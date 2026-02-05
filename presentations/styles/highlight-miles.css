@@ -69,3 +69,27 @@
 
 .hljs-emphasis { font-style: italic; }
 .hljs-strong { font-weight: bold; }
+
+/* Teal theme adjustments */
+.theme-teal .hljs {
+  background: #003338;
+}
+.theme-teal .hljs-keyword,
+.theme-teal .hljs-selector-tag,
+.theme-teal .hljs-type {
+  color: #78e8db;
+}
+.theme-teal .hljs-string,
+.theme-teal .hljs-template-tag,
+.theme-teal .hljs-template-variable,
+.theme-teal .hljs-addition,
+.theme-teal .hljs-attr,
+.theme-teal .hljs-attribute,
+.theme-teal .hljs-selector-class {
+  color: #ffd9a1;
+}
+.theme-teal .hljs-tag,
+.theme-teal .hljs-name,
+.theme-teal .hljs-selector-id {
+  color: #78e8db;
+}

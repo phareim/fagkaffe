@@ -1,6 +1,6 @@
 # Presentations — Miles Branded Slide Decks
 
-Single-file HTML presentations styled per the Miles Brand Guide 2025.
+Single-file HTML presentations styled per the Miles Brand Guide 2026.
 
 ## Project Structure
 
@@ -15,11 +15,17 @@ presentations/
 │   └── slides.js              ← navigation, fragments, notes, hljs init
 ├── public/
 │   ├── highlight.min.js       ← highlight.js core (bundled)
+│   ├── miles-logo-red.svg     ← Miles logo (red, for title slides)
 │   └── fonts/Gelica/          ← Gelica .ttf files (self-hosted)
 └── scripts/
     ├── new.sh <name>          ← scaffold a new presentation
     ├── serve.sh [port]        ← local dev server (default :8080)
-    └── deploy.sh [project]   ← deploy to Cloudflare Pages
+    └── deploy.sh [project]    ← deploy to Cloudflare Pages
+
+../resources/
+├── Miles template 2026.pptx   ← official PowerPoint template (reference)
+├── icons/                     ← brand icons (SVG)
+└── illustrations/             ← larger illustrations (SVG/PNG)
 ```
 
 ## Creating a New Presentation
@@ -56,23 +62,56 @@ Use the HTML comment banner for readability:
 | Token             | Hex       | Use                                     |
 |-------------------|-----------|-----------------------------------------|
 | `--miles-red`     | `#ff303b` | Stopping power, energy, CTAs            |
-| `--burgundy`      | `#450d21` | Depth, title backgrounds                |
+| `--deep-red`      | `#b72318` | Deeper red for subtle accents           |
+| `--burgundy`      | `#450d20` | Depth, title backgrounds                |
 | `--cream`         | `#fbf0e5` | Default background, warm & human        |
 | `--yellow`        | `#ffd9a1` | Optimism, accent on dark backgrounds    |
-| `--dark-purple`   | `#3d1436` | Technology, knowledge, code slides      |
+| `--dark-teal`     | `#004047` | Technology, knowledge, code slides      |
+| `--teal`          | `#78e8db` | Bright accent on dark teal backgrounds  |
+| `--dark-purple`   | `#3d1436` | Legacy tech theme (prefer teal)         |
 
 ## Themes
 
 Set on `.slide-inner`:
 
-| Class            | Background   | Text     | Best for                        |
-|------------------|-------------|----------|---------------------------------|
-| *(none)*         | cream       | burgundy | Standard content slides         |
-| `theme-title`    | burgundy    | cream    | Title/section/closing slides    |
-| `theme-red`      | Miles Red   | white    | Big statements, key takeaways   |
-| `theme-purple`   | dark purple | cream    | Code, tech content              |
-| `theme-white`    | white       | burgundy | Clean data/comparison slides    |
-| `theme-yellow`   | yellow      | burgundy | Warm callouts, fun slides       |
+| Class               | Background   | Text     | Best for                        |
+|---------------------|-------------|----------|---------------------------------|
+| *(none)*            | cream       | burgundy | Standard content slides         |
+| `theme-title`       | burgundy    | cream    | Opening title slide (with logo) |
+| `theme-title-center`| burgundy    | cream    | Closing/section slides          |
+| `theme-red`         | Miles Red   | white    | Big statements, key takeaways   |
+| `theme-teal`        | dark teal   | cream    | Code, tech content (preferred)  |
+| `theme-purple`      | dark purple | cream    | Code, tech content (legacy)     |
+| `theme-white`       | white       | burgundy | Clean data/comparison slides    |
+| `theme-yellow`      | yellow      | burgundy | Warm callouts, fun slides       |
+
+### Title Slide Layout
+
+The opening title slide uses a specific layout matching the Miles PowerPoint template:
+
+```html
+<div class="slide-inner theme-title">
+  <div class="title-header">
+    <h1>Title of presentation<br>Customer name/subtitle</h1>
+    <div class="title-meta">
+      Location<br>
+      Date
+    </div>
+  </div>
+  <div class="title-logo">
+    <img src="public/miles-logo-red.svg" alt="Miles">
+  </div>
+</div>
+```
+
+For closing slides or section breaks, use `theme-title-center` which centers the content:
+
+```html
+<div class="slide-inner theme-title-center">
+  <h1>Thanks!</h1>
+  <p>Questions?</p>
+</div>
+```
 
 ## Typography
 
@@ -132,7 +171,9 @@ Uses highlight.js with a custom Miles color theme. Specify language on the `<cod
 
 Common language classes: `language-javascript`, `language-typescript`, `language-python`, `language-java`, `language-kotlin`, `language-go`, `language-rust`, `language-html`, `language-css`, `language-sql`, `language-bash`, `language-json`, `language-yaml`.
 
-Omit the class for auto-detection. Best on `theme-purple` or default (cream).
+Omit the class for auto-detection. Best on `theme-teal`, `theme-purple`, or default (cream).
+
+The syntax highlighting theme has special adjustments for `theme-teal` slides (teal keywords, yellow strings).
 
 ## Images
 
@@ -174,6 +215,33 @@ The overlay is burgundy at 70% opacity. Override with inline style if needed.
   <img src="public/photo.jpg" alt="Description">
   <figcaption>Photo: description here</figcaption>
 </figure>
+```
+
+## Brand Assets
+
+### Icons (`../resources/icons/`)
+
+SVG icons for use in slides. Copy needed files to `public/` before use.
+
+Available icons:
+- **People**: Bruker, Brukere, Brukerprofil, Brukermappe, Brukerreise, Brukerundersøkelse, Digitalt møte, Hilse
+- **UI elements**: Hamburger menu, Delete (høyre/venstre), Dele
+- **Concepts**: Desktop koding, Desktop, Faglig autoritet, Feiring, Førsteplass, Gjenbruk
+- **Data**: Graf linje (opp/ned), Graf søyler
+- **Symbols**: Alfakrøll, Hjerte (fylt/outline, Miles/rød), FN Bærekraftsmål
+- **Other**: brus-pils, Fjell
+
+### Illustrations (`../resources/illustrations/`)
+
+Larger illustrations (SVG/PNG) for visual slides.
+
+### Example usage
+```bash
+# Copy an icon to public/
+cp ../resources/icons/"Desktop koding.svg" public/
+
+# Then reference in HTML
+<img src="public/Desktop koding.svg" alt="Koding">
 ```
 
 ## Speaker Notes
@@ -224,12 +292,12 @@ Uses `npx wrangler` — no global install needed.
 
 ## Conventions for Building Decks
 
-1. Always start with a `theme-title` slide (title + subtitle/date).
-2. Always end with a `theme-title` slide (thanks/questions).
-3. Use `theme-red` or `theme-purple` for emphasis/break slides between sections.
+1. Always start with a `theme-title` slide (title + location/date + logo).
+2. Always end with a `theme-title-center` slide (thanks/questions).
+3. Use `theme-red` or `theme-teal` for emphasis/break slides between sections.
 4. Keep text minimal — prefer short bullets over paragraphs.
 5. One idea per slide.
 6. Use fragments sparingly — they're great for agendas and reveals, annoying for every bullet.
 7. Put images in `public/` and reference as `public/filename.ext`.
-8. Code slides: use `theme-purple` + `<pre><code class="language-xx">`.
+8. Code slides: use `theme-teal` + `<pre><code class="language-xx">`.
 9. Add speaker notes for context — they help the presenter and document intent.
