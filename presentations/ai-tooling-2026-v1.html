@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & AI-verktøy, 2026 — Miles</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="styles/highlight-miles.css">
+
+  <!-- Slides -->
+  <link rel="stylesheet" href="styles/slides.css">
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 1 — Title                         ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-title">
+      <h1>AI & AI-verktøy</h1>
+      <p>Fagkaffe — Februar 2026</p>
+      <aside class="notes">
+        Velkommen. I dag skal vi snakke om AI som kodeverktøy — ikke hype, men
+        hva som faktisk har skjedd det siste året og hvorfor dette er noe vi
+        alle bør bruke i hverdagen.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 2 — Agenda                        ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Agenda</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">Tidslinje: fra ChatGPT til i dag</li>
+        <li class="fragment">Karpathy-effekten</li>
+        <li class="fragment">Hva er enkelt? Hva er vanskelig?</li>
+        <li class="fragment">Har rollen vår endret seg?</li>
+        <li class="fragment">Verktøy i praksis</li>
+      </ul>
+      <aside class="notes">
+        Fem punkter, ca. 15 minutter. Vi starter med historikk, går til
+        konkrete observasjoner fra Karpathy, og lander på hva dette betyr
+        for oss som utviklere.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 3 — Timeline                      ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-purple">
+      <h2>Tidslinjen</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment"><span class="accent">Nov 2022</span> — ChatGPT. «Wow, den kan kode litt»</li>
+        <li class="fragment"><span class="accent">Mar 2023</span> — GPT-4. Copilot blir mainstream</li>
+        <li class="fragment"><span class="accent">2024</span> — Cursor, Claude 3.5 Sonnet, chat i editoren</li>
+        <li class="fragment"><span class="accent">Feb 2025</span> — Karpathy minter «vibe coding»</li>
+        <li class="fragment"><span class="accent">Des 2025</span> — Claude Code, Codex, agenter som <em>gjør</em> ting</li>
+        <li class="fragment"><span class="accent">Feb 2026</span> — 85% av utviklere bruker AI daglig</li>
+      </ul>
+      <aside class="notes">
+        Tre bølger: Bølge 1 (2022-2023) autocomplete, 30-50% boost.
+        Bølge 2 (2024) chat-basert parprogrammering, 2-4x.
+        Bølge 3 (2025-nå) autonome agenter som eier hele oppgaver, 10x+.
+        Legg merke til akselerasjonen — hvert steg er kortere enn det forrige.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 4 — Tre bølger                    ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-white">
+      <h2>Tre bølger</h2>
+      <div class="gap"></div>
+      <div class="columns-3">
+        <div>
+          <h3 class="accent">Autocomplete</h3>
+          <p>2022–2023</p>
+          <p>Copilot foreslår neste linje. 30–50% raskere.</p>
+        </div>
+        <div>
+          <h3 class="accent">Chat i editoren</h3>
+          <p>2024</p>
+          <p>Cursor, Copilot Chat. Spør om hele funksjoner. 2–4x.</p>
+        </div>
+        <div>
+          <h3 class="accent">Agenter</h3>
+          <p>2025–</p>
+          <p>Claude Code, Codex. Delegér hele oppgaver. 10x+.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        Poenget her er at vi har gått fra «hjelp meg skrive denne linjen» til
+        «bygg denne featuren mens jeg reviewer en annen PR». Det er et
+        fundamentalt annet verktøy.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 5 — Vibe Coding quote             ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-red text-center">
+      <h1>«Vibe Coding»</h1>
+      <div class="gap"></div>
+      <p><em>«There's a new kind of coding I call vibe coding, where you fully
+      give in to the vibes, embrace exponentials, and forget that the code
+      even exists.»</em></p>
+      <div class="gap"></div>
+      <p>— Andrej Karpathy, 2. februar 2025</p>
+      <aside class="notes">
+        Karpathy — tidligere AI-sjef Tesla, medgrunnlegger OpenAI.
+        Tweeten ble viral, fikk egen Wikipedia-artikkel, ble tatt inn i
+        Merriam-Webster som et trending-begrep. Et år senere er det ikke
+        bare et meme lenger.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 6 — Karpathy tweet #1 (Claude)    ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Karpathy, januar 2026</h2>
+      <div class="gap"></div>
+      <p><em>«I rapidly went from about <span class="accent">80% manual coding / 20% agents</span>
+        in November to <span class="accent">80% agent coding / 20% edits</span> in December.»</em></p>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">«I really am mostly programming in English now»</li>
+        <li class="fragment">«Easily the biggest change to my coding workflow in ~2 decades»</li>
+        <li class="fragment">«It happened over the course of a few weeks»</li>
+      </ul>
+      <aside class="notes">
+        Post 1 av de to vi referer til. Karpathy beskriver et fundamentalt
+        skifte i egen arbeidsflyt. Han bruker nå primært Claude Code —
+        skriver i naturlig språk, delegerer til agenten, gjør kun
+        finjusteringer manuelt. Det viktigste: dette skjedde på bare noen uker.
+        Lenke: x.com/karpathy/status/2015883857489522876
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 7 — Karpathy observations         ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Karpathys observasjoner</h2>
+      <div class="gap"></div>
+      <div class="columns">
+        <div>
+          <h3 class="accent">Positivt</h3>
+          <ul>
+            <li class="fragment">Programmering føles <em>morsommere</em></li>
+            <li class="fragment">Mindre blokkert — alltid en vei videre</li>
+            <li class="fragment">Mer mot til å ta store grep</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="accent">Bekymringer</h3>
+          <ul>
+            <li class="fragment">Manuelle ferdigheter atrofierer</li>
+            <li class="fragment">AI gjør feil som en «rushed junior»</li>
+            <li class="fragment">Overingeniører og inflaterer abstraksjoner</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">
+        Begge sider her. Karpathy er ærlig: det er fantastisk, men det er også
+        reelle utfordringer. Nøkkelen er at fordelene veier opp — men du må
+        vite hva du gjør. Senioritet blir viktigere, ikke mindre viktig.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 8 — Karpathy tweet #2 (retro)     ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Vibe Coding — ett år senere</h2>
+      <div class="gap"></div>
+      <p><em>«At the time, LLM capability was low enough that vibe coding was
+        mostly for fun throwaway projects. Today, programming via LLM agents is
+        increasingly becoming a <span class="accent">default workflow for professionals</span>.»</em></p>
+      <div class="gap"></div>
+      <p>— Karpathy, februar 2026</p>
+      <aside class="notes">
+        Post 2. Ett år etter vibe-coding-tweeten reflekterer Karpathy over
+        hvordan begrepet har utviklet seg. Det som startet som et meme for
+        hobbyprosjekter er nå en reell arbeidsflyt for profesjonelle utviklere.
+        Han kaller det neste steget «agentic engineering».
+        Lenke: x.com/karpathy/status/2019137879310836075
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 9 — Faseshift (big statement)     ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-red text-center">
+      <h1>Et faseshift i<br>software&shy;utvikling</h1>
+      <div class="gap"></div>
+      <p>Desember 2025 krysset AI-agenter en terskel.<br>
+         2026 er året industrien tilpasser seg.</p>
+      <aside class="notes">
+        Karpathy kaller det eksplisitt et «phase shift». Det er ikke en
+        gradvis forbedring — det er et kvalitativt hopp. Claude Code og
+        Codex krysset en terskel for koherens i desember 2025.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 10 — Hva er enkelt nå?            ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Hva er <span class="accent">enkelt</span> nå?</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">Boilerplate, CRUD, standardmønstre</li>
+        <li class="fragment">Refaktorering på tvers av mange filer</li>
+        <li class="fragment">Tester — enhets-, integrasjons-, e2e</li>
+        <li class="fragment">Lese og forstå ukjent kodebase</li>
+        <li class="fragment">Konvertere mellom språk og rammeverk</li>
+        <li class="fragment">Prototyping — fra idé til fungerende MVP på timer</li>
+      </ul>
+      <aside class="notes">
+        Alt som er «utfylling» — ting der mønsteret er klart og du bare
+        trenger å produsere kode — er nå nesten gratis. Det inkluderer
+        mange oppgaver som tidligere tok timer eller dager.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 11 — Hva er vanskelig?            ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Hva er <span class="accent">vanskelig</span>?</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">Arkitektur og systemdesign</li>
+        <li class="fragment">Subtile bugs i komplekse systemer</li>
+        <li class="fragment">Ytelsesoptimalisering med reelle constraints</li>
+        <li class="fragment">Sikkerhet — AI lager plausible, men usikker kode</li>
+        <li class="fragment">Domeneforståelse — AI vet ikke hva <em>du</em> bygger</li>
+        <li class="fragment">Kvalitetsvurdering — noen må review'e</li>
+      </ul>
+      <aside class="notes">
+        AI er som en utrolig produktiv junior som aldri blir sliten.
+        Men den mangler dømmekraft, kontekst og domeneforståelse.
+        Du trenger fortsatt senioritet for å styre den riktig.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 12 — Rollen vår                   ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-yellow">
+      <h2>Har rollen vår endret seg?</h2>
+      <div class="gap"></div>
+      <div class="columns">
+        <div>
+          <h3>Før</h3>
+          <p>Skrive kode<br>Lese dokumentasjon<br>Debug med print-statements<br>Google + Stack Overflow</p>
+        </div>
+        <div>
+          <h3>Nå</h3>
+          <p>Beskrive intensjon<br>Reviewe AI-output<br>Styre arkitektur<br>Stille gode spørsmål</p>
+        </div>
+      </div>
+      <aside class="notes">
+        Rollen vår beveger seg fra «den som skriver kode» til «den som
+        forstår hva som skal bygges og hvorfor». Kodeproduksjon er ikke
+        lenger flaskehalsen. Forståelse, retning og kvalitet er det.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 13 — Det viktige skiftet          ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-red text-center">
+      <h1>Kode er ikke lenger<br>flaskehalsen</h1>
+      <div class="gap"></div>
+      <p>Forståelse, retning og kvalitet er det.</p>
+      <aside class="notes">
+        Dette er kanskje den viktigste innsikten. Mange av oss har bygget
+        karrieren på evnen til å skrive kode raskt og riktig. Den evnen
+        er fortsatt verdifull, men den er ikke lenger det som skiller
+        en god utvikler fra en middelmådig en.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 14 — Verktøylandskapet            ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-purple">
+      <h2>Verktøylandskapet, feb 2026</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment"><span class="accent">GitHub Copilot</span> — autocomplete + agent mode. Allerede installert overalt.</li>
+        <li class="fragment"><span class="accent">Cursor</span> — AI-first editor. Best for «flow state»-koding.</li>
+        <li class="fragment"><span class="accent">Claude Code</span> — CLI-agent. Delegér hele oppgaver fra terminalen.</li>
+        <li class="fragment"><span class="accent">Codex</span> — OpenAIs agent-verktøy, kjører mot dine repos.</li>
+        <li class="fragment"><span class="accent">Windsurf / Devin</span> — «Agentic IDE». Indekserer hele codebasen.</li>
+      </ul>
+      <aside class="notes">
+        Mange bruker flere verktøy. Cursor for skriving i flow, Claude Code
+        for store oppgaver og refaktorering. Copilot for de som allerede har
+        det installert. Poenget er ikke å velge «riktig» — det er å begynne.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 15 — Eksempel: Claude Code        ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-purple">
+      <h2>Claude Code i praksis</h2>
+      <div class="gap"></div>
+      <pre><code class="language-bash">$ claude
+
+> Les kodebasen og forklar arkitekturen
+
+> Refaktorer auth-modulen til å bruke JWT i stedet for sessions
+
+> Skriv integrasjonstester for alle API-endepunktene
+
+> Denne presentasjonen er laget med Claude Code.</code></pre>
+      <aside class="notes">
+        Vis gjerne en kort live-demo her om tid. Claude Code kjører lokalt
+        på maskinen din, leser filene dine direkte, og gjør endringer i
+        editoren. Det er ikke en chatbot — det er en agent som faktisk
+        utfører oppgaver. Denne presentasjonen ble faktisk laget med
+        Claude Code, inkludert hele slide-rammeverket.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 16 — Slopacolypse                 ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Elefanten i rommet</h2>
+      <div class="gap"></div>
+      <p>Karpathy spår en <span class="accent">«slopacolypse»</span> i 2026:</p>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">GitHub, arXiv, npm oversvømmes av AI-generert innhold</li>
+        <li class="fragment">Kostnaden ved å filtrere informasjon øker dramatisk</li>
+        <li class="fragment">Mer kode ≠ bedre kode</li>
+      </ul>
+      <div class="gap"></div>
+      <p class="fragment"><strong>Vår jobb: sørge for at det vi lager har <span class="accent">kvalitet</span>.</strong></p>
+      <aside class="notes">
+        Dette er baksiden av medaljen. Når alle kan produsere kode billig,
+        synker gjennomsnittskvaliteten. Det betyr at evnen til å vurdere,
+        velge og kvalitetssikre blir enda viktigere. Som profesjonelle
+        utviklere er dette vår styrke.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 17 — Hva bør vi gjøre?            ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Hva bør vi gjøre?</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment"><strong>Prøv.</strong> Installer Copilot, Cursor, eller Claude Code denne uken.</li>
+        <li class="fragment"><strong>Start smått.</strong> Bruk det til tester, docs, boilerplate.</li>
+        <li class="fragment"><strong>Vær kritisk.</strong> Review alt. AI er en junior, ikke en senior.</li>
+        <li class="fragment"><strong>Del erfaringer.</strong> Vi lærer raskere sammen.</li>
+      </ul>
+      <aside class="notes">
+        Konkret call to action. Ikke vent. Du trenger ikke lære alt på en gang.
+        Men å ikke bruke disse verktøyene i det hele tatt er som å nekte å
+        bruke Google i 2005 fordi «jeg vet jo allerede hvor biblioteket er».
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 18 — Avsluttende statement        ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-red text-center">
+      <h1>Dette er ikke hype</h1>
+      <div class="gap"></div>
+      <p>Det er den største endringen i hvordan vi jobber<br>på over 20 år.</p>
+      <aside class="notes">
+        Karpathy sa det — «biggest change to my coding workflow in ~2 decades».
+        Og det skjedde på noen uker. Vi er midt i det nå.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 19 — Lenker                       ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-purple">
+      <h2>Lenker</h2>
+      <div class="gap"></div>
+      <ul>
+        <li>Karpathy — Claude Code-notater<br><small>x.com/karpathy/status/2015883857489522876</small></li>
+        <li>Karpathy — Vibe Coding, ett år senere<br><small>x.com/karpathy/status/2019137879310836075</small></li>
+        <li>Karpathy — 2025 LLM Year in Review<br><small>karpathy.bearblog.dev/year-in-review-2025</small></li>
+      </ul>
+      <aside class="notes">
+        Del gjerne disse lenkene med folk etterpå. Karpathys Year in Review
+        er spesielt bra for de som vil ha et grundigere overblikk.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 20 — Closing                      ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-title">
+      <h1>Takk!</h1>
+      <p>Spørsmål?</p>
+      <aside class="notes">
+        Åpne for spørsmål og diskusjon. Kanskje noen har egne erfaringer
+        med AI-verktøy de vil dele?
+      </aside>
+    </div>
+  </section>
+
+</div>
+
+<!-- Progress bar & counter -->
+<div class="progress"></div>
+<div class="slide-counter"></div>
+
+<!-- Scripts -->
+<script src="public/highlight.min.js"></script>
+<script src="js/slides.js"></script>
+</body>
+</html>
