@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentation Title — Miles</title>
+
+  <!-- Fonts: DM Sans from Google, Gelica from Adobe (requires Adobe Fonts project) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/slides.css">
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 1 — Title                         ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-title">
+      <h1>Presentation Title</h1>
+      <p>Subtitle or date goes here</p>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 2 — Content (cream)               ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Agenda</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">First topic</li>
+        <li class="fragment">Second topic</li>
+        <li class="fragment">Third topic</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 3 — Two columns                   ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Two Columns</h2>
+      <div class="gap"></div>
+      <div class="columns">
+        <div>
+          <h3>Left</h3>
+          <p>Explain something here with <span class="accent">warmth</span> and clarity.</p>
+        </div>
+        <div>
+          <h3>Right</h3>
+          <p>Supporting details, data, or a complementary point.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 4 — Code (purple theme)           ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-purple">
+      <h2>Code Example</h2>
+      <div class="gap"></div>
+      <pre><code>function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+console.log(greet('Miles'));</code></pre>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 5 — Big statement (red theme)     ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-red text-center">
+      <h1>Professional Authority<br>and Warmth</h1>
+      <div class="gap"></div>
+      <p>A big statement or key takeaway lives here.</p>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 6 — Three columns                 ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-white">
+      <h2>Three Points</h2>
+      <div class="gap"></div>
+      <div class="columns-3">
+        <div>
+          <h3 class="accent">01</h3>
+          <p>First point with supporting detail.</p>
+        </div>
+        <div>
+          <h3 class="accent">02</h3>
+          <p>Second point with supporting detail.</p>
+        </div>
+        <div>
+          <h3 class="accent">03</h3>
+          <p>Third point with supporting detail.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 7 — Closing                       ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner theme-title">
+      <h1>Thanks!</h1>
+      <p>Questions?</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- Progress bar & counter -->
+<div class="progress"></div>
+<div class="slide-counter"></div>
+
+<script src="js/slides.js"></script>
+</body>
+</html>
