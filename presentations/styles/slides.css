@@ -438,6 +438,276 @@ figure figcaption {
   transform: translateY(0);
 }
 
+/* ── Timeline ────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+  margin-top: 1em;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0.5em;
+  bottom: 0.5em;
+  width: 3px;
+  background: currentColor;
+  opacity: 0.25;
+  border-radius: 2px;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 32px;
+  padding-bottom: 1.2em;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 0.5em;
+  width: 15px;
+  height: 15px;
+  background: var(--miles-red);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px currentColor;
+  opacity: 0.15;
+}
+
+.timeline-item.fragment.visible::before {
+  opacity: 1;
+  animation: timeline-pulse 0.4s ease-out;
+}
+
+@keyframes timeline-pulse {
+  0% { transform: scale(0.5); opacity: 0; }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.timeline-item .timeline-date {
+  font-weight: 600;
+  color: var(--miles-red);
+  display: block;
+  margin-bottom: 0.2em;
+}
+
+.theme-teal .timeline-item::before {
+  background: var(--teal);
+}
+
+.theme-teal .timeline-item .timeline-date {
+  color: var(--teal);
+}
+
+.theme-purple .timeline-item::before {
+  background: var(--yellow);
+}
+
+.theme-purple .timeline-item .timeline-date {
+  color: var(--yellow);
+}
+
+/* ── X-Post Card ─────────────────────────────── */
+.x-post {
+  background: var(--white);
+  border: 1px solid #cfd9de;
+  border-radius: 16px;
+  padding: 20px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--black);
+  text-align: left;
+}
+
+.x-post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.x-post-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.x-post-author {
+  display: flex;
+  flex-direction: column;
+}
+
+.x-post-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.x-post-verified {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background: #1d9bf0;
+  border-radius: 50%;
+  position: relative;
+}
+
+.x-post-verified::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.x-post-handle {
+  color: #536471;
+  font-size: 0.95rem;
+}
+
+.x-post-content {
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.x-post-content em {
+  font-style: normal;
+}
+
+.x-post-date {
+  color: #536471;
+  font-size: 0.9rem;
+}
+
+.x-post-engagement {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eff3f4;
+  color: #536471;
+  font-size: 0.9rem;
+}
+
+/* Side-by-side x-posts */
+.x-posts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.x-posts-row .x-post {
+  max-width: none;
+}
+
+/* Large centered x-post for emphasis */
+.x-post-large {
+  max-width: 700px;
+}
+
+.x-post-large .x-post-content {
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+
+.x-posts-row .x-post-large {
+  max-width: none;
+}
+
+/* Animated x-posts - slide in from sides */
+.x-posts-animated .x-post {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.x-posts-animated .x-post:nth-child(1) {
+  transition-delay: 0.2s;
+}
+
+.x-posts-animated .x-post:nth-child(2) {
+  transition-delay: 0.4s;
+}
+
+.slide.active .x-posts-animated .x-post {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Emoji/Icon helpers ──────────────────────── */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 1em;
+}
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.icon-card .icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-card .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.icon-card p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* Theme adjustments for icon cards */
+.theme-white .icon-card {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.slide-inner:not([class*="theme-"]) .icon-card {
+  background: rgba(69, 13, 32, 0.06);
+}
+
 /* ── Print ────────────────────────────────────── */
 @media print {
   .deck { position: static; }

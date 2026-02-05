@@ -17,15 +17,14 @@ presentations/
 │   ├── highlight.min.js       ← highlight.js core (bundled)
 │   ├── miles-logo-red.svg     ← Miles logo (red, for title slides)
 │   └── fonts/Gelica/          ← Gelica .ttf files (self-hosted)
-└── scripts/
-    ├── new.sh <name>          ← scaffold a new presentation
-    ├── serve.sh [port]        ← local dev server (default :8080)
-    └── deploy.sh [project]    ← deploy to Cloudflare Pages
-
-../resources/
-├── Miles template 2026.pptx   ← official PowerPoint template (reference)
-├── icons/                     ← brand icons (SVG)
-└── illustrations/             ← larger illustrations (SVG/PNG)
+├── scripts/
+│   ├── new.sh <name>          ← scaffold a new presentation
+│   ├── serve.sh [port]        ← local dev server (default :8080)
+│   └── deploy.sh [project]    ← deploy to Cloudflare Pages
+└── resources/
+    ├── Miles template 2026.pptx   ← official PowerPoint template (reference)
+    ├── icons/                     ← brand icons (SVG)
+    └── illustrations/             ← larger illustrations (SVG/PNG)
 ```
 
 ## Creating a New Presentation
@@ -219,9 +218,9 @@ The overlay is burgundy at 70% opacity. Override with inline style if needed.
 
 ## Brand Assets
 
-### Icons (`../resources/icons/`)
+### Icons (`resources/icons/`)
 
-SVG icons for use in slides. Copy needed files to `public/` before use.
+SVG icons for use in slides. Reference directly from `resources/icons/`.
 
 Available icons:
 - **People**: Bruker, Brukere, Brukerprofil, Brukermappe, Brukerreise, Brukerundersøkelse, Digitalt møte, Hilse
@@ -231,17 +230,14 @@ Available icons:
 - **Symbols**: Alfakrøll, Hjerte (fylt/outline, Miles/rød), FN Bærekraftsmål
 - **Other**: brus-pils, Fjell
 
-### Illustrations (`../resources/illustrations/`)
+### Illustrations (`resources/illustrations/`)
 
 Larger illustrations (SVG/PNG) for visual slides.
 
 ### Example usage
-```bash
-# Copy an icon to public/
-cp ../resources/icons/"Desktop koding.svg" public/
-
-# Then reference in HTML
-<img src="public/Desktop koding.svg" alt="Koding">
+```html
+<!-- Reference icons directly -->
+<img src="resources/icons/Desktop koding.svg" alt="Koding">
 ```
 
 ## Speaker Notes
@@ -298,6 +294,6 @@ Uses `npx wrangler` — no global install needed.
 4. Keep text minimal — prefer short bullets over paragraphs.
 5. One idea per slide.
 6. Use fragments sparingly — they're great for agendas and reveals, annoying for every bullet.
-7. Put images in `public/` and reference as `public/filename.ext`.
+7. Use icons from `resources/icons/` and illustrations from `resources/illustrations/`. Put other images in `public/`.
 8. Code slides: use `theme-teal` + `<pre><code class="language-xx">`.
 9. Add speaker notes for context — they help the presenter and document intent.
