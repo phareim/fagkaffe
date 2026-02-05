@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Presentation Title — Miles</title>
 
-  <!-- Fonts: DM Sans from Google, Gelica from Adobe (requires Adobe Fonts project) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="styles/highlight-miles.css">
+
+  <!-- Slides -->
   <link rel="stylesheet" href="styles/slides.css">
 </head>
 <body>
@@ -22,11 +27,15 @@
     <div class="slide-inner theme-title">
       <h1>Presentation Title</h1>
       <p>Subtitle or date goes here</p>
+      <aside class="notes">
+        Welcome everyone. This is where your speaker notes go.
+        They are hidden during presentation and shown with the 's' key.
+      </aside>
     </div>
   </section>
 
   <!-- ╔══════════════════════════════════════════╗ -->
-  <!-- ║  SLIDE 2 — Content (cream)               ║ -->
+  <!-- ║  SLIDE 2 — Agenda with fragments         ║ -->
   <!-- ╚══════════════════════════════════════════╝ -->
   <section class="slide">
     <div class="slide-inner">
@@ -37,6 +46,7 @@
         <li class="fragment">Second topic</li>
         <li class="fragment">Third topic</li>
       </ul>
+      <aside class="notes">Walk through the agenda items one by one.</aside>
     </div>
   </section>
 
@@ -67,11 +77,12 @@
     <div class="slide-inner theme-purple">
       <h2>Code Example</h2>
       <div class="gap"></div>
-      <pre><code>function greet(name) {
+      <pre><code class="language-javascript">function greet(name) {
   return `Hello, ${name}!`;
 }
 
 console.log(greet('Miles'));</code></pre>
+      <aside class="notes">Highlight.js auto-detects the language, but you can specify it with class="language-xx".</aside>
     </div>
   </section>
 
@@ -111,7 +122,38 @@ console.log(greet('Miles'));</code></pre>
   </section>
 
   <!-- ╔══════════════════════════════════════════╗ -->
-  <!-- ║  SLIDE 7 — Closing                       ║ -->
+  <!-- ║  SLIDE 7 — Image + text                  ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner">
+      <h2>Image + Text</h2>
+      <div class="gap"></div>
+      <div class="img-text">
+        <img src="public/example.jpg" alt="Description">
+        <div>
+          <h3>Side-by-side</h3>
+          <p>Image on the left, text on the right. Add class <code>img-right</code> to swap.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 8 — Background image              ║ -->
+  <!-- ╚══════════════════════════════════════════╝ -->
+  <section class="slide">
+    <div class="slide-inner has-bg">
+      <div class="bg" style="background-image: url('public/example.jpg')"></div>
+      <div class="bg-overlay"></div>
+      <div class="bg-content">
+        <h1>Full Background</h1>
+        <p>Text over an image with a burgundy overlay.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ╔══════════════════════════════════════════╗ -->
+  <!-- ║  SLIDE 9 — Closing                       ║ -->
   <!-- ╚══════════════════════════════════════════╝ -->
   <section class="slide">
     <div class="slide-inner theme-title">
@@ -126,6 +168,8 @@ console.log(greet('Miles'));</code></pre>
 <div class="progress"></div>
 <div class="slide-counter"></div>
 
+<!-- Scripts -->
+<script src="public/highlight.min.js"></script>
 <script src="js/slides.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /**
- * Miles Slide Deck — minimal keyboard/touch/click navigation
+ * Miles Slide Deck — navigation, fragments, speaker notes, syntax highlighting
  */
 (function () {
   'use strict';
@@ -8,6 +8,9 @@
   const progress = document.querySelector('.progress');
   const counter = document.querySelector('.slide-counter');
   let current = 0;
+  let notesWindow = null;
+
+  // ── Fragments ──────────────────────────────────
 
   function fragmentsOf(slide) {
     return Array.from(slide.querySelectorAll('.fragment'));
@@ -21,12 +24,13 @@
     return fragmentsOf(slide).filter(f => !f.classList.contains('visible'));
   }
 
+  // ── Navigation ─────────────────────────────────
+
   function showSlide(index) {
     current = Math.max(0, Math.min(index, slides.length - 1));
 
     slides.forEach((s, i) => {
       s.classList.toggle('active', i === current);
-      // Reset fragments on non-active slides
       if (i !== current) {
         fragmentsOf(s).forEach(f => f.classList.remove('visible'));
       }
@@ -41,12 +45,11 @@
       counter.textContent = (current + 1) + ' / ' + slides.length;
     }
 
-    // Update URL hash without scrolling
     history.replaceState(null, '', '#' + (current + 1));
+    updateNotes();
   }
 
   function next() {
-    // If current slide has hidden fragments, reveal next one
     const hidden = hiddenFragments(slides[current]);
     if (hidden.length > 0) {
       hidden[0].classList.add('visible');
@@ -56,7 +59,6 @@
   }
 
   function prev() {
-    // If current slide has visible fragments, hide last one
     const visible = visibleFragments(slides[current]);
     if (visible.length > 0) {
       visible[visible.length - 1].classList.remove('visible');
@@ -65,7 +67,49 @@
     showSlide(current - 1);
   }
 
-  // Keyboard navigation
+  // ── Speaker Notes ──────────────────────────────
+
+  function getNotesHTML(slide) {
+    const aside = slide.querySelector('aside.notes');
+    return aside ? aside.innerHTML : '<em>No notes for this slide.</em>';
+  }
+
+  function openNotesWindow() {
+    if (notesWindow && !notesWindow.closed) {
+      notesWindow.focus();
+      updateNotes();
+      return;
+    }
+    notesWindow = window.open('', 'speaker-notes', 'width=500,height=400');
+    const doc = notesWindow.document;
+    doc.write(`<!DOCTYPE html>
+<html><head><title>Speaker Notes</title>
+<style>
+  body { font-family: 'DM Sans', system-ui, sans-serif; padding: 24px;
+         background: #1a1a1a; color: #fbf0e5; line-height: 1.6; }
+  h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
+       color: #ffd9a1; margin-bottom: 12px; }
+  #notes { font-size: 1.1rem; }
+</style>
+</head><body>
+<h2 id="heading">Slide 1 / ${slides.length}</h2>
+<div id="notes"></div>
+</body></html>`);
+    doc.close();
+    updateNotes();
+  }
+
+  function updateNotes() {
+    if (!notesWindow || notesWindow.closed) return;
+    const doc = notesWindow.document;
+    const heading = doc.getElementById('heading');
+    const notes = doc.getElementById('notes');
+    if (heading) heading.textContent = 'Slide ' + (current + 1) + ' / ' + slides.length;
+    if (notes) notes.innerHTML = getNotesHTML(slides[current]);
+  }
+
+  // ── Keyboard ───────────────────────────────────
+
   document.addEventListener('keydown', function (e) {
     switch (e.key) {
       case 'ArrowRight':
@@ -95,10 +139,17 @@
           toggleFullscreen();
         }
         break;
+      case 's':
+        if (!e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          openNotesWindow();
+        }
+        break;
     }
   });
 
-  // Touch support
+  // ── Touch ──────────────────────────────────────
+
   let touchStartX = 0;
   let touchStartY = 0;
 
@@ -115,13 +166,15 @@
     }
   });
 
-  // Click to advance (right half) / go back (left half)
+  // ── Click ──────────────────────────────────────
+
   document.addEventListener('click', function (e) {
-    // Ignore clicks on links and buttons
     if (e.target.closest('a, button')) return;
     const x = e.clientX / window.innerWidth;
     x > 0.5 ? next() : prev();
   });
+
+  // ── Fullscreen ─────────────────────────────────
 
   function toggleFullscreen() {
     if (!document.fullscreenElement) {
@@ -131,7 +184,14 @@
     }
   }
 
-  // Init from hash
+  // ── Syntax Highlighting ────────────────────────
+
+  if (typeof hljs !== 'undefined') {
+    hljs.highlightAll();
+  }
+
+  // ── Init ───────────────────────────────────────
+
   const hash = parseInt(location.hash.replace('#', ''), 10);
   showSlide(hash > 0 ? hash - 1 : 0);
 })();

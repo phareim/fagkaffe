@@ -1,0 +1,71 @@
+/* highlight.js theme — Miles dark (based on brand purple/cream/red/yellow) */
+.hljs {
+  background: #1a1a1a;
+  color: #fbf0e5;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #9e8a7a;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-type {
+  color: #ff303b;
+}
+
+.hljs-string,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-addition {
+  color: #ffd9a1;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-params {
+  color: #e8a0c8;
+}
+
+.hljs-function,
+.hljs-title,
+.hljs-title.function_ {
+  color: #fbf0e5;
+  font-weight: 600;
+}
+
+.hljs-built_in {
+  color: #ff8a90;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-selector-class {
+  color: #ffd9a1;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id {
+  color: #ff303b;
+}
+
+.hljs-meta,
+.hljs-meta .hljs-keyword {
+  color: #9e8a7a;
+}
+
+.hljs-deletion {
+  color: #ff303b;
+  background: rgba(255, 48, 59, 0.1);
+}
+
+.hljs-addition {
+  background: rgba(255, 217, 161, 0.1);
+}
+
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
