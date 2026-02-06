@@ -426,6 +426,207 @@ figure figcaption {
   width: auto;
 }
 
+/* ── Title with Illustration ─────────────────── */
+/* Title slide variant with large image on right (PPTX: "Title Illustration 1") */
+.slide-inner.theme-title.title-illustration {
+  padding: 48px 0 48px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: center;
+}
+.slide-inner.theme-title.title-illustration .title-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-inner.theme-title.title-illustration .title-text .logo {
+  width: 120px;
+  margin-bottom: 1.5em;
+}
+.slide-inner.theme-title.title-illustration h1 {
+  max-width: 100%;
+}
+.slide-inner.theme-title.title-illustration .title-image {
+  height: 100%;
+  overflow: hidden;
+}
+.slide-inner.theme-title.title-illustration .title-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* ── Section Header ──────────────────────────── */
+/* Distinct from theme-title-center: has a small subtitle label + large heading (PPTX: "Section header 1-3") */
+.slide-inner .section-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+.slide-inner .section-header .section-label {
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.7;
+  margin-bottom: 1em;
+}
+.slide-inner .section-header h1 {
+  font-size: 3.5rem;
+  margin-bottom: 0.5em;
+}
+.slide-inner .section-header p {
+  font-size: 1.35rem;
+  max-width: 70%;
+}
+
+/* Section header with photo on right (PPTX: "Section header 2") */
+.slide-inner.section-photo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding-right: 0;
+}
+.slide-inner.section-photo .section-image {
+  height: 100%;
+  overflow: hidden;
+}
+.slide-inner.section-photo .section-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* ── Split Content ───────────────────────────── */
+/* Title + text on left, edge-to-edge image/content on right (PPTX: "Content 6") */
+.slide-inner.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding-right: 0;
+}
+.slide-inner.split .split-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-right: 48px;
+}
+.slide-inner.split .split-text h2 { margin-bottom: 0.5em; }
+.slide-inner.split .split-media {
+  height: 100%;
+  overflow: hidden;
+}
+.slide-inner.split .split-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+/* Reverse: image on left */
+.slide-inner.split.split-reverse {
+  grid-template-columns: 1fr 1fr;
+  padding-right: 80px;
+  padding-left: 0;
+}
+.slide-inner.split.split-reverse .split-media { order: -1; }
+.slide-inner.split.split-reverse .split-text { padding-right: 0; padding-left: 48px; }
+
+/* ── Full-bleed Photo ────────────────────────── */
+/* Single image covering entire slide (PPTX: "Content Photo 1") */
+.slide-inner.photo-full {
+  padding: 0;
+}
+.slide-inner.photo-full img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* ── Photo Grid ──────────────────────────────── */
+/* Grid of photos (PPTX: "Content Photo 2/3") */
+.photo-grid {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+}
+.photo-grid.grid-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.photo-grid.grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.photo-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+/* Photo grid with text on left (PPTX: "Content Photo 3") */
+.slide-inner.photo-grid-text {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding-right: 0;
+}
+.slide-inner.photo-grid-text .photo-grid {
+  gap: 4px;
+}
+
+/* ── Team / People Cards ─────────────────────── */
+/* Circular photos with names/roles (PPTX: "Custom Layout" team slides) */
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  width: 100%;
+  margin-top: 1.5em;
+}
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 0 1 200px;
+}
+.team-card img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1em;
+}
+.team-card .team-name {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin-bottom: 0.2em;
+}
+.team-card .team-role {
+  font-size: 1rem;
+  opacity: 0.7;
+}
+/* 5-person variant: smaller photos */
+.team-grid.team-5 { gap: 32px; }
+.team-grid.team-5 .team-card img {
+  width: 120px;
+  height: 120px;
+}
+
+/* ── Logo Closing ────────────────────────────── */
+/* Just the Miles logo centered (PPTX: "Conclusion 3/4/5") */
+.slide-inner.logo-center {
+  justify-content: center;
+  align-items: center;
+}
+.slide-inner.logo-center img {
+  width: 45%;
+  max-width: 580px;
+  height: auto;
+}
+
 /* ── Fragments (step-reveal) ──────────────────── */
 .fragment {
   opacity: 0;

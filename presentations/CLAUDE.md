@@ -1,6 +1,7 @@
 # Presentations — Miles Branded Slide Decks
 
 Single-file HTML presentations styled per the Miles Brand Guide 2026.
+Use the icons and illustrations under the resources directory.
 
 ## Project Structure
 
@@ -111,6 +112,163 @@ For closing slides or section breaks, use `theme-title-center` which centers the
   <p>Questions?</p>
 </div>
 ```
+
+### Title with Illustration Layout
+
+Title slide with a large image filling the right half:
+
+```html
+<div class="slide-inner theme-title title-illustration">
+  <div class="title-text">
+    <img class="logo" src="public/miles-logo-red.svg" alt="Miles">
+    <h1>Heading text</h1>
+  </div>
+  <div class="title-image">
+    <img src="public/photo.jpg" alt="Description">
+  </div>
+</div>
+```
+
+### Section Header Layout
+
+For section breaks within the presentation. Has a small label + large heading + optional body text. Works with any theme.
+
+```html
+<div class="slide-inner theme-title-center">
+  <div class="section-header">
+    <span class="section-label">Section 01</span>
+    <h1>Big Section Title</h1>
+    <p>Optional supporting text goes here.</p>
+  </div>
+</div>
+```
+
+With a photo on the right side, add `section-photo`:
+
+```html
+<div class="slide-inner theme-title-center section-photo">
+  <div class="section-header">
+    <span class="section-label">Section 01</span>
+    <h1>Section Title</h1>
+    <p>Supporting text.</p>
+  </div>
+  <div class="section-image">
+    <img src="public/photo.jpg" alt="Description">
+  </div>
+</div>
+```
+
+### Split Content Layout
+
+Title and text on the left, edge-to-edge image on the right. Good for showcasing a screenshot, diagram, or photo alongside an explanation.
+
+```html
+<div class="slide-inner split">
+  <div class="split-text">
+    <h2>Title</h2>
+    <p>Explanation text here.</p>
+  </div>
+  <div class="split-media">
+    <img src="public/screenshot.png" alt="Description">
+  </div>
+</div>
+```
+
+Add `split-reverse` to put the image on the left instead:
+
+```html
+<div class="slide-inner split split-reverse">
+  <div class="split-text">...</div>
+  <div class="split-media">...</div>
+</div>
+```
+
+### Full-bleed Photo
+
+A single photo covering the entire slide (no text, no padding):
+
+```html
+<div class="slide-inner photo-full">
+  <img src="public/photo.jpg" alt="Description">
+</div>
+```
+
+For a photo with text overlay, use `has-bg` instead (see Images section below).
+
+### Photo Grid
+
+Grid of photos filling the slide:
+
+```html
+<div class="slide-inner photo-full">
+  <div class="photo-grid grid-2x2">
+    <img src="public/a.jpg" alt="">
+    <img src="public/b.jpg" alt="">
+    <img src="public/c.jpg" alt="">
+    <img src="public/d.jpg" alt="">
+  </div>
+</div>
+```
+
+Grid variants: `grid-2x2` (4 photos), `grid-3x2` (6 photos).
+
+Photo grid with title/text on the left:
+
+```html
+<div class="slide-inner photo-grid-text">
+  <div>
+    <h2>Title</h2>
+    <p>Description text.</p>
+  </div>
+  <div class="photo-grid grid-2x2">
+    <img src="public/a.jpg" alt="">
+    <img src="public/b.jpg" alt="">
+    <img src="public/c.jpg" alt="">
+    <img src="public/d.jpg" alt="">
+  </div>
+</div>
+```
+
+### Team / People Cards
+
+Show team members with circular photos, names, and roles:
+
+```html
+<div class="slide-inner">
+  <h2>Our Team</h2>
+  <div class="team-grid">
+    <div class="team-card">
+      <img src="public/person1.jpg" alt="Name">
+      <div class="team-name">Full Name</div>
+      <div class="team-role">Senior Consultant</div>
+    </div>
+    <div class="team-card">
+      <img src="public/person2.jpg" alt="Name">
+      <div class="team-name">Full Name</div>
+      <div class="team-role">Tech Lead</div>
+    </div>
+    <div class="team-card">
+      <img src="public/person3.jpg" alt="Name">
+      <div class="team-name">Full Name</div>
+      <div class="team-role">Designer</div>
+    </div>
+  </div>
+</div>
+```
+
+For 5 people, add `team-5` to the grid: `<div class="team-grid team-5">`.
+
+### Logo Closing
+
+Minimal closing slide with just the Miles logo centered:
+
+```html
+<div class="slide-inner theme-title-center logo-center">
+  <img src="public/miles-logo-red.svg" alt="Miles">
+</div>
+```
+
+Works with any theme (`theme-title-center`, `theme-red`, etc.).
 
 ## Typography
 
