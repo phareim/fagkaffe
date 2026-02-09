@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI & AI Tooling 2026 — Miles</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="styles/highlight-miles.css" />
+
+    <!-- Slides -->
+    <link rel="stylesheet" href="styles/slides.css" />
+
+    <style>
+      .quote-attribution {
+        font-size: 0.85em;
+        opacity: 0.8;
+        margin-top: 0.5em;
+      }
+
+      .stat-big {
+        font-family: "Gelica", serif;
+        font-size: 4em;
+        font-weight: 500;
+        line-height: 1.1;
+        color: var(--miles-red);
+      }
+      .theme-teal .stat-big {
+        color: var(--teal);
+      }
+      .theme-red .stat-big {
+        color: #fff;
+      }
+
+      .icon-inline {
+        height: 1.4em;
+        vertical-align: middle;
+        margin-right: 0.3em;
+      }
+
+      .linkedin-embed-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+
+      .THIS_IS_A_LIE {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        padding: 0 2px;
+      }
+      .THIS_IS_A_LIE:hover {
+        background: var(--miles-red);
+        color: #fff;
+        transform: scale(1.1);
+        transform-origin: left center;
+        display: inline-block;
+      }
+      .THIS_IS_A_LIE::before {
+        content: attr(title);
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        background: var(--miles-red);
+        color: #fff;
+        padding: 0.5em 0.75em;
+        border-radius: 8px;
+        font-size: 0.55em;
+        font-weight: 600;
+        white-space: normal;
+        max-width: 400px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        transform: translateY(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+      .THIS_IS_A_LIE:hover::before {
+        opacity: 1;
+        transform: translateY(-8px);
+      }
+
+      .x-post-date {
+        text-align: right;
+        margin-top: auto;
+      }
+      .x-post {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 1 — Title                         ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-title">
+          <div class="title-header">
+            <h1>AI Tooling 2026</h1>
+            <div class="title-meta">
+              Haugesund<br />
+              Februar 2026
+            </div>
+          </div>
+          <div class="title-logo">
+            <img src="public/miles-logo-red.svg" alt="Miles" />
+          </div>
+          <aside class="notes">
+            Velkommen til fagkaffe! I dag skal vi snakke om AI som verktøy for
+            utviklere — hva som har skjedd, hvor vi er nå, og noen viktige
+            perspektiver vi bør ha med oss.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 2 — Karpathy: two tweets           ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-teal text-center">
+          <h2>En historie i to tweets</h2>
+          <div class="gap"></div>
+          <div class="x-posts-row x-posts-animated">
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <span class="x-post-handle">@karpathy</span>
+                </div>
+              </div>
+              <div class="x-post-content">
+                There's a new kind of coding I call
+                <strong>«vibe coding»</strong>, where you fully give in to the
+                vibes, embrace exponentials, and forget that the code even
+                exists.
+              </div>
+              <div class="x-post-date">Feb 2, 2025</div>
+            </div>
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <span class="x-post-handle">@karpathy</span>
+                </div>
+              </div>
+              <div class="x-post-content">
+                My current favourite term:
+                <strong>«agentic engineering»</strong>. «Agentic» because the
+                new default is that you are
+                <strong>not writing the code directly 99% of the time</strong>,
+                you are orchestrating agents who do and acting as oversight.
+                «Engineering» to emphasise that there is an art &amp; science
+                and expertise to it.
+              </div>
+              <div class="x-post-date">Feb 4, 2026</div>
+            </div>
+          </div>
+          <aside class="notes">
+            To tweets fra Andrej Karpathy — medgrunnlegger OpenAI, tidligere
+            AI-sjef Tesla. Til venstre: februar 2025, han minter begrepet «vibe
+            coding» — glem at koden eksisterer. Til høyre: ett år senere,
+            «agentic engineering» — du orkestrerer agenter og opptrer som
+            oversight. Merk skiftet: det krever fortsatt ekspertise, men av en
+            annen type.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 3 — Timeline                      ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-teal">
+          <h2>Tidslinjen til kommandolinjen</h2>
+          <div class="timeline">
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Jun 2020</span>
+              GPT-3
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Oct 2021</span>
+              GitHub CoPilot
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Nov 2022</span>
+              ChatGPT
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Mar 2023</span>
+              GPT-4 & Claude
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Jun 2024</span>
+              Multimodal GPT-4o
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Feb 2025</span>
+              Claude Code
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Feb 2025</span>
+              <em>«vibe coding»</em> enters the chat
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Jun 2025</span>
+              Codex
+            </div>
+            <div class="timeline-item fragment">
+              <span class="timeline-date">Feb 2026</span>
+              Agentic engineering (?)
+            </div>
+          </div>
+          <aside class="notes">
+            Her er de grove trekkene på hva som har skjedd. Merk den
+            bemerkelsesverdig korte tidslinjen vi opererer innenfor her. Fra
+            ChatGPT i november 2022 til i dag — det er litt over tre år.
+            Hastigheten er enorm.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 6 — Jevons Paradox                ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-red text-center">
+          <h2>Jevons Paradox</h2>
+          <div class="gap-lg"></div>
+          <h1>
+            &laquo;It is a confusion of ideas to suppose that the economical use
+            of fuel is equivalent to diminished consumption. The very contrary
+            is the truth.&raquo;
+          </h1>
+          <div class="gap"></div>
+          <p class="quote-attribution">— William Stanley Jevons (1865)</p>
+          <aside class="notes">
+            At det blir billigere og lettere å produsere kode, betyr ikke
+            nødvendigvis at vi trenger færre programmerere. Jevons observerte at
+            dampmaskinens effektivitet økte kullforbruket — fordi billigere
+            energi gjorde at folk fant flere bruksområder. Google har også pekt
+            på dette: mer effektiv koding øker etterspørselen etter programvare,
+            ikke omvendt.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 5 — Art & Fear                    ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/pottery.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Art & Fear</h1>
+            <p>Kan vi lære noe av 50 pund keramikk?</p>
+          </div>
+          <aside class="notes">
+            Fra boken «Art &amp; Fear» av David Bayles og Ted Orland. En
+            keramikklærer delte klassen i to grupper: Gruppe A (kvantitet) ble
+            vurdert kun på vekten av keramikken de produserte. 50 pund = A, 40
+            pund = B, osv. Gruppe B (kvalitet) skulle bare lage én vase — den
+            skulle være perfekt for toppkarakter. Resultat? Kvantitetsgruppen
+            laget den klart beste keramikken. Mens kvalitetsgruppen satt og
+            teoretiserte om perfeksjon, lærte kvantitetsgruppen gjennom praksis
+            — de eksperimenterte, feilet, justerte og ble bedre for hver vase.
+            Historien er et sterkt argument for learning by doing, iterativ
+            utvikling, prototyping og MVP-mentalitet. AI-verktøy gir oss
+            muligheten til å iterere raskere enn noensinne. Vi kan «produsere
+            mer keramikk». Men det krever at vi faktisk gjør det. Foto: OANA
+            BUZATU / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 8 — AI commits (Dylan Patel)      ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-teal text-center">
+          <h2>Stadig mer sjekkes inn av AI</h2>
+          <div class="gap-lg"></div>
+          <div class="stat-big">4%</div>
+          <p>
+            av alle offentlige GitHub-commits er skrevet<br />av Claude Code —
+            akkurat nå.
+          </p>
+          <div class="gap"></div>
+          <div class="stat-big fragment">20%+</div>
+          <p class="fragment">forventet innen utgangen av 2026.</p>
+          <div class="gap"></div>
+          <p class="fragment" style="opacity: 0.7; font-size: 0.85em">
+            — Dylan Patel, SemiAnalysis (feb 2026)
+          </p>
+          <aside class="notes">
+            Dylan Patel fra SemiAnalysis delte disse tallene: 4% av alle
+            offentlige GitHub-commits skrives nå av Claude Code alene. Han spår
+            at dette vil overstige 20% innen utgangen av 2026. «While you
+            blinked, AI consumed all of software development.»
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 7 — Spesialist vs Generalist      ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/specialist.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Spesialist vs. Generalist</h1>
+            <p>Mer av begge?</p>
+          </div>
+          <aside class="notes">
+            For noen år siden kunne du drifte en webside med en ensom webmaster,
+            i dag får du til det samme med et lite team på fem personer. Med
+            våre nye verktøy kan en enkeltutvikler bygge ganske omfattende og
+            velfungerende løsninger på egenhånd. SAMTIDIG er kravene til
+            domenekunskap, sikkerhet, design, UU, forvaltning over tid slik at
+            vi ofte trenger tung spesialkompetanse for å bygge det vi reelt sett
+            trenger. Disse to datapunktene er sanne samtidig. Én utvikler kan
+            mer enn noensinne — og vi trenger spesialister mer enn noensinne.
+            Foto: Todd Quackenbush / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 10 — Section: Kritikk             ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-title-center">
+          <div class="section-header">
+            <span class="section-label">Kritikk</span>
+            <h1>Hva skal vi overlate til maskinene?</h1>
+          </div>
+          <aside class="notes">
+            AI er til veldig lite hjelp hvis det blir stående som et verktøy for
+            å gjøre oss dummere. La oss snakke om de kritiske perspektivene.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 11 — Critique image                ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="img-center">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D5622AQF1loVDWFqutg/feedshare-shrink_800/B56Zv6U33yKwAg-/0/1769431334601?e=1772064000&v=beta&t=P60LtQDIWkw1eZl9Sn5_PxC3tPM1D9oRIr3F38SnFmQ"
+              alt="AI og menneskelig tenkning"
+              style="max-height: 520px; border-radius: 12px"
+            />
+          </div>
+          <aside class="notes">
+            AI er til veldig lite hjelp hvis det blir stående som et verktøy for
+            å gjøre oss dummere. Vi må tenke kritisk om hva vi delegerer og hva
+            vi beholder.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 12 — Gorman / Motstemmer           ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="linkedin-embed-wrapper">
+            <iframe
+              src="https://www.linkedin.com/embed/feed/update/urn:li:share:7419632629202960384"
+              height="500"
+              width="504"
+              frameborder="0"
+              allowfullscreen=""
+              title="Embedded post"
+              style="border-radius: 12px"
+            ></iframe>
+          </div>
+          <aside class="notes">
+            Det er viktig å lytte til motstemmene. Ikke all kritikk av AI er
+            luddisme — mye av det er gjennomtenkt og viktig. Vi må ta de beste
+            argumentene fra begge sider.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 13 — Miljø                         ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="img-center">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D4E22AQFS3V9HB9--cA/feedshare-shrink_800/B4EZwfF.95J8Ag-/0/1770048188556?e=1772064000&v=beta&t=0vepBKD_OGGb_arnCgzCgRjvlmrgqJbrFWTmoNldqXc"
+              alt="AI og miljø"
+              style="max-height: 520px; border-radius: 12px"
+            />
+          </div>
+          <aside class="notes">
+            Også er det dette da. Om noe: det viktigste miljøaspektet av vår
+            kode er ikke hvordan vi bygger det, men hva vi bygger. Den virkelige
+            verdien av Kolumbus-teamet vårt er at flere folk i Rogaland tar
+            bussen — for å ta et lavthengende eksempel.
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 14 — Du bruker KI feil             ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/thinking.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <blockquote
+              style="
+                border-left: 4px solid var(--yellow);
+                padding-left: 1em;
+                font-size: 1.5em;
+                max-width: 720px;
+              "
+            >
+              &laquo;<span
+                class="THIS_IS_A_LIE"
+                title="Denne delen av sitatet er funnet opp av Claude!"
+                >KI-verktøyene vi har i dag er kraftige nok til å endre måten vi
+                jobber på. Men de er ikke kraftige nok til å tenke for
+                oss.</span
+              >
+              Du må enten lære å bruke KI som et verktøy for egen tenkning,
+              eller akseptere at andres tenkning, systemer og prioriteringer
+              gradvis vil styre arbeidet ditt.&raquo;
+            </blockquote>
+            <div class="gap"></div>
+            <p style="opacity: 0.8; font-size: 0.85em">
+              &laquo;Du bruker KI feil&raquo; — Silvia Seres i Dagens Næringsliv
+            </p>
+          </div>
+          <aside class="notes">
+            <p>
+              <a
+                href="https://www.dn.no/innlegg/ki/arbeid/teknologi/du-bruker-ki-feil/2-1-1932533"
+                >Du bruker AI Feil</a
+              >
+            </p>
+            <p>
+              Fra en kronikk i DN: «Du bruker KI feil». Hovedpoenget er at
+              KI-verktøy kan enten gjøre deg dummere eller smartere — og
+              forskjellen ligger i hvordan du bruker dem. Bruker du AI som en
+              snarvei for å slippe å tenke, vil andres systemer og
+              prioriteringer gradvis styre arbeidet ditt. Bruker du det som et
+              verktøy for å forsterke din egen tenkning, åpner det enorme
+              muligheter.
+            </p>
+            Foto: Glenn Carstens-Peters / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 15 — Diskusjon                     ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-title-center">
+          <h1>Vi åpner rommet for diskusjon</h1>
+          <div class="gap"></div>
+          <p>Hva tenker dere?</p>
+          <aside class="notes">
+            Åpne for diskusjon. Mulige spørsmål å stille: — Hvordan bruker dere
+            AI i dag? — Hva er dere mest bekymret for? — Hva er dere mest
+            begeistret for? — Hva bør vi gjøre annerledes i Miles?
+          </aside>
+        </div>
+      </section>
+
+      <!-- ╔══════════════════════════════════════════╗ -->
+      <!-- ║  SLIDE 16 — Closing                       ║ -->
+      <!-- ╚══════════════════════════════════════════╝ -->
+      <section class="slide">
+        <div class="slide-inner theme-title-center logo-center">
+          <img src="public/miles-logo-red.svg" alt="Miles" />
+        </div>
+      </section>
+    </div>
+
+    <!-- Progress bar & counter -->
+    <div class="progress"></div>
+    <div class="slide-counter"></div>
+
+    <!-- Scripts -->
+    <script src="public/highlight.min.js"></script>
+    <script src="js/slides.js"></script>
+  </body>
+</html>

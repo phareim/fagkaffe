@@ -9,5 +9,8 @@ set -euo pipefail
 DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PROJECT="${1:-miles-haugesund-fagkaffe}"
 
+# Rebuild the index page
+"$DIR/scripts/build-index.sh"
+
 echo "Deploying $DIR → Cloudflare Pages project: $PROJECT"
 npx wrangler pages deploy "$DIR" --project-name="$PROJECT" --commit-dirty=true
