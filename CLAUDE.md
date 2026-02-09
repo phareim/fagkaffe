@@ -3,6 +3,8 @@
 Single-file HTML presentations styled per the Miles Brand Guide 2026.
 Use the icons and illustrations under the resources directory.
 
+META: as we work and learn, please feel free to jot down notes and thoughts in @NAPKIN.md. it is supposed to be a brain-dump of random thoughts as we work. treat it as such. :END META.
+
 ## Project Structure
 
 ```
