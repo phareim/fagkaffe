@@ -6,16 +6,16 @@ Single-file HTML slide decks styled per the Miles Brand Guide 2026. No build ste
 
 ```bash
 # Create a new presentation
-./scripts/new.sh my-talk
+./presentations/scripts/new.sh my-talk
 
 # Start local dev server
-./scripts/serve.sh
+./presentations/scripts/serve.sh
 
 # Open in browser
 open http://localhost:8080/my-talk.html
 ```
 
-Or just copy `template.html` to a new `.html` file and start editing.
+Or just copy `presentations/template.html` to a new `.html` file and start editing.
 
 ## How It Works
 
@@ -90,14 +90,14 @@ Beyond basic heading + text, the following layout patterns are available:
 ## Deploying
 
 ```bash
-./scripts/deploy.sh              # deploy to Cloudflare Pages
-./scripts/deploy.sh my-project   # custom project name
+./presentations/scripts/deploy.sh              # deploy to Cloudflare Pages
+./presentations/scripts/deploy.sh my-project   # custom project name
 ```
 
 Presentations are then available at `https://<project>.pages.dev/<name>.html`.
 
 ## Brand Reference
 
-The official Miles PowerPoint template (`resources/Miles template 2026.pptx`) was used as the design reference. Brand icons are in `resources/icons/` and illustrations in `resources/illustrations/`.
+The official Miles PowerPoint template (`presentations/resources/Miles template 2026.pptx`) was used as the design reference. Brand icons are in `presentations/resources/icons/` and illustrations in `presentations/resources/illustrations/`.
 
-See `CLAUDE.md` for the full technical reference including all CSS classes, color tokens, and HTML patterns.
+See `presentations/CLAUDE.md` for the full technical reference including all CSS classes, color tokens, and HTML patterns.
