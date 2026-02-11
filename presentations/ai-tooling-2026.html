@@ -106,6 +106,45 @@
     .x-post {
       display: flex;
       flex-direction: column;
+      position: relative;
+    }
+
+    /* ── Timeline with images ── */
+    .timeline-split {
+      display: flex;
+      gap: 3em;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .timeline-split .timeline {
+      flex: 1;
+      margin-top: 0;
+    }
+
+    .timeline-visual {
+      flex: 0 0 380px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timeline-visual img {
+      position: absolute;
+      max-width: 100%;
+      max-height: 420px;
+      border-radius: 12px;
+      object-fit: contain;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      pointer-events: none;
+    }
+
+    .timeline-visual img.tl-visible {
+      opacity: 1;
+      transform: scale(1);
     }
   </style>
 </head>
@@ -155,7 +194,7 @@
               </div>
               <div class="x-post-author">
                 <span class="x-post-name">Andrej Karpathy <span class="x-post-verified"></span></span>
-                <span class="x-post-handle">@karpathy</span>
+                <a href="https://twitter.com/karpathy" target="_blank" class="x-post-handle">@karpathy</a>
               </div>
             </div>
             <div class="x-post-content">
@@ -178,7 +217,7 @@
               </div>
               <div class="x-post-author">
                 <span class="x-post-name">Andrej Karpathy <span class="x-post-verified"></span></span>
-                <span class="x-post-handle">@karpathy</span>
+                <a href="https://twitter.com/karpathy" target="_blank" class="x-post-handle">@karpathy</a>
               </div>
             </div>
             <div class="x-post-content">
@@ -209,43 +248,56 @@
     <!-- ╚══════════════════════════════════════════╝ -->
     <section class="slide">
       <div class="slide-inner theme-teal">
-        <h2>Tidslinjen til kommandolinjen</h2>
-        <div class="timeline">
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Jun 2020</span>
-            GPT-3
+        <h2>Tidslinje mot kommandolinje</h2>
+        <div class="timeline-split">
+          <div class="timeline">
+            <div class="timeline-item fragment" data-tl="0">
+              <span class="timeline-date">Jun 2020</span>
+              GPT-3
+            </div>
+            <div class="timeline-item fragment" data-tl="1">
+              <span class="timeline-date">Oct 2021</span>
+              GitHub CoPilot
+            </div>
+            <div class="timeline-item fragment" data-tl="2">
+              <span class="timeline-date">Nov 2022</span>
+              ChatGPT
+            </div>
+            <div class="timeline-item fragment" data-tl="3">
+              <span class="timeline-date">Mar 2023</span>
+              GPT-4 & Claude
+            </div>
+            <div class="timeline-item fragment" data-tl="4">
+              <span class="timeline-date">Jun 2024</span>
+              Multimodal GPT-4o
+            </div>
+            <div class="timeline-item fragment" data-tl="5">
+              <span class="timeline-date">Feb 2025</span>
+              Claude Code
+            </div>
+            <div class="timeline-item fragment" data-tl="6">
+              <span class="timeline-date">Feb 2025</span>
+              <em>«vibe coding»</em> enters the chat
+            </div>
+            <div class="timeline-item fragment" data-tl="7">
+              <span class="timeline-date">Jun 2025</span>
+              Codex
+            </div>
+            <div class="timeline-item fragment" data-tl="8">
+              <span class="timeline-date">Feb 2026</span>
+              Agentic engineering (?)
+            </div>
           </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Oct 2021</span>
-            GitHub CoPilot
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Nov 2022</span>
-            ChatGPT
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Mar 2023</span>
-            GPT-4 & Claude
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Jun 2024</span>
-            Multimodal GPT-4o
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Feb 2025</span>
-            Claude Code
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Feb 2025</span>
-            <em>«vibe coding»</em> enters the chat
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Jun 2025</span>
-            Codex
-          </div>
-          <div class="timeline-item fragment">
-            <span class="timeline-date">Feb 2026</span>
-            Agentic engineering (?)
+          <div class="timeline-visual">
+            <img data-tl-img="0" src="https://miro.medium.com/1*mhF99YFncF70pSVe5jr76Q.png" alt="GPT-3">
+            <img data-tl-img="1" src="https://github.gallerycdn.vsassets.io/extensions/github/copilotvs/1.206.0.0/1719349649662/Microsoft.VisualStudio.Services.Icons.Default" alt="GitHub Copilot">
+            <img data-tl-img="2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png" alt="ChatGPT">
+            <img data-tl-img="3" src="https://avatars.slack-edge.com/2025-05-14/8891273522918_30c38bf627ac73075db6_512.png" alt="GPT-4 & Claude">
+            <img data-tl-img="4" src="https://wp.technologyreview.com/wp-content/uploads/2024/05/Screenshot-2024-05-13_crop.jpg" alt="GPT-4o">
+            <img data-tl-img="5" src="https://preview.redd.it/whats-claude-code-v0-f1vrmqb645le1.jpeg?width=640&crop=smart&auto=webp&s=054fd333b56291f1dd6d2609fd48ea4db554672b" alt="Claude Code">
+            <img data-tl-img="6" src="https://pbs.twimg.com/media/HAxGMg1aAAE4JYL?format=jpg&name=900x900" alt="Vibe coding">
+            <img data-tl-img="7" src="https://persistent.oaistatic.com/codex/icon.png" alt="Codex">
+            <img data-tl-img="8" src="https://cdn.prod.website-files.com/66fed35d0b50c9d131fccb84/67fe70ec030adf153de1ee83_AD_4nXckQ3JFTVhBe4V_JFUToSvwT3aBXdrwYbh9oK3evBmQgRvp5AgAjhS9JTxRetkmFXQL3BZPjPnJwBhxZPcshITKFMw-ki2r71VFv-4HPMO3MnYbet6tFio7mlojUxg6Bu5kpK9oJA.png" alt="Agentic engineering">
           </div>
         </div>
         <aside class="notes">
@@ -338,7 +390,7 @@
               </div>
               <div class="x-post-author">
                 <span class="x-post-name">Eric S. Raymond <span class="x-post-verified"></span></span>
-                <span class="x-post-handle">@esrtweet</span>
+                <a href="https://twitter.com/esrtweet" target="_blank" class="x-post-handle">@esrtweet</a>
               </div>
             </div>
             <div class="x-post-content">
@@ -352,6 +404,15 @@
                 means rather than an end.</strong>
             </div>
             <div class="x-post-date">Feb 5, 2026</div>
+            <img src="public/esr.png" alt="Eric S. Raymond" style="
+              width: 60px;
+              border-radius: 5px;
+              transform: rotate(-3deg);
+              position: absolute;
+              bottom: -70px;
+              right: 14px;
+              opacity: 0.9;
+            ">
           </div>
           <div class="x-post">
             <div class="x-post-header">
@@ -372,7 +433,7 @@
               </div>
               <div class="x-post-author">
                 <span class="x-post-name">Ryan Dahl <span class="x-post-verified"></span></span>
-                <span class="x-post-handle">@rough__sea</span>
+                <a href="https://twitter.com/rough__sea" target="_blank" class="x-post-handle">@rough__sea</a>
               </div>
             </div>
             <div class="x-post-content">
@@ -384,6 +445,15 @@
               <strong>writing syntax directly is not it.</strong>
             </div>
             <div class="x-post-date">Jan 19, 2026</div>
+            <img src="public/nodejs.png" alt="Ryan Dahl" style="
+              width: 60px;
+              border-radius: 5px;
+              transform: rotate(2.5deg);
+              position: absolute;
+              bottom: -40px;
+              right: 14px;
+              opacity: 0.9;
+            ">
           </div>
         </div>
         <aside class="notes">
@@ -600,6 +670,27 @@
   <!-- Scripts -->
   <script src="public/highlight.min.js"></script>
   <script src="js/slides.js"></script>
+
+  <!-- Timeline image sync -->
+  <script>
+    (function () {
+      const visual = document.querySelector('.timeline-visual');
+      if (!visual) return;
+      const imgs = visual.querySelectorAll('img[data-tl-img]');
+      const observer = new MutationObserver(function () {
+        const visibleItems = document.querySelectorAll('.timeline-item.fragment.visible[data-tl]');
+        const lastIdx = visibleItems.length
+          ? visibleItems[visibleItems.length - 1].dataset.tl
+          : null;
+        imgs.forEach(function (img) {
+          img.classList.toggle('tl-visible', img.dataset.tlImg === lastIdx);
+        });
+      });
+      document.querySelectorAll('.timeline-item.fragment[data-tl]').forEach(function (item) {
+        observer.observe(item, { attributes: true, attributeFilter: ['class'] });
+      });
+    })();
+  </script>
 </body>
 
 </html>
