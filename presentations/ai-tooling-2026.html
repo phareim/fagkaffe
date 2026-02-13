@@ -103,6 +103,28 @@
       margin-top: auto;
     }
 
+    .highlighter {
+      position: relative;
+      display: inline;
+      padding: 0.05em 0.15em;
+      z-index: 0;
+    }
+
+    .highlighter::before {
+      content: "";
+      position: absolute;
+      inset: -2px -4px;
+      z-index: -1;
+      background: var(--yellow);
+      opacity: 0.85;
+      border-radius: 3px 5px 4px 6px;
+      transform: rotate(-0.6deg) skewX(-1.5deg);
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+      mask-size: 100% 100%;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+      -webkit-mask-size: 100% 100%;
+    }
+
     .x-post {
       display: flex;
       flex-direction: column;
@@ -203,7 +225,7 @@
               vibes, embrace exponentials, and forget that the code even
               exists.
             </div>
-            <div class="x-post-date">Feb 2, 2025</div>
+            <div class="x-post-date"><span class="highlighter">Feb 2, 2025</span></div>
           </div>
           <div class="x-post x-post-large">
             <div class="x-post-header">
@@ -229,7 +251,7 @@
               «Engineering» to emphasise that there is an art &amp; science
               and expertise to it.
             </div>
-            <div class="x-post-date">Feb 4, 2026</div>
+            <div class="x-post-date"><span class="highlighter">Feb 4, 2026</span></div>
           </div>
         </div>
         <aside class="notes">
