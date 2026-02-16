@@ -44,7 +44,7 @@ Each presentation is a single `.html` file. All presentations share `styles/`, `
 Every slide follows this pattern:
 
 ```html
-<section class="slide">
+<section class="slide" data-title="Description">
   <div class="slide-inner [theme-class]">
     <!-- content -->
     <aside class="notes">Speaker notes here (hidden during presentation).</aside>
@@ -52,12 +52,7 @@ Every slide follows this pattern:
 </section>
 ```
 
-Use the HTML comment banner for readability:
-```html
-<!-- ╔══════════════════════════════════════════╗ -->
-<!-- ║  SLIDE N — Description                   ║ -->
-<!-- ╚══════════════════════════════════════════╝ -->
-```
+Use `data-title` on the `<section>` to label each slide for readability and navigation.
 
 ## Brand Colors (CSS custom properties)
 
