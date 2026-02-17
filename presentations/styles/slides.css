@@ -923,6 +923,19 @@ figure figcaption {
   align-items: center;
   height: 100%;
   justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+.slide.active .bar-chart-col {
+  animation: bar-slide-up 0.5s ease forwards;
+}
+
+@keyframes bar-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .bar-chart-value {
@@ -970,8 +983,8 @@ figure figcaption {
 .slide-inner:not([class*="theme-"]) .bar-chart-value { color: var(--miles-red); }
 
 /* Theme: white */
-.theme-white .bar-chart-bar { background: var(--miles-red); }
-.theme-white .bar-chart-value { color: var(--miles-red); }
+.theme-white .bar-chart-bar { background: var(--burgundy); }
+.theme-white .bar-chart-value { color: var(--burgundy); }
 
 /* ── Print ────────────────────────────────────── */
 @media print {

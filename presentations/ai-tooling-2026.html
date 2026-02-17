@@ -165,6 +165,227 @@
       opacity: 1;
       transform: scale(1);
     }
+
+    /* ── Code Production Chart (scoped) ── */
+    .cpc {
+      --cpc-bg: #0a0c10;
+      --cpc-surface: #111318;
+      --cpc-border: #1e2230;
+      --cpc-human: #4a9eff;
+      --cpc-ai: #ff6b35;
+      --cpc-ai-glow: rgba(255, 107, 53, 0.3);
+      --cpc-text: #ffffff;
+      --cpc-muted: #ffffff;
+      --cpc-accent: #ffe066;
+      background: var(--cpc-bg);
+      color: var(--cpc-text);
+      font-family: 'DM Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 40px;
+      overflow: hidden;
+    }
+
+    .cpc .grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .cpc .cpc-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cpc header {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .cpc .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cpc-muted);
+      margin-bottom: 8px;
+    }
+
+    .cpc header h1 {
+      font-family: 'Gelica', serif;
+      font-size: clamp(22px, 3vw, 36px);
+      font-weight: 500;
+      line-height: 1.1;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .cpc header h1 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--cpc-accent);
+    }
+
+    .cpc .subtitle {
+      font-size: 11px;
+      color: var(--cpc-muted);
+      line-height: 1.5;
+      max-width: 500px;
+    }
+
+    .cpc .legend {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .cpc .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--cpc-muted);
+    }
+
+    .cpc .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .cpc .legend-line {
+      width: 20px;
+      height: 2px;
+      border-top: 2px dashed;
+      opacity: 0.5;
+    }
+
+    .cpc .chart-wrapper {
+      background: var(--cpc-surface);
+      border: 1px solid var(--cpc-border);
+      border-radius: 4px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .cpc .chart-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, var(--cpc-ai-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cpc canvas {
+      display: block;
+      width: 100% !important;
+    }
+
+    .cpc .forecast-badge {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cpc-accent);
+      border: 1px solid rgba(255, 230, 102, 0.3);
+      padding: 4px 8px;
+      background: rgba(255, 230, 102, 0.05);
+    }
+
+    .cpc .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      margin-top: 1px;
+      background: var(--cpc-border);
+    }
+
+    .cpc .stat-card {
+      background: var(--cpc-surface);
+      padding: 16px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cpc .stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--cpc-human);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+
+    .cpc .stat-card.ai-card::after { background: var(--cpc-ai); }
+    .cpc .stat-card.accent-card::after { background: var(--cpc-accent); }
+    .cpc .stat-card.reveal::after { transform: scaleX(1); }
+
+    .cpc .stat-label {
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cpc-muted);
+      margin-bottom: 4px;
+    }
+
+    .cpc .stat-value {
+      font-family: 'Gelica', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: #ffffff;
+      line-height: 1;
+    }
+
+    .cpc .stat-sub {
+      font-size: 10px;
+      color: var(--cpc-muted);
+      margin-top: 4px;
+    }
+
+    .cpc .cpc-tooltip {
+      position: fixed;
+      background: #1a1e28;
+      border: 1px solid var(--cpc-border);
+      padding: 12px 16px;
+      font-size: 11px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 100;
+      min-width: 180px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .cpc .cpc-tooltip.visible { opacity: 1; }
+    .cpc .cpc-tooltip .tooltip-year { color: var(--cpc-accent); font-size: 13px; margin-bottom: 8px; }
+    .cpc .cpc-tooltip .tooltip-row { display: flex; justify-content: space-between; gap: 16px; color: var(--cpc-muted); }
+    .cpc .cpc-tooltip .tooltip-row span:last-child { color: var(--cpc-text); font-weight: 500; }
+    .cpc .cpc-tooltip .tooltip-forecast {
+      margin-top: 8px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cpc-accent);
+      opacity: 0.7;
+    }
   </style>
 </head>
 
@@ -368,26 +589,27 @@
     <section class="slide" data-title="Lines of Code Produced">
       <div class="slide-inner theme-teal">
         <h2>Kodelinjer produsert globalt per år</h2>
+        <p style="opacity: 0.6; font-size: 0.75em; margin-top: -0.5em">Kilde: Google AI</p>
         <div class="bar-chart">
-          <div class="bar-chart-col fragment">
+          <div class="bar-chart-col" style="animation-delay: 0.1s">
             <div class="bar-chart-value">~100B</div>
             <div class="bar-chart-bar" style="height: 17%"></div>
             <div class="bar-chart-label">2021</div>
             <div class="bar-chart-sub">Før generativ AI; manuell koding</div>
           </div>
-          <div class="bar-chart-col fragment">
+          <div class="bar-chart-col" style="animation-delay: 0.2s">
             <div class="bar-chart-value">~180B</div>
             <div class="bar-chart-bar" style="height: 30%"></div>
             <div class="bar-chart-label">2023</div>
             <div class="bar-chart-sub">Tidlig adopsjon av GitHub Copilot og ChatGPT</div>
           </div>
-          <div class="bar-chart-col fragment">
+          <div class="bar-chart-col" style="animation-delay: 0.3s">
             <div class="bar-chart-value">~256B</div>
             <div class="bar-chart-bar" style="height: 43%"></div>
             <div class="bar-chart-label">2024</div>
             <div class="bar-chart-sub">AI-integrasjon i utviklingsmiljøer (VS Code, Cursor)</div>
           </div>
-          <div class="bar-chart-col fragment">
+          <div class="bar-chart-col" style="animation-delay: 0.4s">
             <div class="bar-chart-value">~600B</div>
             <div class="bar-chart-bar" style="height: 100%"></div>
             <div class="bar-chart-label">2025</div>
@@ -424,6 +646,126 @@
           specific, one-time data task and then discarded. This contributes
           to the high numbers but doesn't necessarily mean the global
           "permanent" codebase is growing at the same rate.
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-title="LOC Added (OpenAI)">
+      <div class="slide-inner theme-white">
+        <h2>Brutto kodelinjer lagt til per år</h2>
+        <p style="opacity: 0.5; font-size: 0.75em; margin-top: -0.5em">Kilde: OpenAI</p>
+        <div class="bar-chart">
+          <div class="bar-chart-col" style="animation-delay: 0.1s">
+            <div class="bar-chart-value">~85</div>
+            <div class="bar-chart-bar" style="height: 35%; background: var(--burgundy)"></div>
+            <div class="bar-chart-label">2021</div>
+            <div class="bar-chart-sub">Modne CI/CD-pipelines</div>
+          </div>
+          <div class="bar-chart-col" style="animation-delay: 0.2s">
+            <div class="bar-chart-value">~140</div>
+            <div class="bar-chart-bar" style="height: 58%; background: var(--burgundy)"></div>
+            <div class="bar-chart-label">2023</div>
+            <div class="bar-chart-sub">AI-assistert koding blir vanlig</div>
+          </div>
+          <div class="bar-chart-col" style="animation-delay: 0.3s">
+            <div class="bar-chart-value">~180</div>
+            <div class="bar-chart-bar" style="height: 75%; background: var(--burgundy)"></div>
+            <div class="bar-chart-label">2024</div>
+            <div class="bar-chart-sub">Copilot i enterprise + gratis-tilgang</div>
+          </div>
+          <div class="bar-chart-col" style="animation-delay: 0.4s">
+            <div class="bar-chart-value">~240</div>
+            <div class="bar-chart-bar" style="height: 100%; background: var(--burgundy)"></div>
+            <div class="bar-chart-label">2025</div>
+            <div class="bar-chart-sub">~1 mrd commits, høy LOC/commit</div>
+          </div>
+        </div>
+        <p style="font-size: 0.75em; opacity: 0.5; margin-top: 0.5em">
+          Milliarder linjer (brutto LOC added). Totalt siden 2015: ca 1,3–1,4 billioner LOC.
+        </p>
+        <aside class="notes">
+          Grovt, konsistent anslag på globale kodelinjer produsert per år
+          (LOC added), basert på GitHub som dominerende proxy og kalibrert
+          mot kjente størrelser (commits/contributions), empiriske studier
+          av LOC per commit, og økende andel maskingenerert kode etter 2022.
+
+          Forutsetninger:
+          — Målt som brutto LOC added (ikke netto etter sletting).
+          — Inkluderer open + private repoer (der GitHub er hovedplattform).
+          — Snitt LOC per commit: 2015–2019: ~40–60 LOC, 2020–2022:
+          ~60–80 LOC, 2023–2026: ~90–150 LOC (AI-effekt + mer
+          scaffolding/generert kode).
+          — Tallene er ordensstørrelse, ikke eksakte målinger.
+
+          Fremskriving: 2027 ~360 mrd, 2028 ~430 mrd, 2029 ~500 mrd,
+          2030 ~600 mrd. LOC mister nesten all styringsverdi.
+        </aside>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Kodeproduksjon 2015–2030">
+      <div class="slide-inner cpc">
+        <div class="grain"></div>
+        <div class="cpc-container">
+          <header>
+            <p class="eyebrow">Dataanalyse &middot; Global utvikling</p>
+            <h1>Kodelinjer produsert per år — med <em>AI-akselerasjon</em></h1>
+            <p class="subtitle">Estimater basert på Github Octoverse, Stack Overflow-rapporter og industriforskning. AI-kategorien inkluderer kode generert og fullført av LLM-verktøy. Kilde: Claude</p>
+          </header>
+
+          <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--cpc-human)"></div> Menneskeskrevet kode</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--cpc-ai)"></div> AI-assistert kode</div>
+            <div class="legend-item"><div class="legend-line" style="border-color:var(--cpc-accent)"></div> Prognose (2026–2030)</div>
+          </div>
+
+          <div class="chart-wrapper">
+            <div class="forecast-badge">Inkl. prognose &rarr;</div>
+            <canvas id="cpc-chart"></canvas>
+          </div>
+
+          <div class="stats" id="cpc-stats">
+            <div class="stat-card">
+              <div class="stat-label">Total 2015</div>
+              <div class="stat-value">~3.7 <span style="font-size:14px;color:var(--cpc-muted)">mrd</span></div>
+              <div class="stat-sub">Milliarder linjer (baseline)</div>
+            </div>
+            <div class="stat-card ai-card">
+              <div class="stat-label">AI-andel 2025</div>
+              <div class="stat-value">~35 <span style="font-size:14px;color:var(--cpc-muted)">%</span></div>
+              <div class="stat-sub">Av all ny kode produsert</div>
+            </div>
+            <div class="stat-card accent-card">
+              <div class="stat-label">Prognose 2028</div>
+              <div class="stat-value">~75 <span style="font-size:14px;color:var(--cpc-muted)">%</span></div>
+              <div class="stat-sub">Estimert AI-andel</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Veksttakt AI-kode</div>
+              <div class="stat-value">~3&times; <span style="font-size:14px;color:var(--cpc-muted)">YoY</span></div>
+              <div class="stat-sub">2023–2025 (gjennomsnitt)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cpc-tooltip" id="cpc-tooltip">
+          <div class="tooltip-year" id="cpc-tt-year"></div>
+          <div class="tooltip-row"><span>Menneskeskrevet</span><span id="cpc-tt-human"></span></div>
+          <div class="tooltip-row"><span>AI-generert</span><span id="cpc-tt-ai"></span></div>
+          <div class="tooltip-row"><span>Totalt</span><span id="cpc-tt-total"></span></div>
+          <div class="tooltip-forecast" id="cpc-tt-forecast"></div>
+        </div>
+
+        <aside class="notes">
+          Metodenotat:
+          — «Kodelinjer» er et upresist mål — inkluderer all ny kode
+          committet/generert, ikke kumulativt.
+          — AI-tall (2022–) basert på GitHub Copilot-data, Amazon
+          CodeWhisperer-rapporter og McKinsey-studier.
+          — 2026+ er modellert scenariobasert: konservativt vs. akselerert
+          AI-adopsjon.
+          — Agentic AI-systemer (2027+) kan endre kurven dramatisk —
+          kode-output pr. utvikler kan 10x-e.
         </aside>
       </div>
     </section>
@@ -791,6 +1133,265 @@
       });
       document.querySelectorAll('.timeline-item.fragment[data-tl]').forEach(function (item) {
         observer.observe(item, { attributes: true, attributeFilter: ['class'] });
+      });
+    })();
+  </script>
+
+  <!-- Code Production Chart -->
+  <script>
+    (function () {
+      const canvas = document.getElementById('cpc-chart');
+      const tooltip = document.getElementById('cpc-tooltip');
+      if (!canvas || !tooltip) return;
+
+      const data = [
+        { year: 2015, human: 3.7,  ai: 0,     forecast: false },
+        { year: 2016, human: 4.0,  ai: 0,     forecast: false },
+        { year: 2017, human: 4.4,  ai: 0,     forecast: false },
+        { year: 2018, human: 4.9,  ai: 0,     forecast: false },
+        { year: 2019, human: 5.5,  ai: 0.05,  forecast: false },
+        { year: 2020, human: 6.1,  ai: 0.1,   forecast: false },
+        { year: 2021, human: 6.8,  ai: 0.3,   forecast: false },
+        { year: 2022, human: 7.2,  ai: 1.2,   forecast: false },
+        { year: 2023, human: 7.5,  ai: 3.8,   forecast: false },
+        { year: 2024, human: 7.8,  ai: 8.5,   forecast: false },
+        { year: 2025, human: 8.0,  ai: 16.0,  forecast: false },
+        { year: 2026, human: 8.2,  ai: 30.0,  forecast: true  },
+        { year: 2027, human: 8.3,  ai: 55.0,  forecast: true  },
+        { year: 2028, human: 8.4,  ai: 95.0,  forecast: true  },
+        { year: 2029, human: 8.5,  ai: 160.0, forecast: true  },
+        { year: 2030, human: 8.6,  ai: 260.0, forecast: true  },
+      ];
+
+      const dpr = window.devicePixelRatio || 1;
+
+      function fmt(val) {
+        if (val < 1) return (val * 1000).toFixed(0) + 'M';
+        if (val >= 100) return val.toFixed(0) + ' mrd';
+        return val.toFixed(1) + ' mrd';
+      }
+
+      function draw() {
+        const wrapper = canvas.parentElement;
+        const rect = wrapper.getBoundingClientRect();
+        const W = rect.width - 48;
+        const H = Math.min(340, rect.height - 48);
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+        const cw = W - pad.left - pad.right;
+        const ch = H - pad.top - pad.bottom;
+
+        const years = data.map(function (d) { return d.year; });
+        var maxVal = 0;
+        data.forEach(function (d) { var t = d.human + d.ai; if (t > maxVal) maxVal = t; });
+        const yMax = Math.ceil(maxVal / 50) * 50;
+
+        function xPos(year) {
+          return pad.left + ((year - years[0]) / (years[years.length - 1] - years[0])) * cw;
+        }
+        function yPos(val) {
+          return pad.top + ch - (val / yMax) * ch;
+        }
+
+        // Forecast zone
+        const forecastStart = data.find(function (d) { return d.forecast; });
+        if (forecastStart) {
+          const fx = xPos(forecastStart.year);
+          ctx.fillStyle = 'rgba(255, 230, 102, 0.04)';
+          ctx.fillRect(fx, pad.top, (W - pad.right) - fx, ch);
+          ctx.strokeStyle = 'rgba(255, 230, 102, 0.2)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([4, 4]);
+          ctx.beginPath();
+          ctx.moveTo(fx, pad.top);
+          ctx.lineTo(fx, pad.top + ch);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.fillStyle = 'rgba(255, 230, 102, 0.5)';
+          ctx.font = '9px DM Mono, monospace';
+          ctx.fillText('PROGNOSE', fx + 6, pad.top + 14);
+        }
+
+        // Grid lines
+        var yTicks = [0, 50, 100, 150, 200, 250];
+        ctx.font = '10px DM Mono, monospace';
+        ctx.textAlign = 'right';
+        yTicks.forEach(function (v) {
+          if (v > yMax) return;
+          var y = yPos(v);
+          ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, y);
+          ctx.lineTo(pad.left + cw, y);
+          ctx.stroke();
+          ctx.fillStyle = '#8a90a0';
+          ctx.fillText(v + ' mrd', pad.left - 8, y + 4);
+        });
+
+        // X axis labels
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#8a90a0';
+        data.forEach(function (d) {
+          if (d.year % 2 === 1) return;
+          ctx.fillText(d.year, xPos(d.year), H - pad.bottom + 20);
+        });
+
+        // Stacked area — AI on top
+        ctx.beginPath();
+        data.forEach(function (d, i) {
+          var x = xPos(d.year), y = yPos(d.human + d.ai);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        for (var i = data.length - 1; i >= 0; i--) {
+          ctx.lineTo(xPos(data[i].year), yPos(data[i].human));
+        }
+        ctx.closePath();
+        var aiGrad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+        aiGrad.addColorStop(0, 'rgba(255, 107, 53, 0.6)');
+        aiGrad.addColorStop(1, 'rgba(255, 107, 53, 0.05)');
+        ctx.fillStyle = aiGrad;
+        ctx.fill();
+
+        // Area: human
+        ctx.beginPath();
+        data.forEach(function (d, i) {
+          var x = xPos(d.year), y = yPos(d.human);
+          if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        });
+        ctx.lineTo(xPos(data[data.length - 1].year), yPos(0));
+        ctx.lineTo(xPos(data[0].year), yPos(0));
+        ctx.closePath();
+        var humanGrad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+        humanGrad.addColorStop(0, 'rgba(74, 158, 255, 0.5)');
+        humanGrad.addColorStop(1, 'rgba(74, 158, 255, 0.05)');
+        ctx.fillStyle = humanGrad;
+        ctx.fill();
+
+        // Line: total
+        ctx.beginPath();
+        data.forEach(function (d, i) {
+          var x = xPos(d.year), y = yPos(d.human + d.ai);
+          if (i === 0) { ctx.moveTo(x, y); return; }
+          var prevX = xPos(data[i - 1].year);
+          var prevY = yPos(data[i - 1].human + data[i - 1].ai);
+          var cpX = (prevX + x) / 2;
+          ctx.bezierCurveTo(cpX, prevY, cpX, y, x, y);
+        });
+        ctx.strokeStyle = '#ff6b35';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Line: human
+        ctx.beginPath();
+        data.forEach(function (d, i) {
+          var x = xPos(d.year), y = yPos(d.human);
+          if (i === 0) { ctx.moveTo(x, y); return; }
+          var prevX = xPos(data[i - 1].year);
+          var prevY = yPos(data[i - 1].human);
+          var cpX = (prevX + x) / 2;
+          ctx.bezierCurveTo(cpX, prevY, cpX, y, x, y);
+        });
+        ctx.strokeStyle = '#4a9eff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // Dots at non-forecast data points
+        data.forEach(function (d) {
+          if (d.forecast) return;
+          var x = xPos(d.year);
+          ctx.beginPath();
+          ctx.arc(x, yPos(d.human + d.ai), 3.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#ff6b35';
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(x, yPos(d.human + d.ai), 5.5, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255, 107, 53, 0.3)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // Axis
+        ctx.strokeStyle = '#1e2230';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, pad.top);
+        ctx.lineTo(pad.left, pad.top + ch);
+        ctx.lineTo(pad.left + cw, pad.top + ch);
+        ctx.stroke();
+
+        canvas._dataPoints = data.map(function (d) {
+          return { year: d.year, human: d.human, ai: d.ai, forecast: d.forecast, x: xPos(d.year), y: yPos(d.human + d.ai) };
+        });
+      }
+
+      // Draw when this slide becomes active, and on resize
+      function initChart() {
+        var slide = canvas.closest('.slide');
+        if (slide && slide.classList.contains('active')) {
+          draw();
+          // Animate stat cards
+          document.querySelectorAll('#cpc-stats .stat-card').forEach(function (el, i) {
+            setTimeout(function () { el.classList.add('reveal'); }, i * 150);
+          });
+        }
+      }
+
+      // Observe slide activation
+      var slide = canvas.closest('.slide');
+      if (slide) {
+        new MutationObserver(function () {
+          if (slide.classList.contains('active')) {
+            draw();
+            document.querySelectorAll('#cpc-stats .stat-card').forEach(function (el, i) {
+              setTimeout(function () { el.classList.add('reveal'); }, i * 150);
+            });
+          }
+        }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      window.addEventListener('resize', function () {
+        if (slide && slide.classList.contains('active')) draw();
+      });
+
+      // Initial draw (in case slide is already active)
+      setTimeout(initChart, 100);
+
+      // Hover tooltip
+      canvas.addEventListener('mousemove', function (e) {
+        var rect = canvas.getBoundingClientRect();
+        var mx = e.clientX - rect.left;
+        var pts = canvas._dataPoints;
+        if (!pts) return;
+
+        var closest = pts[0], minDist = Infinity;
+        pts.forEach(function (p) {
+          var d = Math.abs(p.x - mx);
+          if (d < minDist) { minDist = d; closest = p; }
+        });
+
+        if (minDist > 60) { tooltip.classList.remove('visible'); return; }
+
+        document.getElementById('cpc-tt-year').textContent = closest.year;
+        document.getElementById('cpc-tt-human').textContent = fmt(closest.human);
+        document.getElementById('cpc-tt-ai').textContent = closest.ai > 0 ? fmt(closest.ai) : '\u2014';
+        document.getElementById('cpc-tt-total').textContent = fmt(closest.human + closest.ai);
+        document.getElementById('cpc-tt-forecast').textContent = closest.forecast ? '\u2605 Prognosedata' : '';
+
+        tooltip.style.left = (e.clientX + 16) + 'px';
+        tooltip.style.top = (e.clientY - 40) + 'px';
+        tooltip.classList.add('visible');
+      });
+
+      canvas.addEventListener('mouseleave', function () {
+        tooltip.classList.remove('visible');
       });
     })();
   </script>
