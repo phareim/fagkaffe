@@ -86,14 +86,45 @@
 <html><head><title>Speaker Notes</title>
 <style>
   body { font-family: 'DM Sans', system-ui, sans-serif; padding: 24px;
-         background: #1a1a1a; color: #fbf0e5; line-height: 1.6; }
+         background: #1a1a1a; color: #fbf0e5; line-height: 1.6; margin: 0; }
+  .top-bar { display: flex; justify-content: space-between; align-items: center;
+             padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.1); }
   h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
-       color: #ffd9a1; margin-bottom: 12px; }
-  #notes { font-size: 1.1rem; }
+       color: #ffd9a1; margin: 0; }
+  #timer { font-family: 'DM Mono', monospace; font-size: 1.4rem; color: #78e8db; }
+  #notes { font-size: 1.1rem; padding: 24px; }
+  .timer-controls { display: flex; gap: 8px; align-items: center; }
+  .timer-btn { background: none; border: 1px solid rgba(255,255,255,0.2);
+               color: #fbf0e5; border-radius: 4px; padding: 4px 10px;
+               cursor: pointer; font-size: 0.75rem; font-family: 'DM Sans', system-ui, sans-serif; }
+  .timer-btn:hover { border-color: rgba(255,255,255,0.5); }
 </style>
 </head><body>
-<h2 id="heading">Slide 1 / ${slides.length}</h2>
+<div class="top-bar">
+  <h2 id="heading">Slide 1 / ${slides.length}</h2>
+  <div class="timer-controls">
+    <span id="timer">00:00:00</span>
+    <button class="timer-btn" id="resetBtn">Reset</button>
+  </div>
+</div>
 <div id="notes"></div>
+<script>
+  var startTime = Date.now();
+  var timerEl = document.getElementById('timer');
+  function pad(n) { return n < 10 ? '0' + n : n; }
+  function tick() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    var h = Math.floor(elapsed / 3600);
+    var m = Math.floor((elapsed % 3600) / 60);
+    var s = elapsed % 60;
+    timerEl.textContent = pad(h) + ':' + pad(m) + ':' + pad(s);
+  }
+  setInterval(tick, 1000);
+  document.getElementById('resetBtn').addEventListener('click', function() {
+    startTime = Date.now();
+    tick();
+  });
+</script>
 </body></html>`);
     doc.close();
     updateNotes();
@@ -107,6 +138,24 @@
     if (heading) heading.textContent = 'Slide ' + (current + 1) + ' / ' + slides.length;
     if (notes) notes.innerHTML = getNotesHTML(slides[current]);
   }
+
+  // ── Present Button ──────────────────────────────
+
+  function startPresentation() {
+    document.documentElement.requestFullscreen().catch(() => {});
+    openNotesWindow();
+  }
+
+  (function createPresentButton() {
+    const btn = document.createElement('button');
+    btn.className = 'present-btn';
+    btn.textContent = 'Present';
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      startPresentation();
+    });
+    document.body.appendChild(btn);
+  })();
 
   // ── Keyboard ───────────────────────────────────
 

@@ -386,6 +386,16 @@
       color: var(--cpc-accent);
       opacity: 0.7;
     }
+
+    .bs-sticker {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      width: 280px;
+      z-index: 10;
+      pointer-events: none;
+      --sticker-rotate: -12deg;
+    }
   </style>
 </head>
 
@@ -748,6 +758,8 @@
           </div>
         </div>
 
+        <img class="fragment sticker-slap bs-sticker" src="public/is-this-BS.png" alt="Is this BS?">
+
         <div class="cpc-tooltip" id="cpc-tooltip">
           <div class="tooltip-year" id="cpc-tt-year"></div>
           <div class="tooltip-row"><span>Menneskeskrevet</span><span id="cpc-tt-human"></span></div>
@@ -801,8 +813,8 @@
         </h1>
         <div class="gap"></div>
         <p class="quote-attribution">— William Stanley Jevons (1865)</p>
-        <img class="fragment" src="public/more-research-needed.png" alt="More research needed"
-          style="position:absolute;bottom:60px;right:80px;width:220px;transform:rotate(8deg);filter:drop-shadow(0 4px 12px rgba(0,0,0,0.4));pointer-events:none">
+        <img class="fragment sticker-slap" src="public/more-research-needed.png" alt="More research needed"
+          style="position:absolute;bottom:60px;right:80px;width:280px;pointer-events:none">
         <aside class="notes">
           At det blir billigere og lettere å produsere kode, betyr ikke
           nødvendigvis at vi trenger færre programmerere. Jevons observerte at
