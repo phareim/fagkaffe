@@ -44,7 +44,7 @@ Slides:
     - Credit: Art & Fear – David Bayles og Ted Orland
     - speaker notes: En keramikklærer delte klassen i to: Gruppe A (kvantitet) vurdert på vekt, Gruppe B (kvalitet) laget én perfekt vase. Kvantitetsgruppen laget klart best keramikk — de lærte gjennom praksis, eksperimenterte, feilet og justerte. AI-verktøy gir oss muligheten til å iterere raskere enn noensinne. Men det krever at vi faktisk gjør det.
 
-- Teamarbeid (photo slide — Annie Spratt / Unsplash)
+- Lagarbeid (public/agile-manifesto.jpg — det originale agile manifesto-møtet, Snowbird Utah, februar 2001)
 
 - Lærende organisasjon (photo slide — Element5 Digital / Unsplash)
 
