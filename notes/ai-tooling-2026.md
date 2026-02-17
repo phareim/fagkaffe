@@ -50,12 +50,6 @@ Slides:
 
 - Tilbakemeldingssløyfer (photo slide — Jason Goodman / Unsplash)
 
-- Stemmer fra feltet
-    - Two X-posts: Eric S. Raymond (@esrtweet, Feb 5, 2026) og Ryan Dahl (@rough__sea, Jan 19, 2026)
-    - ESR: «I was always a system designer first, with code only as a means rather than an end»
-    - Dahl: «the era of humans writing code is over. … writing syntax directly is not it»
-    - speaker notes: ESR — forfatter av «The Cathedral and the Bazaar», en av open source-bevegelsens grunnleggere. Ryan Dahl — skaperen av Node.js og Deno. Begge understreker at jobben ikke forsvinner, men endrer karakter fundamentalt.
-
 - [Commented out] AI commits — Dylan Patel / SemiAnalysis: 4% av alle offentlige GitHub-commits skrevet av Claude Code; prognose 20%+ innen utgangen av 2026
 - [Commented out] Spesialist vs Generalist — én utvikler kan mer enn noensinne, og vi trenger spesialister mer enn noensinne. Disse er sanne samtidig.
 - [Commented out] Section: Kritikk — «Hva skal vi overlate til maskinene?»
@@ -69,6 +63,12 @@ Slides:
 
 - Miljø (LinkedIn image about AI og miljø)
     - speaker notes: Også er det dette da. Det viktigste miljøaspektet av vår kode er ikke hvordan vi bygger det, men hva vi bygger. Den virkelige verdien av Kolumbus-teamet vårt er at flere folk i Rogaland tar bussen.
+
+- Stemmer fra feltet
+    - Two X-posts: Eric S. Raymond (@esrtweet, Feb 5, 2026) og Ryan Dahl (@rough__sea, Jan 19, 2026)
+    - ESR: «I was always a system designer first, with code only as a means rather than an end»
+    - Dahl: «the era of humans writing code is over. … writing syntax directly is not it»
+    - speaker notes: ESR — forfatter av «The Cathedral and the Bazaar», en av open source-bevegelsens grunnleggere. Ryan Dahl — skaperen av Node.js og Deno. Begge understreker at jobben ikke forsvinner, men endrer karakter fundamentalt.
 
 - Du bruker KI feil
     - Background: public/thinking.jpg (Glenn Carstens-Peters / Unsplash)
