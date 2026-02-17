@@ -906,6 +906,73 @@ figure figcaption {
   background: rgba(69, 13, 32, 0.06);
 }
 
+/* ── Bar Chart ────────────────────────────────── */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5em;
+  height: 320px;
+  padding: 0 1em;
+  margin-top: 1em;
+}
+
+.bar-chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.bar-chart-value {
+  font-family: 'Gelica', serif;
+  font-weight: 500;
+  font-size: 1.1em;
+  margin-bottom: 0.4em;
+  white-space: nowrap;
+}
+
+.bar-chart-bar {
+  width: 100%;
+  max-width: 120px;
+  border-radius: 6px 6px 0 0;
+  transition: height 0.6s ease;
+  position: relative;
+}
+
+.bar-chart-label {
+  font-size: 0.85em;
+  font-weight: 600;
+  margin-top: 0.6em;
+  text-align: center;
+}
+
+.bar-chart-sub {
+  font-size: 0.65em;
+  opacity: 0.7;
+  margin-top: 0.25em;
+  text-align: center;
+  max-width: 160px;
+  line-height: 1.3;
+}
+
+/* Theme: teal */
+.theme-teal .bar-chart-bar { background: var(--teal); }
+.theme-teal .bar-chart-value { color: var(--teal); }
+
+/* Theme: red */
+.theme-red .bar-chart-bar { background: #fff; }
+.theme-red .bar-chart-value { color: #fff; }
+
+/* Theme: default / cream */
+.slide-inner:not([class*="theme-"]) .bar-chart-bar { background: var(--miles-red); }
+.slide-inner:not([class*="theme-"]) .bar-chart-value { color: var(--miles-red); }
+
+/* Theme: white */
+.theme-white .bar-chart-bar { background: var(--miles-red); }
+.theme-white .bar-chart-value { color: var(--miles-red); }
+
 /* ── Print ────────────────────────────────────── */
 @media print {
   .deck { position: static; }
