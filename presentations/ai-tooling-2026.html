@@ -415,6 +415,68 @@
         opacity: 0.7;
       }
 
+      /* ── Agile Manifesto slide ── */
+      .manifesto-content {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: 64px 80px;
+        color: var(--cream);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .manifesto-content h1 {
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(18vh);
+      }
+
+      .manifesto-content:has(.manifesto-text.visible) h1 {
+        transform: translateY(0);
+      }
+
+      .manifesto-text {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.55s ease 0.4s,
+          transform 0.55s ease 0.4s;
+        max-width: 620px;
+        line-height: 1.6;
+      }
+
+      .manifesto-text.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .manifesto-intro,
+      .manifesto-outro {
+        font-size: 0.8em;
+        opacity: 0.75;
+        margin: 0 0 0.75em;
+      }
+
+      .manifesto-outro {
+        margin: 0.75em 0 0;
+      }
+
+      .manifesto-values {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .manifesto-values li {
+        padding: 0.2em 0;
+        font-size: 0.95em;
+      }
+
+      .manifesto-values .over {
+        opacity: 0.45;
+        font-style: italic;
+      }
+
       .bs-sticker {
         position: absolute;
         bottom: 30px;
@@ -1002,8 +1064,18 @@
             style="background-image: url(&quot;public/agile-manifesto.jpg&quot;); background-position: center 0%"
           ></div>
           <div class="bg-overlay"></div>
-          <div class="bg-content">
+          <div class="bg-content manifesto-content">
             <h1>Lagarbeid</h1>
+            <div class="fragment manifesto-text">
+              <p class="manifesto-intro">We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:</p>
+              <ul class="manifesto-values">
+                <li><strong>Individuals and interactions</strong> <span class="over">over</span> processes and tools</li>
+                <li><strong>Working software</strong> <span class="over">over</span> comprehensive documentation</li>
+                <li><strong>Customer collaboration</strong> <span class="over">over</span> contract negotiation</li>
+                <li><strong>Responding to change</strong> <span class="over">over</span> following a plan</li>
+              </ul>
+              <p class="manifesto-outro">That is, while there is value in the items on the right, we value the items on the left more.</p>
+            </div>
           </div>
           <small
             style="
