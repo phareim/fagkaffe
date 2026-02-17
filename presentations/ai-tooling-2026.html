@@ -415,36 +415,6 @@
         opacity: 0.7;
       }
 
-      /* ── View Transitions ── */
-      /* Global slide cross-fade */
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-        animation-duration: 0.35s;
-        animation-timing-function: ease-in-out;
-      }
-
-      /* Morph manifesto values from slide 11 → 12.
-         Only active when fragment is visible — otherwise plain cross-fade. */
-      .slide.active .manifesto-text.visible .manifesto-values li:nth-child(1),
-      .slide.active .manifesto-left li:nth-child(1) { view-transition-name: manifesto-1; }
-
-      .slide.active .manifesto-text.visible .manifesto-values li:nth-child(2),
-      .slide.active .manifesto-left li:nth-child(2) { view-transition-name: manifesto-2; }
-
-      .slide.active .manifesto-text.visible .manifesto-values li:nth-child(3),
-      .slide.active .manifesto-left li:nth-child(3) { view-transition-name: manifesto-3; }
-
-      .slide.active .manifesto-text.visible .manifesto-values li:nth-child(4),
-      .slide.active .manifesto-left li:nth-child(4) { view-transition-name: manifesto-4; }
-
-      ::view-transition-old(manifesto-1), ::view-transition-new(manifesto-1),
-      ::view-transition-old(manifesto-2), ::view-transition-new(manifesto-2),
-      ::view-transition-old(manifesto-3), ::view-transition-new(manifesto-3),
-      ::view-transition-old(manifesto-4), ::view-transition-new(manifesto-4) {
-        animation-duration: 0.5s;
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
       /* ── Agile Manifesto slide ── */
       .manifesto-content {
         position: absolute;

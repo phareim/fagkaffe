@@ -49,21 +49,13 @@
     updateNotes();
   }
 
-  function navigate(index) {
-    if (document.startViewTransition) {
-      document.startViewTransition(function () { showSlide(index); });
-    } else {
-      showSlide(index);
-    }
-  }
-
   function next() {
     const hidden = hiddenFragments(slides[current]);
     if (hidden.length > 0) {
       hidden[0].classList.add('visible');
       return;
     }
-    navigate(current + 1);
+    showSlide(current + 1);
   }
 
   function prev() {
@@ -72,7 +64,7 @@
       visible[visible.length - 1].classList.remove('visible');
       return;
     }
-    navigate(current - 1);
+    showSlide(current - 1);
   }
 
   // ── Speaker Notes ──────────────────────────────
@@ -184,11 +176,11 @@
         break;
       case 'Home':
         e.preventDefault();
-        navigate(0);
+        showSlide(0);
         break;
       case 'End':
         e.preventDefault();
-        navigate(slides.length - 1);
+        showSlide(slides.length - 1);
         break;
       case 'f':
         if (!e.metaKey && !e.ctrlKey) {
