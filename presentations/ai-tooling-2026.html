@@ -478,8 +478,24 @@
       }
 
       .manifesto-values li {
-        padding: 0.2em 0;
         font-size: 1.05em;
+        padding: 0.2em 0.5em;
+        margin-left: -0.5em;
+        border-radius: 6px;
+        transition:
+          font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+          background 0.2s ease,
+          padding 0.25s ease;
+      }
+
+      .manifesto-values li:hover {
+        font-size: 1.365em; /* 1.05em × 1.3 ≈ 130% of base */
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--burgundy);
+      }
+
+      .manifesto-values li:hover .over {
+        opacity: 0.4;
       }
 
       .manifesto-left {
@@ -499,26 +515,6 @@
         opacity: 0.5;
       }
 
-      .manifesto-left li {
-        transition:
-          font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1),
-          background 0.2s ease,
-          padding 0.25s ease,
-          border-radius 0.2s ease;
-        border-radius: 6px;
-        padding: 0.2em 0.5em;
-        margin-left: -0.5em;
-      }
-
-      .manifesto-left li:hover {
-        font-size: 1.43em; /* 1.1em × 1.3 ≈ 130% of base */
-        background: rgba(255, 255, 255, 0.9);
-        color: var(--burgundy);
-      }
-
-      .manifesto-left li:hover::before {
-        opacity: 0.4;
-      }
 
       .manifesto-values .over {
         opacity: 0.45;
