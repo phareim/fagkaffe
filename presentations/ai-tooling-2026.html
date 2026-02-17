@@ -472,6 +472,23 @@
         font-size: 1.05em;
       }
 
+      .manifesto-left {
+        list-style: none;
+        padding: 0;
+        margin: 1em 0 0;
+      }
+
+      .manifesto-left li {
+        font-size: 1.1em;
+        padding: 0.2em 0;
+        opacity: 0.85;
+      }
+
+      .manifesto-left li::before {
+        content: '→ ';
+        opacity: 0.5;
+      }
+
       .manifesto-values .over {
         opacity: 0.45;
         font-style: italic;
@@ -1106,6 +1123,12 @@
           <div class="bg-overlay"></div>
           <div class="bg-content">
             <h1>Lærende organisasjon</h1>
+            <ul class="manifesto-left">
+              <li>Individuals and interactions</li>
+              <li>Working software</li>
+              <li>Customer collaboration</li>
+              <li>Responding to change</li>
+            </ul>
           </div>
           <aside class="notes">Foto: Element5 Digital / Unsplash</aside>
         </div>
