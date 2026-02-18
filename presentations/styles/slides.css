@@ -94,8 +94,8 @@ html, body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  /* Scale to fill viewport while maintaining 16:9 aspect ratio */
-  scale: min(calc(100vw / 1280), calc(100vh / 720));
+  /* Scale set by JS via transform: scale() */
+  transform-origin: center center;
 }
 
 /* ── Typography ───────────────────────────────── */

@@ -233,6 +233,23 @@
     }
   }
 
+  // ── Scaling ────────────────────────────────────
+
+  const slideInners = Array.from(document.querySelectorAll('.slide-inner'));
+
+  function scaleSlides() {
+    const scale = Math.min(
+      window.innerWidth / 1280,
+      window.innerHeight / 720
+    );
+    slideInners.forEach(function (el) {
+      el.style.transform = 'scale(' + scale + ')';
+    });
+  }
+
+  window.addEventListener('resize', scaleSlides);
+  scaleSlides();
+
   // ── Syntax Highlighting ────────────────────────
 
   if (typeof hljs !== 'undefined') {
