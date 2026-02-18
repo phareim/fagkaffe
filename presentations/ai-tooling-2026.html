@@ -530,6 +530,151 @@
         pointer-events: none;
         --sticker-rotate: -12deg;
       }
+
+      /* ── Agile Team Work slide ── */
+      .agile-cards {
+        display: flex;
+        gap: 2em;
+        flex: 1;
+        align-items: stretch;
+      }
+
+      .agile-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2em 1.5em;
+        border-radius: 16px;
+        text-align: center;
+        background: transparent;
+        transition:
+          flex 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+          background 0.35s ease,
+          color 0.35s ease,
+          opacity 0.35s ease;
+      }
+
+      /* Override fragment hiding — agile cards stay visible */
+      .agile-card.fragment {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .agile-icons {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        margin-bottom: 0.75em;
+      }
+
+      .agile-icon {
+        height: 80px;
+        transition:
+          transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          filter 0.35s ease;
+      }
+
+      .agile-icon-robot {
+        height: 72px;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition:
+          opacity 0.35s ease,
+          width 0.35s ease,
+          filter 0.35s ease;
+      }
+
+      .agile-card.agile-active .agile-icon-robot {
+        opacity: 1;
+        width: 72px;
+      }
+
+      .agile-plus {
+        font-family: "Gelica", serif;
+        font-size: 2.4em;
+        font-weight: 500;
+        opacity: 0;
+        width: 0;
+        margin-right: 0.4em;
+        overflow: hidden;
+        transition:
+          opacity 0.35s ease,
+          width 0.35s ease;
+      }
+
+      .agile-card.agile-active .agile-plus {
+        opacity: 0.7;
+        width: 1em;
+      }
+
+      .agile-card h3 {
+        margin: 0;
+      }
+
+      .agile-heading {
+        display: none;
+      }
+
+      .agile-card.agile-active h3:not(.agile-heading) {
+        display: none;
+      }
+
+      .agile-card.agile-active .agile-heading {
+        display: block;
+        margin-bottom: 0.5em;
+      }
+
+      .agile-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 1em auto 0;
+        text-align: left;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        width: fit-content;
+        transition:
+          max-height 0.5s ease 0.1s,
+          opacity 0.4s ease 0.2s;
+      }
+
+      .agile-bullets li {
+        padding: 0.3em 0;
+        font-size: 0.92em;
+        line-height: 1.5;
+      }
+
+      .agile-bullets li::before {
+        content: "→ ";
+        opacity: 0.5;
+      }
+
+      /* Active card */
+      .agile-card.agile-active {
+        background: var(--burgundy);
+        color: var(--cream);
+        flex: 2;
+        justify-content: flex-start;
+        padding-top: 3em;
+      }
+
+      .agile-card.agile-active .agile-icons .agile-icon {
+        transform: translateY(-8px) scale(1.15);
+        filter: brightness(0) invert(1);
+      }
+
+      .agile-card.agile-active .agile-bullets {
+        max-height: 400px;
+        opacity: 1;
+      }
+
+      /* Dim inactive cards when one is active */
+      .agile-cards:has(.agile-active) .agile-card:not(.agile-active) {
+        opacity: 0.3;
+      }
     </style>
   </head>
 
@@ -1070,37 +1215,6 @@
         </div>
       </section>
 
-      <section class="slide" data-title="Art &amp; Fear">
-        <div class="slide-inner has-bg">
-          <div
-            class="bg"
-            style="background-image: url(&quot;public/pottery.jpg&quot;)"
-          ></div>
-          <div class="bg-overlay"></div>
-          <div class="bg-content">
-            <h1>Kan vi lære noe av 50 pund keramikk?</h1>
-            <p class="quote-attribution">
-              Art & Fear – David Bayles og Ted Orland
-            </p>
-          </div>
-          <aside class="notes">
-            Fra boken «Art &amp; Fear» av David Bayles og Ted Orland. En
-            keramikklærer delte klassen i to grupper: Gruppe A (kvantitet) ble
-            vurdert kun på vekten av keramikken de produserte. 50 pund = A, 40
-            pund = B, osv. Gruppe B (kvalitet) skulle bare lage én vase — den
-            skulle være perfekt for toppkarakter. Resultat? Kvantitetsgruppen
-            laget den klart beste keramikken. Mens kvalitetsgruppen satt og
-            teoretiserte om perfeksjon, lærte kvantitetsgruppen gjennom praksis
-            — de eksperimenterte, feilet, justerte og ble bedre for hver vase.
-            Historien er et sterkt argument for learning by doing, iterativ
-            utvikling, prototyping og MVP-mentalitet. AI-verktøy gir oss
-            muligheten til å iterere raskere enn noensinne. Vi kan «produsere
-            mer keramikk». Men det krever at vi faktisk gjør det. Foto: OANA
-            BUZATU / Unsplash
-          </aside>
-        </div>
-      </section>
-
       <section class="slide" data-title="Lagarbeid">
         <div class="slide-inner has-bg">
           <div
@@ -1139,6 +1253,63 @@
         </div>
       </section>
 
+      <section class="slide" data-title="Agile Team Work">
+        <div class="slide-inner">
+          <div class="agile-cards">
+            <div class="agile-card fragment" data-agile-card="0">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Gjenbruk.svg" class="agile-icon" alt="Continuous delivery">
+              </div>
+              <h3>Continuous delivery</h3>
+              <h3 class="agile-heading">AI + Continuous Delivery</h3>
+              <ul class="agile-bullets">
+                <li>Hurtigere leveranser krever bedre pipeline</li>
+                <li>Agenter inn i review-prosessen</li>
+                <li>Subtile feil krever kortere feedback-loops mot reelle miljø</li>
+                <li>Stil og kodestruktur</li>
+              </ul>
+            </div>
+            <div class="agile-card fragment" data-agile-card="1">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Brukere.svg" class="agile-icon" alt="Cross-functional teams">
+              </div>
+              <h3>Cross-functional teams</h3>
+              <h3 class="agile-heading">AI + Cross-functional Teams</h3>
+              <ul class="agile-bullets">
+                <li>Vurder agenter som en del av teamet</li>
+                <li>Agenter som oversetter mellom domener</li>
+                <li>Agenter som hjelp i onboarding</li>
+              </ul>
+            </div>
+            <div class="agile-card fragment" data-agile-card="2">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Faglig autoritet.svg" class="agile-icon" alt="Continuous learning">
+              </div>
+              <h3>Continuous learning</h3>
+              <h3 class="agile-heading">AI + Continuous Learning</h3>
+              <ul class="agile-bullets">
+                <li>Hold på den menneskelige læringen</li>
+                <li>Agentene skal støtte folka — ikke skape avhengighet</li>
+                <li>Bruk agenter til å lette og fremme eksperimenter med lav risiko</li>
+                <li>Bruk agenter som hjelp til å gjøre kunnskap eksplisitt og strukturert</li>
+              </ul>
+            </div>
+          </div>
+          <aside class="notes">
+            Tre praksiser fra agile — og hva de betyr i en verden med agentic AI. Trykk for å gå gjennom én og én.
+            Delivery: pipeline + agenter i review + kortere feedback-loops.
+            Cross-functional: agenter som teammedlem, oversetterrolle, onboarding.
+            Learning: størst risiko her — ikke la agentene erstatte den menneskelige læringen.
+          </aside>
+        </div>
+      </section>
+
       <section class="slide" data-title="Learning Organization">
         <div class="slide-inner has-bg">
           <div
@@ -1168,15 +1339,66 @@
         <div class="slide-inner has-bg">
           <div
             class="bg"
-            style="
-              background-image: url(&quot;https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070&auto=format&fit=crop&quot;);
-            "
+            style="background-image: url(&quot;public/unsplash/aleksandr-popov-aW50su5Dwek-unsplash.jpg&quot;)"
           ></div>
           <div class="bg-overlay"></div>
           <div class="bg-content">
             <h1>Tilbakemeldingssløyfer</h1>
           </div>
-          <aside class="notes">Foto: Jason Goodman / Unsplash</aside>
+          <small
+            style="
+              position: absolute;
+              bottom: 8px;
+              right: 12px;
+              color: rgba(255, 255, 255, 0.5);
+              font-size: 0.6rem;
+              z-index: 1;
+            "
+            >Photo by
+            <a
+              href="https://unsplash.com/@5tep5?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Aleksandr Popov</a
+            >
+            on
+            <a
+              href="https://unsplash.com/photos/a-roller-coaster-lit-up-at-night-with-red-lights-aW50su5Dwek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Unsplash</a
+            ></small
+          >
+          <aside class="notes">Foto: Aleksandr Popov / Unsplash</aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Art &amp; Fear">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/pottery.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Kan vi lære noe av 50 pund keramikk?</h1>
+            <p class="quote-attribution">
+              Art & Fear – David Bayles og Ted Orland
+            </p>
+          </div>
+          <aside class="notes">
+            Fra boken «Art &amp; Fear» av David Bayles og Ted Orland. En
+            keramikklærer delte klassen i to grupper: Gruppe A (kvantitet) ble
+            vurdert kun på vekten av keramikken de produserte. 50 pund = A, 40
+            pund = B, osv. Gruppe B (kvalitet) skulle bare lage én vase — den
+            skulle være perfekt for toppkarakter. Resultat? Kvantitetsgruppen
+            laget den klart beste keramikken. Mens kvalitetsgruppen satt og
+            teoretiserte om perfeksjon, lærte kvantitetsgruppen gjennom praksis
+            — de eksperimenterte, feilet, justerte og ble bedre for hver vase.
+            Historien er et sterkt argument for learning by doing, iterativ
+            utvikling, prototyping og MVP-mentalitet. AI-verktøy gir oss
+            muligheten til å iterere raskere enn noensinne. Vi kan «produsere
+            mer keramikk». Men det krever at vi faktisk gjør det. Foto: OANA
+            BUZATU / Unsplash
+          </aside>
         </div>
       </section>
 
@@ -1489,6 +1711,15 @@
         </div>
       </section>
 
+      <section class="slide" data-title="Meanwhile...">
+        <div class="slide-inner photo-full">
+          <div class="photo-grid grid-2x2" style="grid-template-columns: 1fr 1fr; grid-template-rows: 1fr;">
+            <img src="public/crazy-guy.jpeg" alt="Crazy guy">
+            <img src="public/internett-er-en-flopp.jpg" alt="Internett er en flopp">
+          </div>
+        </div>
+      </section>
+
       <section class="slide" data-title="Diskusjon">
         <div class="slide-inner theme-title-center">
           <h1>Your thoughts?</h1>
@@ -1514,6 +1745,35 @@
     <!-- Scripts -->
     <script src="public/highlight.min.js"></script>
     <script src="js/slides.js"></script>
+
+    <!-- Agile cards: one-at-a-time highlight -->
+    <script>
+      (function () {
+        const cards = document.querySelectorAll('.agile-card[data-agile-card]');
+        if (!cards.length) return;
+        var updating = false;
+
+        function updateActive() {
+          if (updating) return;
+          updating = true;
+          var lastVisible = null;
+          cards.forEach(function (c) {
+            if (c.classList.contains('visible')) lastVisible = c;
+          });
+          cards.forEach(function (c) {
+            c.classList.toggle('agile-active', c === lastVisible);
+          });
+          updating = false;
+        }
+
+        cards.forEach(function (card) {
+          new MutationObserver(updateActive).observe(card, {
+            attributes: true,
+            attributeFilter: ['class'],
+          });
+        });
+      })();
+    </script>
 
     <!-- Timeline image sync -->
     <script>
