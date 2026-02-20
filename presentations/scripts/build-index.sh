@@ -10,7 +10,7 @@ OUT="$DIR/index.html"
 files=()
 for f in "$DIR"/*.html; do
   base="$(basename "$f")"
-  [[ "$base" == "template.html" || "$base" == "index.html" ]] && continue
+  [[ "$base" == "template.html" || "$base" == "index.html" || "$base" == "admin.html" || "$base" == "poll.html" ]] && continue
   files+=("$f")
 done
 
