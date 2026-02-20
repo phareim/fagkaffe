@@ -245,28 +245,6 @@
     <p class="section-title">Sesjoner</p>
     <div id="sessions-list"><p class="empty">Laster...</p></div>
 
-    <hr class="divider">
-
-    <!-- Add poll form -->
-    <div class="card" id="add-poll-card" style="display:none">
-      <p class="section-title">Legg til avstemning</p>
-      <div class="form-row">
-        <label>Sesjon</label>
-        <input type="text" id="poll-session-display" disabled />
-      </div>
-      <div class="form-row">
-        <label for="poll-question">Spørsmål</label>
-        <textarea id="poll-question" rows="3" placeholder="Skriv spørsmålet her..."></textarea>
-      </div>
-      <div class="form-row">
-        <label for="poll-options">Svaralternativer (ett per linje)</label>
-        <textarea id="poll-options" rows="3" placeholder="Ja&#10;Nei"></textarea>
-      </div>
-      <div class="actions">
-        <button class="btn btn-teal" id="add-poll-btn">Legg til avstemning</button>
-        <button class="btn btn-outline" id="cancel-poll-btn">Avbryt</button>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -276,7 +254,6 @@
 (function () {
   const BASE = '';
   let token = sessionStorage.getItem('admin_token') || '';
-  let selectedSessionId = null;
   let pollRefreshTimers = {};
 
   // ── Auth ────────────────────────────────────────
@@ -370,7 +347,6 @@
         <button class="btn btn-outline toggle-session-btn" data-status="${s.status}">
           ${s.status === 'open' ? 'Lukk sesjon' : 'Åpne sesjon'}
         </button>
-        <button class="btn btn-teal add-poll-btn">+ Avstemning</button>
       </div>
       <div class="polls-container"></div>
     `;
@@ -380,10 +356,6 @@
       await api('PATCH', `/api/admin/sessions/${s.id}`, { status: newStatus });
       toast(newStatus === 'open' ? 'Sesjon åpnet' : 'Sesjon lukket');
       loadSessions();
-    });
-
-    card.querySelector('.add-poll-btn').addEventListener('click', () => {
-      showAddPollForm(s);
     });
 
     loadPolls(s.id, card.querySelector('.polls-container'));
@@ -492,48 +464,6 @@
     toast(newStatus === 'open' ? 'Avstemning åpnet' : 'Avstemning lukket');
     loadSessions();
   };
-
-  // ── Add poll form ─────────────────────────────────
-
-  function showAddPollForm(session) {
-    selectedSessionId = session.id;
-    const card = document.getElementById('add-poll-card');
-    card.style.display = 'block';
-    document.getElementById('poll-session-display').value = session.label || session.id;
-    document.getElementById('poll-question').value = '';
-    document.getElementById('poll-options').value = 'Ja\nNei';
-    card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  document.getElementById('cancel-poll-btn').addEventListener('click', () => {
-    document.getElementById('add-poll-card').style.display = 'none';
-    selectedSessionId = null;
-  });
-
-  document.getElementById('add-poll-btn').addEventListener('click', async () => {
-    const question = document.getElementById('poll-question').value.trim();
-    const optionsRaw = document.getElementById('poll-options').value;
-    const options = optionsRaw.split('\n').map(s => s.trim()).filter(Boolean);
-
-    if (!question || options.length < 2) {
-      toast('Fyll ut spørsmål og minst 2 svaralternativer.');
-      return;
-    }
-    if (!selectedSessionId) return;
-
-    try {
-      await api('POST', '/api/admin/polls', {
-        session_id: selectedSessionId,
-        question,
-        options,
-      });
-      toast('Avstemning lagt til!');
-      document.getElementById('add-poll-card').style.display = 'none';
-      loadSessions();
-    } catch {
-      toast('Feil ved lagring. Prøv igjen.');
-    }
-  });
 
   // ── Controls ──────────────────────────────────────
 

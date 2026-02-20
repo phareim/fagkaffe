@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS sessions (
 CREATE TABLE IF NOT EXISTS polls (
   id TEXT PRIMARY KEY,
   session_id TEXT NOT NULL,
+  slug TEXT,                    -- stable identifier from slide data-poll attr
   question TEXT NOT NULL,
   options TEXT NOT NULL,        -- JSON array: ["Ja","Nei"]
   type TEXT DEFAULT 'binary',   -- 'binary' | 'multiple_choice'
@@ -20,6 +21,8 @@ CREATE TABLE IF NOT EXISTS polls (
   created_at INTEGER NOT NULL,
   FOREIGN KEY (session_id) REFERENCES sessions(id)
 );
+
+CREATE UNIQUE INDEX IF NOT EXISTS polls_session_slug ON polls(session_id, slug);
 
 CREATE TABLE IF NOT EXISTS votes (
   id TEXT PRIMARY KEY,

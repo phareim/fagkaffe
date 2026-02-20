@@ -263,40 +263,38 @@
   const POLL_BASE_URL = location.origin;
 
   let pollInterval = null;
+  const pollUUIDs = new Map(); // slug → uuid (cached after first register call)
 
-  function getPollId(slide) {
+  function getPollSlug(slide) {
     return slide.dataset.poll || null;
   }
 
-  function injectPollUI(slide, pollId) {
+  function injectPollUI(slide, slug) {
     const inner = slide.querySelector('.slide-inner');
-    if (!inner) return;
-    if (inner.querySelector('.poll-widget')) return; // already injected
+    if (!inner || inner.querySelector('.poll-widget')) return;
 
-    // Build the QR target URL
     const pollUrl = `${POLL_BASE_URL}/poll?p=${encodeURIComponent(PRESENTATION_SLUG)}`;
 
     const widget = document.createElement('div');
     widget.className = 'poll-widget';
     widget.innerHTML = `
       <div class="poll-qr-col">
-        <div class="poll-qr-box" id="poll-qr-${pollId}"></div>
+        <div class="poll-qr-box" id="poll-qr-${slug}"></div>
         <p class="poll-qr-url">${POLL_BASE_URL.replace(/^https?:\/\//, '')}/poll</p>
       </div>
       <div class="poll-results-col">
         <p class="poll-results-label">Live resultater</p>
-        <div class="poll-bars" id="poll-bars-${pollId}">
+        <div class="poll-bars" id="poll-bars-${slug}">
           <p class="poll-loading">Venter på stemmer...</p>
         </div>
-        <p class="poll-total" id="poll-total-${pollId}">0 stemmer</p>
+        <p class="poll-total" id="poll-total-${slug}">0 stemmer</p>
       </div>
     `;
     inner.appendChild(widget);
 
-    // Generate QR code after DOM insertion
     if (typeof QRCode !== 'undefined') {
       try {
-        new QRCode(document.getElementById(`poll-qr-${pollId}`), {
+        new QRCode(document.getElementById(`poll-qr-${slug}`), {
           text: pollUrl,
           width: 180,
           height: 180,
@@ -308,13 +306,13 @@
     }
   }
 
-  async function fetchAndRenderResults(pollId) {
-    const barsEl = document.getElementById(`poll-bars-${pollId}`);
-    const totalEl = document.getElementById(`poll-total-${pollId}`);
+  async function fetchAndRenderResults(uuid, slug) {
+    const barsEl = document.getElementById(`poll-bars-${slug}`);
+    const totalEl = document.getElementById(`poll-total-${slug}`);
     if (!barsEl) return;
 
     try {
-      const res = await fetch(`/api/results?poll_id=${encodeURIComponent(pollId)}`);
+      const res = await fetch(`/api/results?poll_id=${encodeURIComponent(uuid)}`);
       if (!res.ok) return;
       const data = await res.json();
 
@@ -346,10 +344,10 @@
       .replace(/>/g, '&gt;');
   }
 
-  function startPollRefresh(pollId) {
+  function startPollRefresh(uuid, slug) {
     stopPollRefresh();
-    fetchAndRenderResults(pollId);
-    pollInterval = setInterval(() => fetchAndRenderResults(pollId), 3000);
+    fetchAndRenderResults(uuid, slug);
+    pollInterval = setInterval(() => fetchAndRenderResults(uuid, slug), 3000);
   }
 
   function stopPollRefresh() {
@@ -359,6 +357,44 @@
     }
   }
 
+  async function registerAndStartPoll(slide, slug) {
+    injectPollUI(slide, slug);
+
+    // Use cached UUID on revisit — skip re-registration
+    if (pollUUIDs.has(slug)) {
+      startPollRefresh(pollUUIDs.get(slug), slug);
+      return;
+    }
+
+    // Read question from the first h2 inside slide-inner
+    const inner = slide.querySelector('.slide-inner');
+    const h2 = inner && inner.querySelector('h2');
+    const question = h2 ? h2.textContent.trim() : slug;
+
+    // Parse options from data-poll-options attribute
+    let options;
+    try {
+      options = JSON.parse(slide.dataset.pollOptions || '[]');
+    } catch (e) {
+      options = [];
+    }
+
+    if (options.length < 2) return;
+
+    try {
+      const res = await fetch('/api/polls/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ presentation: PRESENTATION_SLUG, slug, question, options }),
+      });
+      if (!res.ok) return;
+      const poll = await res.json();
+      if (!poll || !poll.id) return;
+      pollUUIDs.set(slug, poll.id);
+      startPollRefresh(poll.id, slug);
+    } catch (e) { /* network error — silently ignore */ }
+  }
+
   // Patch showSlide to handle poll activation/deactivation
   (function patchShowSlide() {
     const origShowSlide = showSlide;
@@ -366,10 +402,9 @@
       origShowSlide(index);
       stopPollRefresh();
       const slide = slides[current];
-      const pollId = getPollId(slide);
-      if (pollId) {
-        injectPollUI(slide, pollId);
-        startPollRefresh(pollId);
+      const slug = getPollSlug(slide);
+      if (slug) {
+        registerAndStartPoll(slide, slug);
       }
     };
   })();

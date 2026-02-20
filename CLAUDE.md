@@ -479,17 +479,21 @@ Audience members scan a QR code → `https://<project>.pages.dev/poll?p=<slug>` 
 ### Poll slide syntax
 
 ```html
-<section class="slide" data-title="Avstemning" data-poll="my-poll-id">
+<section class="slide" data-title="Avstemning" data-poll="my-poll-slug"
+         data-poll-options='["Ja","Nei"]'>
   <div class="slide-inner theme-teal">
-    <h2>Question text here.</h2>
+    <h2>Question text here — read automatically as the poll question.</h2>
     <aside class="notes">Scan-to-vote. Wait for results before advancing.</aside>
   </div>
 </section>
 ```
 
-- `data-poll` on the `<section>` triggers auto-injection of a QR code + live bar chart.
-- The poll ID must match what was created in the admin panel.
-- `public/qrcode.min.js` and `js/slides.js` handle everything automatically.
+- `data-poll` = stable slug (identity key, scoped per session)
+- `data-poll-options` = JSON array of answer strings
+- Question is read from the first `<h2>` inside `.slide-inner`
+- Slide body is free-form HTML — images, custom layout, anything
+- When the presenter enters the slide, `slides.js` auto-registers the poll against the active session and starts live result polling — no manual admin setup needed
+- On revisit, UUID is cached — no second register call
 
 ### Setup (one-time per deployment)
 
@@ -505,7 +509,7 @@ wrangler d1 execute fag-kaffe-polls --file=presentations/schema.sql
 1. Open `https://<project>.pages.dev/admin`
 2. Enter admin token (stored in sessionStorage).
 3. Select presentation slug → Create new session → name it (e.g. "Haugesund feb 2026").
-4. Add polls matching the `data-poll` IDs used in your slides (question + options on separate lines).
+4. Polls are created automatically when the presenter navigates to a poll slide — no manual setup needed.
 
 ### Admin panel: `presentations/admin.html`
 ### Mobile vote page: `presentations/poll.html`
