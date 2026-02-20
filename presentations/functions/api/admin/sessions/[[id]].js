@@ -1,5 +1,6 @@
-// GET  /api/admin/sessions?presentation=ai-agile  — list sessions with vote tallies
-// POST /api/admin/sessions                        — create a session
+// GET  /api/admin/sessions?presentation=...  — list sessions with tallies
+// POST /api/admin/sessions                   — create a session
+// PATCH /api/admin/sessions/:id              — open or close a session
 
 function requireAdmin(request, env) {
   const auth = request.headers.get('Authorization') || '';
@@ -32,7 +33,6 @@ export async function onRequestGet({ request, env }) {
     `SELECT * FROM sessions WHERE presentation = ? ORDER BY created_at DESC`
   ).bind(presentation).all();
 
-  // Attach poll count and vote count to each session
   const enriched = await Promise.all(sessions.map(async (s) => {
     const { results: polls } = await env.DB.prepare(
       `SELECT id FROM polls WHERE session_id = ?`
@@ -76,4 +76,33 @@ export async function onRequestPost({ request, env }) {
 
   const session = await env.DB.prepare(`SELECT * FROM sessions WHERE id = ?`).bind(id).first();
   return json(session, 201);
+}
+
+export async function onRequestPatch({ request, env, params }) {
+  const denied = requireAdmin(request, env);
+  if (denied) return denied;
+
+  // params.id is an array from the [[id]] catch-all: ['uuid'] or undefined
+  const id = params.id && params.id[0];
+  if (!id) return json({ error: 'Missing session ID' }, 400);
+
+  let body;
+  try { body = await request.json(); } catch { return json({ error: 'Invalid JSON' }, 400); }
+
+  const { status } = body;
+  if (!['open', 'closed'].includes(status)) {
+    return json({ error: 'status must be open or closed' }, 400);
+  }
+
+  const now = Date.now();
+  const closedAt = status === 'closed' ? now : null;
+
+  await env.DB.prepare(
+    `UPDATE sessions SET status = ?, closed_at = ? WHERE id = ?`
+  ).bind(status, closedAt, id).run();
+
+  const session = await env.DB.prepare(`SELECT * FROM sessions WHERE id = ?`).bind(id).first();
+  if (!session) return json({ error: 'Session not found' }, 404);
+
+  return json(session);
 }
