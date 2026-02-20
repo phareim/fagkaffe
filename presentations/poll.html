@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Avstemning — Miles Fagkaffe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --miles-red: #ff303b;
+      --deep-red: #b72318;
+      --burgundy: #450d20;
+      --cream: #fbf0e5;
+      --yellow: #ffd9a1;
+      --dark-teal: #004047;
+      --teal: #78e8db;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--dark-teal);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .logo {
+      width: 100px;
+      margin-bottom: 32px;
+      opacity: 0.85;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 32px 28px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .poll-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    .question {
+      font-size: 1.4rem;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 32px;
+      color: var(--cream);
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .option-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: var(--cream);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 18px 24px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .option-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: var(--teal);
+    }
+    .option-btn:active {
+      transform: scale(0.97);
+    }
+    .option-btn.selected {
+      background: var(--miles-red);
+      border-color: var(--miles-red);
+    }
+    .confirmation {
+      display: none;
+      text-align: center;
+      padding: 8px 0;
+    }
+    .confirmation .check {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+    .confirmation h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--teal);
+    }
+    .confirmation p {
+      font-size: 1rem;
+      opacity: 0.75;
+    }
+    .status-msg {
+      margin-top: 20px;
+      font-size: 0.9rem;
+      opacity: 0.6;
+      min-height: 1.2em;
+    }
+    .loading {
+      text-align: center;
+      opacity: 0.6;
+      font-size: 1rem;
+    }
+    .error-msg {
+      text-align: center;
+      color: var(--yellow);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    .no-poll {
+      text-align: center;
+      opacity: 0.7;
+    }
+    .no-poll h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <p class="loading">Laster...</p>
+  </div>
+
+  <script>
+    (function () {
+      const BASE = '';
+
+      // Get or create a persistent device ID
+      function getDeviceId() {
+        let id = localStorage.getItem('poll_device_id');
+        if (!id) {
+          id = crypto.randomUUID();
+          localStorage.setItem('poll_device_id', id);
+        }
+        return id;
+      }
+
+      // Get presentation slug from query param
+      function getPresentation() {
+        const p = new URLSearchParams(location.search).get('p');
+        return p || null;
+      }
+
+      const deviceId = getDeviceId();
+      const presentation = getPresentation();
+      const votedPolls = JSON.parse(localStorage.getItem('poll_voted') || '{}');
+
+      function saveVoted(pollId) {
+        votedPolls[pollId] = true;
+        localStorage.setItem('poll_voted', JSON.stringify(votedPolls));
+      }
+
+      async function loadActivePoll() {
+        const app = document.getElementById('app');
+
+        if (!presentation) {
+          app.innerHTML = `<div class="card error-msg"><p>Ingen presentasjon spesifisert.<br>Skann QR-koden fra presentasjonen.</p></div>`;
+          return;
+        }
+
+        let data;
+        try {
+          const res = await fetch(`${BASE}/api/sessions/active?presentation=${encodeURIComponent(presentation)}`);
+          data = await res.json();
+        } catch (e) {
+          app.innerHTML = `<div class="card error-msg"><p>Kunne ikke koble til serveren. Prøv igjen.</p></div>`;
+          return;
+        }
+
+        if (!data.session || data.polls.length === 0) {
+          app.innerHTML = `<div class="card no-poll"><h2>Ingen aktiv avstemning</h2><p>Vent til presentatøren åpner en ny runde.</p></div>`;
+          return;
+        }
+
+        // Find the first open poll
+        const openPolls = data.polls.filter(p => p.status === 'open');
+        if (openPolls.length === 0) {
+          app.innerHTML = `<div class="card no-poll"><h2>Avstemningen er avsluttet</h2><p>Takk for din deltakelse!</p></div>`;
+          return;
+        }
+
+        const poll = openPolls[0];
+        const options = JSON.parse(poll.options);
+        const alreadyVoted = !!votedPolls[poll.id];
+
+        if (alreadyVoted) {
+          renderConfirmation(app, true);
+          return;
+        }
+
+        renderPoll(app, poll, options);
+      }
+
+      function renderPoll(app, poll, options) {
+        const optionButtons = options.map(opt =>
+          `<button class="option-btn" data-answer="${escapeHtml(opt)}">${escapeHtml(opt)}</button>`
+        ).join('');
+
+        app.innerHTML = `
+          <div class="card">
+            <p class="poll-label">Avstemning</p>
+            <p class="question">${escapeHtml(poll.question)}</p>
+            <div class="options" id="options">${optionButtons}</div>
+            <p class="status-msg" id="status"></p>
+          </div>
+        `;
+
+        document.querySelectorAll('.option-btn').forEach(btn => {
+          btn.addEventListener('click', () => vote(poll.id, btn.dataset.answer, app));
+        });
+      }
+
+      async function vote(pollId, answer, app) {
+        const statusEl = document.getElementById('status');
+        const buttons = document.querySelectorAll('.option-btn');
+
+        buttons.forEach(b => {
+          b.disabled = true;
+          if (b.dataset.answer === answer) b.classList.add('selected');
+        });
+        if (statusEl) statusEl.textContent = 'Sender...';
+
+        try {
+          const res = await fetch(`${BASE}/api/vote`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ poll_id: pollId, device_id: deviceId, answer }),
+          });
+          const data = await res.json();
+
+          if (data.ok || data.already_voted) {
+            saveVoted(pollId);
+            renderConfirmation(app, data.already_voted);
+          } else {
+            if (statusEl) statusEl.textContent = data.error || 'Noe gikk galt. Prøv igjen.';
+            buttons.forEach(b => { b.disabled = false; b.classList.remove('selected'); });
+          }
+        } catch (e) {
+          if (statusEl) statusEl.textContent = 'Nettverksfeil. Prøv igjen.';
+          buttons.forEach(b => { b.disabled = false; b.classList.remove('selected'); });
+        }
+      }
+
+      function renderConfirmation(app, alreadyVoted) {
+        app.innerHTML = `
+          <div class="card">
+            <div class="confirmation" style="display:block">
+              <div class="check">✓</div>
+              <h2>Takk for svaret!</h2>
+              <p>${alreadyVoted ? 'Du har allerede svart på denne avstemningen.' : 'Stemmen din er registrert.'}</p>
+            </div>
+          </div>
+        `;
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      loadActivePoll();
+    })();
+  </script>
+</body>
+</html>

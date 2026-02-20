@@ -256,6 +256,124 @@
     hljs.highlightAll();
   }
 
+  // ── Poll Slides ────────────────────────────────
+
+  // Derive presentation slug from the HTML filename (e.g. "ai-agile" from "ai-agile.html")
+  const PRESENTATION_SLUG = location.pathname.split('/').pop().replace(/\.html?$/, '') || 'unknown';
+  const POLL_BASE_URL = location.origin;
+
+  let pollInterval = null;
+
+  function getPollId(slide) {
+    return slide.dataset.poll || null;
+  }
+
+  function injectPollUI(slide, pollId) {
+    const inner = slide.querySelector('.slide-inner');
+    if (!inner) return;
+    if (inner.querySelector('.poll-widget')) return; // already injected
+
+    // Build the QR target URL
+    const pollUrl = `${POLL_BASE_URL}/poll?p=${encodeURIComponent(PRESENTATION_SLUG)}`;
+
+    const widget = document.createElement('div');
+    widget.className = 'poll-widget';
+    widget.innerHTML = `
+      <div class="poll-qr-col">
+        <div class="poll-qr-box" id="poll-qr-${pollId}"></div>
+        <p class="poll-qr-url">${POLL_BASE_URL.replace(/^https?:\/\//, '')}/poll</p>
+      </div>
+      <div class="poll-results-col">
+        <p class="poll-results-label">Live resultater</p>
+        <div class="poll-bars" id="poll-bars-${pollId}">
+          <p class="poll-loading">Venter på stemmer...</p>
+        </div>
+        <p class="poll-total" id="poll-total-${pollId}">0 stemmer</p>
+      </div>
+    `;
+    inner.appendChild(widget);
+
+    // Generate QR code after DOM insertion
+    if (typeof QRCode !== 'undefined') {
+      try {
+        new QRCode(document.getElementById(`poll-qr-${pollId}`), {
+          text: pollUrl,
+          width: 180,
+          height: 180,
+          colorDark: '#ffffff',
+          colorLight: '#004047',
+          correctLevel: QRCode.CorrectLevel.M,
+        });
+      } catch (e) { /* ignore */ }
+    }
+  }
+
+  async function fetchAndRenderResults(pollId) {
+    const barsEl = document.getElementById(`poll-bars-${pollId}`);
+    const totalEl = document.getElementById(`poll-total-${pollId}`);
+    if (!barsEl) return;
+
+    try {
+      const res = await fetch(`/api/results?poll_id=${encodeURIComponent(pollId)}`);
+      if (!res.ok) return;
+      const data = await res.json();
+
+      const { options, total, breakdown } = data;
+      if (!options || options.length === 0) return;
+
+      totalEl.textContent = total === 1 ? '1 stemme' : `${total} stemmer`;
+
+      barsEl.innerHTML = options.map(opt => {
+        const count = breakdown[opt] || 0;
+        const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+        return `
+          <div class="poll-bar-row">
+            <span class="poll-bar-label">${escHtml(opt)}</span>
+            <div class="poll-bar-track">
+              <div class="poll-bar-fill" style="width:${pct}%"></div>
+            </div>
+            <span class="poll-bar-pct">${pct}%</span>
+            <span class="poll-bar-count">${count}</span>
+          </div>`;
+      }).join('');
+    } catch (e) { /* network error — silently ignore */ }
+  }
+
+  function escHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function startPollRefresh(pollId) {
+    stopPollRefresh();
+    fetchAndRenderResults(pollId);
+    pollInterval = setInterval(() => fetchAndRenderResults(pollId), 3000);
+  }
+
+  function stopPollRefresh() {
+    if (pollInterval) {
+      clearInterval(pollInterval);
+      pollInterval = null;
+    }
+  }
+
+  // Patch showSlide to handle poll activation/deactivation
+  (function patchShowSlide() {
+    const origShowSlide = showSlide;
+    showSlide = function (index) {
+      origShowSlide(index);
+      stopPollRefresh();
+      const slide = slides[current];
+      const pollId = getPollId(slide);
+      if (pollId) {
+        injectPollUI(slide, pollId);
+        startPollRefresh(pollId);
+      }
+    };
+  })();
+
   // ── Init ───────────────────────────────────────
 
   const hash = parseInt(location.hash.replace('#', ''), 10);

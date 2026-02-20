@@ -1,3 +1,20 @@
+# Current Work
+Active presentation: `notes/ai-agile.md` / `presentations/ai-agile.html`
+
+---
+
+## Slide Style Preferences
+
+- **Full-bleed photos as standalone slides** — used for mood/transition, no text needed
+- **Social embeds as primary content** — X-posts and LinkedIn posts shown as-is, side by side when comparing two voices
+- **"Sticker" fragments** — short, punchy labels (e.g. "Is this BS?", "More research needed") that reveal on click as a wry aside
+- **Substantial speaker notes** — tell the full story there; slides stay sparse
+- **Literary/cultural anchors** — a quote or concept (Jevons, Art & Fear) used to frame an argument, not just decorate
+- **Skepticism built in** — deliberately include counterpoints and critics, not just enthusiasm
+- **Interactive data viz** — charts with hover states and animated stat cards rather than static images
+
+---
+
 # Presentations — Miles Branded Slide Decks
 
 Single-file HTML presentations styled per the Miles Brand Guide 2026.
@@ -454,6 +471,48 @@ Once deployed, presentations are available at:
 - `https://<project>.pages.dev/` (index / overview)
 - `https://<project>.pages.dev/my-talk` (pretty URL, no .html needed)
 - `https://<project>.pages.dev/my-talk#5` (direct link to slide 5)
+
+## Live Polls
+
+Audience members scan a QR code → `https://<project>.pages.dev/poll?p=<slug>` → vote on their phone. Results update live in the slide deck every 3 seconds.
+
+### Poll slide syntax
+
+```html
+<section class="slide" data-title="Avstemning" data-poll="my-poll-id">
+  <div class="slide-inner theme-teal">
+    <h2>Question text here.</h2>
+    <aside class="notes">Scan-to-vote. Wait for results before advancing.</aside>
+  </div>
+</section>
+```
+
+- `data-poll` on the `<section>` triggers auto-injection of a QR code + live bar chart.
+- The poll ID must match what was created in the admin panel.
+- `public/qrcode.min.js` and `js/slides.js` handle everything automatically.
+
+### Setup (one-time per deployment)
+
+```bash
+wrangler d1 create fag-kaffe-polls                              # get database_id
+# → paste it into wrangler.toml  [[d1_databases]] database_id field
+wrangler d1 execute fag-kaffe-polls --file=presentations/schema.sql
+# Set ADMIN_TOKEN in Cloudflare Pages → Settings → Environment variables
+```
+
+### Before each presentation
+
+1. Open `https://<project>.pages.dev/admin`
+2. Enter admin token (stored in sessionStorage).
+3. Select presentation slug → Create new session → name it (e.g. "Haugesund feb 2026").
+4. Add polls matching the `data-poll` IDs used in your slides (question + options on separate lines).
+
+### Admin panel: `presentations/admin.html`
+### Mobile vote page: `presentations/poll.html`
+### Schema: `presentations/schema.sql`
+### API: `presentations/functions/api/` (Cloudflare Pages Functions + D1)
+
+---
 
 ## Conventions for Building Decks
 

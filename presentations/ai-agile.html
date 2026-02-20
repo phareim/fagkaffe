@@ -1,0 +1,2148 @@
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI &amp; Agile</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="styles/highlight-miles.css" />
+
+    <!-- Slides -->
+    <link rel="stylesheet" href="styles/slides.css" />
+
+    <style>
+      .quote-attribution {
+        font-size: 0.85em;
+        opacity: 0.8;
+        margin-top: 0.5em;
+      }
+
+      .stat-big {
+        font-family: "Gelica", serif;
+        font-size: 4em;
+        font-weight: 500;
+        line-height: 1.1;
+        color: var(--miles-red);
+      }
+
+      .theme-teal .stat-big {
+        color: var(--teal);
+      }
+
+      .theme-red .stat-big {
+        color: #fff;
+      }
+
+      .icon-inline {
+        height: 1.4em;
+        vertical-align: middle;
+        margin-right: 0.3em;
+      }
+
+      .linkedin-embed-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+
+      .THIS_IS_A_LIE {
+        position: relative;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        padding: 0 2px;
+      }
+
+      .THIS_IS_A_LIE:hover {
+        background: var(--miles-red);
+        color: #fff;
+      }
+
+      .THIS_IS_A_LIE::before {
+        content: attr(title);
+        position: absolute;
+        bottom: 100%;
+        left: 0;
+        background: var(--miles-red);
+        color: #fff;
+        padding: 0.5em 0.75em;
+        border-radius: 8px;
+        font-size: 0.55em;
+        font-weight: 600;
+        white-space: normal;
+        max-width: 400px;
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          opacity 0.3s ease,
+          transform 0.3s ease;
+        transform: translateY(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      }
+
+      .THIS_IS_A_LIE:hover::before {
+        opacity: 1;
+        transform: translateY(-8px);
+      }
+
+      .x-post-date {
+        text-align: right;
+        margin-top: auto;
+      }
+
+      .highlighter {
+        position: relative;
+        display: inline;
+        padding: 0.05em 0.15em;
+        z-index: 0;
+      }
+
+      .highlighter::before {
+        content: "";
+        position: absolute;
+        inset: -2px -4px;
+        z-index: -1;
+        background: var(--yellow);
+        opacity: 0.85;
+        border-radius: 3px 5px 4px 6px;
+        transform: rotate(-0.6deg) skewX(-1.5deg);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+        mask-size: 100% 100%;
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+        -webkit-mask-size: 100% 100%;
+      }
+
+      .x-post {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+
+      /* ── Timeline with images ── */
+      .timeline-split {
+        display: flex;
+        gap: 3em;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .timeline-split .timeline {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      .timeline-visual {
+        flex: 0 0 380px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .timeline-visual img {
+        position: absolute;
+        max-width: 100%;
+        max-height: 420px;
+        border-radius: 12px;
+        object-fit: contain;
+        opacity: 0;
+        transform: scale(0.96);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+        pointer-events: none;
+      }
+
+      .timeline-visual img.tl-visible {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      /* ── Code Production Chart (scoped) ── */
+      .cpc {
+        --cpc-bg: #0a0c10;
+        --cpc-surface: #111318;
+        --cpc-border: #1e2230;
+        --cpc-human: #4a9eff;
+        --cpc-ai: #ff6b35;
+        --cpc-ai-glow: rgba(255, 107, 53, 0.3);
+        --cpc-text: #ffffff;
+        --cpc-muted: #ffffff;
+        --cpc-accent: #ffe066;
+        background: var(--cpc-bg);
+        color: var(--cpc-text);
+        font-family: "DM Mono", monospace;
+        display: flex;
+        flex-direction: column;
+        padding: 32px 40px;
+        overflow: hidden;
+      }
+
+      .cpc .grain {
+        position: absolute;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .cpc .cpc-container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .cpc header {
+        margin-bottom: 20px;
+        text-align: left;
+      }
+
+      .cpc .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--cpc-muted);
+        margin-bottom: 8px;
+      }
+
+      .cpc header h1 {
+        font-family: "Gelica", serif;
+        font-size: clamp(22px, 3vw, 36px);
+        font-weight: 500;
+        line-height: 1.1;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .cpc header h1 em {
+        font-style: italic;
+        font-weight: 500;
+        color: var(--cpc-accent);
+      }
+
+      .cpc .subtitle {
+        font-size: 11px;
+        color: var(--cpc-muted);
+        line-height: 1.5;
+        max-width: 500px;
+      }
+
+      .cpc .legend {
+        display: flex;
+        gap: 24px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+
+      .cpc .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 11px;
+        color: var(--cpc-muted);
+      }
+
+      .cpc .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .cpc .legend-line {
+        width: 20px;
+        height: 2px;
+        border-top: 2px dashed;
+        opacity: 0.5;
+      }
+
+      .cpc .chart-wrapper {
+        background: var(--cpc-surface);
+        border: 1px solid var(--cpc-border);
+        border-radius: 4px;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        flex: 1;
+        min-height: 0;
+      }
+
+      .cpc .chart-wrapper::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          var(--cpc-ai-glow) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .cpc canvas {
+        display: block;
+        width: 100% !important;
+      }
+
+      .cpc .forecast-badge {
+        position: absolute;
+        top: 24px;
+        right: 24px;
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--cpc-accent);
+        border: 1px solid rgba(255, 230, 102, 0.3);
+        padding: 4px 8px;
+        background: rgba(255, 230, 102, 0.05);
+      }
+
+      .cpc .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        margin-top: 1px;
+        background: var(--cpc-border);
+      }
+
+      .cpc .stat-card {
+        background: var(--cpc-surface);
+        padding: 16px 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .cpc .stat-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--cpc-human);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.6s ease;
+      }
+
+      .cpc .stat-card.ai-card::after {
+        background: var(--cpc-ai);
+      }
+      .cpc .stat-card.accent-card::after {
+        background: var(--cpc-accent);
+      }
+      .cpc .stat-card.reveal::after {
+        transform: scaleX(1);
+      }
+
+      .cpc .stat-label {
+        font-size: 9px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--cpc-muted);
+        margin-bottom: 4px;
+      }
+
+      .cpc .stat-value {
+        font-family: "Gelica", serif;
+        font-size: 24px;
+        font-weight: 500;
+        color: #ffffff;
+        line-height: 1;
+      }
+
+      .cpc .stat-sub {
+        font-size: 10px;
+        color: var(--cpc-muted);
+        margin-top: 4px;
+      }
+
+      .cpc .cpc-tooltip {
+        position: fixed;
+        background: #1a1e28;
+        border: 1px solid var(--cpc-border);
+        padding: 12px 16px;
+        font-size: 11px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.15s;
+        z-index: 100;
+        min-width: 180px;
+        font-family: "DM Mono", monospace;
+      }
+
+      .cpc .cpc-tooltip.visible {
+        opacity: 1;
+      }
+      .cpc .cpc-tooltip .tooltip-year {
+        color: var(--cpc-accent);
+        font-size: 13px;
+        margin-bottom: 8px;
+      }
+      .cpc .cpc-tooltip .tooltip-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        color: var(--cpc-muted);
+      }
+      .cpc .cpc-tooltip .tooltip-row span:last-child {
+        color: var(--cpc-text);
+        font-weight: 500;
+      }
+      .cpc .cpc-tooltip .tooltip-forecast {
+        margin-top: 8px;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--cpc-accent);
+        opacity: 0.7;
+      }
+
+      /* ── Lærende organisasjon: h1 entrance ── */
+      @keyframes slideUpIn {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .slide[data-title="Learning Organization"].active .bg-content h1 {
+        animation: slideUpIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+      }
+
+      /* ── Agile Manifesto slide ── */
+      .manifesto-content {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        padding: 64px 80px;
+        color: var(--cream);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .manifesto-content h1 {
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateY(18vh);
+      }
+
+      .manifesto-content:has(.manifesto-text.visible) h1 {
+        transform: translateY(0);
+      }
+
+      .manifesto-text {
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.55s ease 0.4s,
+          transform 0.55s ease 0.4s;
+        max-width: 620px;
+        line-height: 1.6;
+      }
+
+      .manifesto-text.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .manifesto-intro,
+      .manifesto-outro {
+        font-size: 0.9em;
+        opacity: 0.75;
+        margin: 0 0 0.75em;
+      }
+
+      .manifesto-outro {
+        margin: 0.75em 0 0;
+      }
+
+      .manifesto-values {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .manifesto-values li {
+        font-size: 1.05em;
+        padding: 0.2em 0.5em;
+        margin-left: -0.5em;
+        border-radius: 6px;
+        transition:
+          font-size 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+          background 0.2s ease,
+          padding 0.25s ease;
+      }
+
+      .manifesto-values li:hover {
+        font-size: 1.365em; /* 1.05em × 1.3 ≈ 130% of base */
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--burgundy);
+      }
+
+      .manifesto-values li:hover .over {
+        opacity: 0.4;
+      }
+
+      .manifesto-left {
+        list-style: none;
+        padding: 0;
+        margin: 1em 0 0;
+      }
+
+      .manifesto-left li {
+        font-size: 1.1em;
+        padding: 0.2em 0;
+        opacity: 0.85;
+      }
+
+      .manifesto-left li::before {
+        content: '→ ';
+        opacity: 0.5;
+      }
+
+
+      .manifesto-values .over {
+        opacity: 0.45;
+        font-style: italic;
+      }
+
+      .bs-sticker {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        width: 280px;
+        z-index: 10;
+        pointer-events: none;
+        --sticker-rotate: -12deg;
+      }
+
+      /* ── Agile Team Work slide ── */
+      .agile-cards {
+        display: flex;
+        gap: 2em;
+        flex: 1;
+        align-items: stretch;
+      }
+
+      .agile-card {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2em 1.5em;
+        border-radius: 16px;
+        text-align: center;
+        background: transparent;
+        transition:
+          flex 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+          background 0.35s ease,
+          color 0.35s ease,
+          opacity 0.35s ease;
+      }
+
+      /* Override fragment hiding — agile cards stay visible */
+      .agile-card.fragment {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .agile-icons {
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+        margin-bottom: 0.75em;
+      }
+
+      .agile-icon {
+        height: 80px;
+        transition:
+          transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+          filter 0.35s ease;
+      }
+
+      .agile-icon-robot {
+        height: 72px;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        transition:
+          opacity 0.35s ease,
+          width 0.35s ease,
+          filter 0.35s ease;
+      }
+
+      .agile-card.agile-active .agile-icon-robot {
+        opacity: 1;
+        width: 72px;
+      }
+
+      .agile-plus {
+        font-family: "Gelica", serif;
+        font-size: 2.4em;
+        font-weight: 500;
+        opacity: 0;
+        width: 0;
+        margin-right: 0.4em;
+        overflow: hidden;
+        transition:
+          opacity 0.35s ease,
+          width 0.35s ease;
+      }
+
+      .agile-card.agile-active .agile-plus {
+        opacity: 0.7;
+        width: 1em;
+      }
+
+      .agile-card h3 {
+        margin: 0;
+      }
+
+      .agile-heading {
+        display: none;
+      }
+
+      .agile-card.agile-active h3:not(.agile-heading) {
+        display: none;
+      }
+
+      .agile-card.agile-active .agile-heading {
+        display: block;
+        margin-bottom: 0.5em;
+      }
+
+      .agile-bullets {
+        list-style: none;
+        padding: 0;
+        margin: 1em auto 0;
+        text-align: left;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        width: fit-content;
+        transition:
+          max-height 0.5s ease 0.1s,
+          opacity 0.4s ease 0.2s;
+      }
+
+      .agile-bullets li {
+        padding: 0.3em 0;
+        font-size: 0.92em;
+        line-height: 1.5;
+      }
+
+      .agile-bullets li::before {
+        content: "→ ";
+        opacity: 0.5;
+      }
+
+      /* Active card */
+      .agile-card.agile-active {
+        background: var(--burgundy);
+        color: var(--cream);
+        flex: 2;
+        justify-content: flex-start;
+        padding-top: 3em;
+      }
+
+      .agile-card.agile-active .agile-icons .agile-icon {
+        transform: translateY(-8px) scale(1.15);
+        filter: brightness(0) invert(1);
+      }
+
+      .agile-card.agile-active .agile-bullets {
+        max-height: 400px;
+        opacity: 1;
+      }
+
+      /* Dim inactive cards when one is active */
+      .agile-cards:has(.agile-active) .agile-card:not(.agile-active) {
+        opacity: 0.3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="deck">
+      <section class="slide" data-title="Title">
+        <div class="slide-inner theme-title">
+          <div class="title-header">
+            <h1>AI &amp; Agile</h1>
+            <div class="title-meta">
+              Haugesund<br />
+              Februar 2026
+            </div>
+          </div>
+          <div class="title-logo">
+            <img src="public/miles-logo-red.svg" alt="Miles" />
+          </div>
+          <aside class="notes">
+            Velkommen til fagkaffe! I dag skal vi snakke om AI som verktøy for
+            utviklere — hva som har skjedd, hvor vi er nå, og noen viktige
+            perspektiver vi bør ha med oss.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Avstemning" data-poll="ai-daily-work">
+        <div class="slide-inner theme-teal">
+          <h2>Jeg opplever at mitt daglige arbeid endrer seg vesentlig på grunn av AI.</h2>
+          <aside class="notes">
+            Scan-to-vote. Gir ofte et godt bilde av rommet — og et naturlig utgangspunkt for diskusjonen.
+            Opprett sesjon og poll "ai-daily-work" (Ja/Nei) i admin-panelet før du starter.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Timeline">
+        <div class="slide-inner theme-teal">
+          <div class="timeline-split">
+            <div class="timeline">
+              <div class="timeline-item fragment" data-tl="0">
+                <span class="timeline-date">Jun 2020</span>
+                GPT-3
+              </div>
+              <div class="timeline-item fragment" data-tl="1">
+                <span class="timeline-date">Oct 2021</span>
+                GitHub CoPilot
+              </div>
+              <div class="timeline-item fragment" data-tl="2">
+                <span class="timeline-date">Nov 2022</span>
+                ChatGPT
+              </div>
+              <div class="timeline-item fragment" data-tl="3">
+                <span class="timeline-date">Mar 2023</span>
+                GPT-4 & Claude
+              </div>
+              <div class="timeline-item fragment" data-tl="4">
+                <span class="timeline-date">Jun 2024</span>
+                Multimodal GPT-4o
+              </div>
+              <div class="timeline-item fragment" data-tl="5">
+                <span class="timeline-date">Feb 2025</span>
+                Claude Code
+              </div>
+              <div class="timeline-item fragment" data-tl="6">
+                <span class="timeline-date">Feb 2025</span>
+                <em>«Vibe Coding»</em> enters the chat
+              </div>
+              <div class="timeline-item fragment" data-tl="7">
+                <span class="timeline-date">Jun 2025</span>
+                GPT-5 & Codex
+              </div>
+              <div class="timeline-item fragment" data-tl="8">
+                <span class="timeline-date">Feb 2026</span>
+                Agentic Engineering
+              </div>
+            </div>
+            <div class="timeline-visual">
+              <img
+                data-tl-img="0"
+                src="https://miro.medium.com/1*mhF99YFncF70pSVe5jr76Q.png"
+                alt="GPT-3"
+              />
+              <img
+                data-tl-img="1"
+                src="https://github.gallerycdn.vsassets.io/extensions/github/copilotvs/1.206.0.0/1719349649662/Microsoft.VisualStudio.Services.Icons.Default"
+                alt="GitHub Copilot"
+              />
+              <img
+                data-tl-img="2"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png"
+                alt="ChatGPT"
+              />
+              <img
+                data-tl-img="3"
+                src="https://avatars.slack-edge.com/2025-05-14/8891273522918_30c38bf627ac73075db6_512.png"
+                alt="GPT-4 & Claude"
+              />
+              <img
+                data-tl-img="4"
+                src="https://wp.technologyreview.com/wp-content/uploads/2024/05/Screenshot-2024-05-13_crop.jpg"
+                alt="GPT-4o"
+              />
+              <img
+                data-tl-img="5"
+                src="https://preview.redd.it/whats-claude-code-v0-f1vrmqb645le1.jpeg?width=640&crop=smart&auto=webp&s=054fd333b56291f1dd6d2609fd48ea4db554672b"
+                alt="Claude Code"
+              />
+              <img
+                data-tl-img="6"
+                src="https://pbs.twimg.com/media/HAxGMg1aAAE4JYL?format=jpg&name=900x900"
+                alt="Vibe coding"
+              />
+              <img
+                data-tl-img="7"
+                src="https://persistent.oaistatic.com/codex/icon.png"
+                alt="Codex"
+              />
+              <img
+                data-tl-img="8"
+                src="https://pbs.twimg.com/media/HAZReLhXkAARUzG.jpg"
+                alt="Agentic engineering"
+              />
+            </div>
+          </div>
+          <aside class="notes">
+            Her er de grove trekkene på hva som har skjedd. Merk den
+            bemerkelsesverdig korte tidslinjen vi opererer innenfor her. Fra
+            ChatGPT i november 2022 til i dag — det er litt over tre år.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Karpathy: two tweets">
+        <div class="slide-inner theme-teal text-center">
+          <div class="x-posts-row x-posts-animated">
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/karpathy"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@karpathy</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                There's a new kind of coding I call
+                <strong>«vibe coding»</strong>, where you fully give in to the
+                vibes, embrace exponentials, and forget that the code even
+                exists.
+              </div>
+              <div class="x-post-date">
+                <span class="highlighter">Feb 2, 2025</span>
+              </div>
+            </div>
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/karpathy"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@karpathy</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                My current favourite term:
+                <strong>«agentic engineering»</strong>. «Agentic» because the
+                new default is that you are
+                <strong>not writing the code directly 99% of the time</strong>,
+                you are orchestrating agents who do and acting as oversight.
+                «Engineering» to emphasise that there is an art &amp; science
+                and expertise to it.
+              </div>
+              <div class="x-post-date">
+                <span class="highlighter">Feb 4, 2026</span>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            To tweets fra Andrej Karpathy — medgrunnlegger OpenAI, tidligere
+            AI-sjef Tesla. Til venstre: februar 2025, han minter begrepet «vibe
+            coding» — glem at koden eksisterer. Til høyre: ett år senere,
+            «agentic engineering» — du orkestrerer agenter og opptrer som
+            oversight. Merk skiftet: det krever fortsatt ekspertise, men av en
+            annen type.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lines of code (Google AI)">
+        <div class="slide-inner theme-teal">
+          <img
+            class="fragment sticker-slap bs-sticker"
+            src="public/is-this-BS.png"
+            alt="Is this BS?"
+          />
+          <h2>Brutto kodelinjer pr år</h2>
+          <p style="opacity: 0.6; font-size: 0.75em; margin-top: -0.5em">
+            Kilde: Google AI
+          </p>
+          <div class="bar-chart">
+            <div class="bar-chart-col" style="animation-delay: 0.1s">
+              <div class="bar-chart-value">~100 mrd</div>
+              <div class="bar-chart-bar" style="height: 17%"></div>
+              <div class="bar-chart-label">2021</div>
+              <div class="bar-chart-sub">Før generativ AI; manuell koding</div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.2s">
+              <div class="bar-chart-value">~180 mrd</div>
+              <div class="bar-chart-bar" style="height: 30%"></div>
+              <div class="bar-chart-label">2023</div>
+              <div class="bar-chart-sub">
+                Tidlig adopsjon av GitHub Copilot og ChatGPT
+              </div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.3s">
+              <div class="bar-chart-value">~256 mrd</div>
+              <div class="bar-chart-bar" style="height: 43%"></div>
+              <div class="bar-chart-label">2024</div>
+              <div class="bar-chart-sub">
+                AI-integrasjon i utviklingsmiljøer (VS Code, Cursor)
+              </div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.4s">
+              <div class="bar-chart-value">~600 mrd</div>
+              <div class="bar-chart-bar" style="height: 100%"></div>
+              <div class="bar-chart-label">2025</div>
+              <div class="bar-chart-sub">
+                Autonome AI-agenter og utbredte &laquo;No-Code&raquo;-verktøy
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Where do these numbers come from? GitHub Octoverse Reports: This is
+            the primary source for "Public" code data. GitHub reported over 4
+            billion contributions in 2023. Analysts multiply contribution data
+            by average changes-per-commit to estimate total volume. IDC
+            (International Data Corporation): IDC tracks the "Global Developer
+            Population" and their productivity. They have historically projected
+            a CAGR (Compound Annual Growth Rate) of roughly 20-25% for code
+            production, which has spiked recently due to GenAI. The "AI
+            Multiplier" (Microsoft/Google): In 2024/2025, Google and Microsoft
+            leadership (including Satya Nadella and Thomas Dohmke) highlighted
+            that AI-assisted developers are writing code 55% faster than before.
+            The 2025 jump to 600B+ lines reflects the shift from "human-typed"
+            code to "AI-generated" code. Bitkom and Evans Data Corp: These
+            organizations track the growth of professional developers (roughly
+            27-30 million globally) and their output metrics. A Note on "Ghost"
+            Code: It is important to distinguish between stored code and
+            generated code. In 2025, a massive portion of produced code is
+            "ephemeral" — code generated by an AI to solve a specific, one-time
+            data task and then discarded. This contributes to the high numbers
+            but doesn't necessarily mean the global "permanent" codebase is
+            growing at the same rate.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lines of code (OpenAI)">
+        <div class="slide-inner theme-white">
+          <img
+            class="fragment sticker-slap bs-sticker"
+            src="public/is-this-BS.png"
+            alt="Is this BS?"
+          />
+          <h2>Brutto kodelinjer pr år</h2>
+          <p style="opacity: 0.6; font-size: 0.75em; margin-top: -0.5em">
+            Kilde: OpenAI
+          </p>
+          <div class="bar-chart">
+            <div class="bar-chart-col" style="animation-delay: 0.1s">
+              <div class="bar-chart-value">~85 mrd</div>
+              <div
+                class="bar-chart-bar"
+                style="height: 35%; background: var(--burgundy)"
+              ></div>
+              <div class="bar-chart-label">2021</div>
+              <div class="bar-chart-sub">Modne CI/CD-pipelines</div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.2s">
+              <div class="bar-chart-value">~140 mrd</div>
+              <div
+                class="bar-chart-bar"
+                style="height: 58%; background: var(--burgundy)"
+              ></div>
+              <div class="bar-chart-label">2023</div>
+              <div class="bar-chart-sub">AI-assistert koding blir vanlig</div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.3s">
+              <div class="bar-chart-value">~180 mrd</div>
+              <div
+                class="bar-chart-bar"
+                style="height: 75%; background: var(--burgundy)"
+              ></div>
+              <div class="bar-chart-label">2024</div>
+              <div class="bar-chart-sub">
+                Copilot i enterprise + gratis-tilgang
+              </div>
+            </div>
+            <div class="bar-chart-col" style="animation-delay: 0.4s">
+              <div class="bar-chart-value">~240 mrd</div>
+              <div
+                class="bar-chart-bar"
+                style="height: 100%; background: var(--burgundy)"
+              ></div>
+              <div class="bar-chart-label">2025</div>
+              <div class="bar-chart-sub">~1 mrd commits, høy LOC/commit</div>
+            </div>
+          </div>
+          <aside class="notes">
+            Grovt, konsistent anslag på globale kodelinjer produsert per år (LOC
+            added), basert på GitHub som dominerende proxy og kalibrert mot
+            kjente størrelser (commits/contributions), empiriske studier av LOC
+            per commit, og økende andel maskingenerert kode etter 2022.
+            Forutsetninger: — Målt som brutto LOC added (ikke netto etter
+            sletting). — Inkluderer open + private repoer (der GitHub er
+            hovedplattform). — Snitt LOC per commit: 2015–2019: ~40–60 LOC,
+            2020–2022: ~60–80 LOC, 2023–2026: ~90–150 LOC (AI-effekt + mer
+            scaffolding/generert kode). — Tallene er ordensstørrelse, ikke
+            eksakte målinger. Fremskriving: 2027 ~360 mrd, 2028 ~430 mrd, 2029
+            ~500 mrd, 2030 ~600 mrd. LOC mister nesten all styringsverdi.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lines of code (Claude)">
+        <div class="slide-inner cpc">
+          <div class="grain"></div>
+          <div class="cpc-container">
+            <header>
+              <p class="eyebrow">Dataanalyse &middot; Global utvikling</p>
+              <h1>
+                Kodelinjer produsert per år — med <em>AI-akselerasjon</em>
+              </h1>
+              <p class="subtitle">
+                Estimater basert på Github Octoverse, Stack Overflow-rapporter
+                og industriforskning. AI-kategorien inkluderer kode generert og
+                fullført av LLM-verktøy. Kilde: Claude
+              </p>
+            </header>
+
+            <div class="legend">
+              <div class="legend-item">
+                <div
+                  class="legend-dot"
+                  style="background: var(--cpc-human)"
+                ></div>
+                Menneskeskrevet kode
+              </div>
+              <div class="legend-item">
+                <div class="legend-dot" style="background: var(--cpc-ai)"></div>
+                AI-assistert kode
+              </div>
+              <div class="legend-item">
+                <div
+                  class="legend-line"
+                  style="border-color: var(--cpc-accent)"
+                ></div>
+                Prognose (2026–2030)
+              </div>
+            </div>
+
+            <div class="chart-wrapper">
+              <div class="forecast-badge">Inkl. prognose &rarr;</div>
+              <canvas id="cpc-chart"></canvas>
+            </div>
+
+            <div class="stats" id="cpc-stats">
+              <div class="stat-card">
+                <div class="stat-label">Total 2015</div>
+                <div class="stat-value">
+                  ~3.7
+                  <span style="font-size: 14px; color: var(--cpc-muted)"
+                    >mrd</span
+                  >
+                </div>
+                <div class="stat-sub">Milliarder linjer (baseline)</div>
+              </div>
+              <div class="stat-card ai-card">
+                <div class="stat-label">AI-andel 2025</div>
+                <div class="stat-value">
+                  ~35
+                  <span style="font-size: 14px; color: var(--cpc-muted)"
+                    >%</span
+                  >
+                </div>
+                <div class="stat-sub">Av all ny kode produsert</div>
+              </div>
+              <div class="stat-card accent-card">
+                <div class="stat-label">Prognose 2028</div>
+                <div class="stat-value">
+                  ~75
+                  <span style="font-size: 14px; color: var(--cpc-muted)"
+                    >%</span
+                  >
+                </div>
+                <div class="stat-sub">Estimert AI-andel</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Veksttakt AI-kode</div>
+                <div class="stat-value">
+                  ~3&times;
+                  <span style="font-size: 14px; color: var(--cpc-muted)"
+                    >YoY</span
+                  >
+                </div>
+                <div class="stat-sub">2023–2025 (gjennomsnitt)</div>
+              </div>
+            </div>
+          </div>
+
+          <img
+            class="fragment sticker-slap bs-sticker"
+            src="public/is-this-BS.png"
+            alt="Is this BS?"
+          />
+
+          <div class="cpc-tooltip" id="cpc-tooltip">
+            <div class="tooltip-year" id="cpc-tt-year"></div>
+            <div class="tooltip-row">
+              <span>Menneskeskrevet</span><span id="cpc-tt-human"></span>
+            </div>
+            <div class="tooltip-row">
+              <span>AI-generert</span><span id="cpc-tt-ai"></span>
+            </div>
+            <div class="tooltip-row">
+              <span>Totalt</span><span id="cpc-tt-total"></span>
+            </div>
+            <div class="tooltip-forecast" id="cpc-tt-forecast"></div>
+          </div>
+
+          <aside class="notes">
+            Metodenotat: — «Kodelinjer» er et upresist mål — inkluderer all ny
+            kode committet/generert, ikke kumulativt. — AI-tall (2022–) basert
+            på GitHub Copilot-data, Amazon CodeWhisperer-rapporter og
+            McKinsey-studier. — 2026+ er modellert scenariobasert: konservativt
+            vs. akselerert AI-adopsjon. — Agentic AI-systemer (2027+) kan endre
+            kurven dramatisk — kode-output pr. utvikler kan 10x-e.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Compilers Took My Job">
+        <div class="slide-inner photo-full" style="background: #1a1a1a">
+          <img
+            src="public/compilers-took-my-job.png"
+            alt="Compilers took my job"
+            style="object-fit: contain"
+          />
+        </div>
+      </section>
+
+      <section class="slide" data-title="Coal mining">
+        <div class="slide-inner photo-full">
+          <img
+            src="https://images.unsplash.com/photo-1535535112387-56ffe8db21ff?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="Coal mining"
+          />
+          <small
+            style="
+              position: absolute;
+              bottom: 8px;
+              right: 12px;
+              color: rgba(255, 255, 255, 0.5);
+              font-size: 0.6rem;
+              z-index: 1;
+            "
+            >Photo by
+            <a
+              href="https://unsplash.com/@drc1948?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Denis Chick</a
+            >
+            on
+            <a
+              href="https://unsplash.com/photos/black-and-red-train-passing-through-forest-mHqIs22M2Kw?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Unsplash</a
+            ></small
+          >
+        </div>
+      </section>
+
+      <section class="slide" data-title="Jevons Paradox">
+        <div class="slide-inner theme-red text-center">
+          <h2>Jevons Paradox</h2>
+          <div class="gap-lg"></div>
+          <h1>
+            &laquo;It is a confusion of ideas to suppose that the economical use
+            of fuel is equivalent to diminished consumption. The very contrary
+            is the truth.&raquo;
+          </h1>
+          <div class="gap"></div>
+          <p class="quote-attribution">— William Stanley Jevons (1865)</p>
+          <img
+            class="fragment sticker-slap"
+            src="public/more-research-needed.png"
+            alt="More research needed"
+            style="
+              position: absolute;
+              bottom: 60px;
+              right: 80px;
+              width: 280px;
+              pointer-events: none;
+            "
+          />
+          <aside class="notes">
+            At det blir billigere og lettere å produsere kode, betyr ikke
+            nødvendigvis at vi trenger færre programmerere. Jevons observerte at
+            dampmaskinens effektivitet økte kullforbruket — fordi billigere
+            energi gjorde at folk fant flere bruksområder. Google har også pekt
+            på dette: mer effektiv koding øker etterspørselen etter programvare,
+            ikke omvendt.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Lagarbeid">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/agile-manifesto.jpg&quot;); background-position: center 0%"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content manifesto-content">
+            <h1>Lagarbeid</h1>
+            <div class="fragment manifesto-text">
+              <p class="manifesto-intro">We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:</p>
+              <ul class="manifesto-values">
+                <li><strong>Individuals and interactions</strong> <span class="over">over</span> processes and tools</li>
+                <li><strong>Working software</strong> <span class="over">over</span> comprehensive documentation</li>
+                <li><strong>Customer collaboration</strong> <span class="over">over</span> contract negotiation</li>
+                <li><strong>Responding to change</strong> <span class="over">over</span> following a plan</li>
+              </ul>
+              <p class="manifesto-outro">That is, while there is value in the items on the right, we value the items on the left more.</p>
+            </div>
+          </div>
+          <small
+            style="
+              position: absolute;
+              bottom: 8px;
+              right: 12px;
+              color: rgba(255, 255, 255, 0.5);
+              font-size: 0.6rem;
+              z-index: 1;
+            "
+            >Snowbird, Utah, februar 2001 —
+            <a href="https://agilemanifesto.org" style="color: inherit"
+              >agilemanifesto.org</a
+            ></small
+          >
+          <aside class="notes">Det originale agile manifesto-møtet, Snowbird Utah, februar 2001.</aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Agile Team Work">
+        <div class="slide-inner">
+          <div class="agile-cards">
+            <div class="agile-card fragment" data-agile-card="0">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Gjenbruk.svg" class="agile-icon" alt="Continuous delivery">
+              </div>
+              <h3>Continuous delivery</h3>
+              <h3 class="agile-heading">AI + Continuous Delivery</h3>
+              <ul class="agile-bullets">
+                <li>Hurtigere leveranser krever bedre pipeline</li>
+                <li>Agenter inn i review-prosessen</li>
+                <li>Subtile feil krever kortere feedback-loops mot reelle miljø</li>
+                <li>Stil og kodestruktur</li>
+              </ul>
+            </div>
+            <div class="agile-card fragment" data-agile-card="1">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Brukere.svg" class="agile-icon" alt="Cross-functional teams">
+              </div>
+              <h3>Cross-functional teams</h3>
+              <h3 class="agile-heading">AI + Cross-functional Teams</h3>
+              <ul class="agile-bullets">
+                <li>Vurder agenter som en del av teamet</li>
+                <li>Agenter som oversetter mellom domener</li>
+                <li>Agenter som hjelp i onboarding</li>
+              </ul>
+            </div>
+            <div class="agile-card fragment" data-agile-card="2">
+              <div class="agile-icons">
+                <img src="public/robot-neutral-svgrepo-com.svg" class="agile-icon agile-icon-robot" alt="AI">
+                <span class="agile-plus">+</span>
+                <img src="resources/icons/Faglig autoritet.svg" class="agile-icon" alt="Continuous learning">
+              </div>
+              <h3>Continuous learning</h3>
+              <h3 class="agile-heading">AI + Continuous Learning</h3>
+              <ul class="agile-bullets">
+                <li>Hold på den menneskelige læringen</li>
+                <li>Agentene skal støtte folka — ikke skape avhengighet</li>
+                <li>Bruk agenter til å lette og fremme eksperimenter med lav risiko</li>
+                <li>Bruk agenter som hjelp til å gjøre kunnskap eksplisitt og strukturert</li>
+              </ul>
+            </div>
+          </div>
+          <aside class="notes">
+            Tre praksiser fra agile — og hva de betyr i en verden med agentic AI. Trykk for å gå gjennom én og én.
+            Delivery: pipeline + agenter i review + kortere feedback-loops.
+            Cross-functional: agenter som teammedlem, oversetterrolle, onboarding.
+            Learning: størst risiko her — ikke la agentene erstatte den menneskelige læringen.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Learning Organization">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/boy-in-classroom.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Lærende organisasjon</h1>
+            <ul class="manifesto-left">
+              <li>Individuals and interactions</li>
+              <li>Working software</li>
+              <li>Customer collaboration</li>
+              <li>Responding to change</li>
+            </ul>
+          </div>
+          <aside class="notes">
+            En lærende organisasjon defineres av sin evne til kontinuerlig å lære av egne suksesser og feil, for slik å tilpasse seg endringer i omgivelser og rammebetingelser. Det er en kultur hvor medarbeidere kollektivt utvider sin kapasitet til å skape ønskede resultater, støttet av systemer for kunnskapsdeling, åpenhet og eksperimentering.
+            <br><br>Foto: CDC / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Feedback Loops">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/unsplash/aleksandr-popov-aW50su5Dwek-unsplash.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Tilbakemeldingssløyfer</h1>
+          </div>
+          <small
+            style="
+              position: absolute;
+              bottom: 8px;
+              right: 12px;
+              color: rgba(255, 255, 255, 0.5);
+              font-size: 0.6rem;
+              z-index: 1;
+            "
+            >Photo by
+            <a
+              href="https://unsplash.com/@5tep5?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Aleksandr Popov</a
+            >
+            on
+            <a
+              href="https://unsplash.com/photos/a-roller-coaster-lit-up-at-night-with-red-lights-aW50su5Dwek?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+              style="color: inherit"
+              >Unsplash</a
+            ></small
+          >
+          <aside class="notes">Foto: Aleksandr Popov / Unsplash</aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Art &amp; Fear">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/pottery.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Kan vi lære noe av 50 pund keramikk?</h1>
+            <p class="quote-attribution">
+              Art & Fear – David Bayles og Ted Orland
+            </p>
+          </div>
+          <aside class="notes">
+            Fra boken «Art &amp; Fear» av David Bayles og Ted Orland. En
+            keramikklærer delte klassen i to grupper: Gruppe A (kvantitet) ble
+            vurdert kun på vekten av keramikken de produserte. 50 pund = A, 40
+            pund = B, osv. Gruppe B (kvalitet) skulle bare lage én vase — den
+            skulle være perfekt for toppkarakter. Resultat? Kvantitetsgruppen
+            laget den klart beste keramikken. Mens kvalitetsgruppen satt og
+            teoretiserte om perfeksjon, lærte kvantitetsgruppen gjennom praksis
+            — de eksperimenterte, feilet, justerte og ble bedre for hver vase.
+            Historien er et sterkt argument for learning by doing, iterativ
+            utvikling, prototyping og MVP-mentalitet. AI-verktøy gir oss
+            muligheten til å iterere raskere enn noensinne. Vi kan «produsere
+            mer keramikk». Men det krever at vi faktisk gjør det. Foto: OANA
+            BUZATU / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <!--section class="slide" data-title="AI commits (Dylan Patel)">
+        <div class="slide-inner theme-teal text-center">
+          <h2>Stadig mer sjekkes inn av AI</h2>
+          <div class="gap-lg"></div>
+          <div class="stat-big">4%</div>
+          <p>
+            av alle offentlige GitHub-commits er skrevet<br />av Claude Code —
+            akkurat nå.
+          </p>
+          <div class="gap"></div>
+          <div class="stat-big fragment">20%+</div>
+          <p class="fragment">forventet innen utgangen av 2026.</p>
+          <div class="gap"></div>
+          <p class="fragment" style="opacity: 0.7; font-size: 0.85em">
+            — Dylan Patel, SemiAnalysis (feb 2026)
+          </p>
+          <aside class="notes">
+            Dylan Patel fra SemiAnalysis delte disse tallene: 4% av alle
+            offentlige GitHub-commits skrives nå av Claude Code alene. Han spår
+            at dette vil overstige 20% innen utgangen av 2026. «While you
+            blinked, AI consumed all of software development.»
+          </aside>
+        </div>
+      </section-->
+
+      <!--section class="slide" data-title="Spesialist vs Generalist">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/specialist.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Spesialist vs. Generalist</h1>
+            <p>Mer av begge?</p>
+          </div>
+          <aside class="notes">
+            For noen år siden kunne du drifte en webside med en ensom webmaster,
+            i dag får du til det samme med et lite team på fem personer. Med
+            våre nye verktøy kan en enkeltutvikler bygge ganske omfattende og
+            velfungerende løsninger på egenhånd. SAMTIDIG er kravene til
+            domenekunskap, sikkerhet, design, UU, forvaltning over tid slik at
+            vi ofte trenger tung spesialkompetanse for å bygge det vi reelt sett
+            trenger. Disse to datapunktene er sanne samtidig. Én utvikler kan
+            mer enn noensinne — og vi trenger spesialister mer enn noensinne.
+            Foto: Todd Quackenbush / Unsplash
+          </aside>
+        </div>
+      </section-->
+
+      <!--section class="slide" data-title="Section: Kritikk">
+        <div class="slide-inner theme-title-center">
+          <div class="section-header">
+            <span class="section-label">Kritikk</span>
+            <h1>Hva skal vi overlate til maskinene?</h1>
+          </div>
+          <aside class="notes">
+            AI er til veldig lite hjelp hvis det blir stående som et verktøy for
+            å gjøre oss dummere. La oss snakke om de kritiske perspektivene.
+          </aside>
+        </div>
+      </section-->
+
+      <section class="slide" data-title="Critique image">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="img-center">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D5622AQF1loVDWFqutg/feedshare-shrink_800/B56Zv6U33yKwAg-/0/1769431334601?e=1772064000&v=beta&t=P60LtQDIWkw1eZl9Sn5_PxC3tPM1D9oRIr3F38SnFmQ"
+              alt="AI og menneskelig tenkning"
+              style="max-height: 520px; border-radius: 12px"
+            />
+          </div>
+          <aside class="notes">
+            AI er til veldig lite hjelp hvis det blir stående som et verktøy for
+            å gjøre oss dummere. Vi må tenke kritisk om hva vi delegerer og hva
+            vi beholder.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Gorman / Motstemmer">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="linkedin-embed-wrapper">
+            <iframe
+              src="https://www.linkedin.com/embed/feed/update/urn:li:share:7419632629202960384"
+              height="500"
+              width="504"
+              frameborder="0"
+              allowfullscreen=""
+              title="Embedded post"
+              style="border-radius: 12px"
+            ></iframe>
+          </div>
+          <aside class="notes">
+            Det er viktig å lytte til motstemmene. Ikke all kritikk av AI er
+            luddisme — mye av det er gjennomtenkt og viktig. Vi må ta de beste
+            argumentene fra begge sider.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Miljø">
+        <div
+          class="slide-inner theme-title-center"
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <div class="img-center">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D4E22AQFS3V9HB9--cA/feedshare-shrink_800/B4EZwfF.95J8Ag-/0/1770048188556?e=1772064000&v=beta&t=0vepBKD_OGGb_arnCgzCgRjvlmrgqJbrFWTmoNldqXc"
+              alt="AI og miljø"
+              style="max-height: 520px; border-radius: 12px"
+            />
+          </div>
+          <aside class="notes">
+            Også er det dette da. Om noe: det viktigste miljøaspektet av vår
+            kode er ikke hvordan vi bygger det, men hva vi bygger. Den virkelige
+            verdien av Kolumbus-teamet vårt er at flere folk i Rogaland tar
+            bussen — for å ta et lavthengende eksempel.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Stemmer fra feltet">
+        <div class="slide-inner theme-teal">
+          <div class="x-posts-row">
+            <div class="x-post">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <div
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      background: var(--teal);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-weight: 600;
+                      color: var(--dark-teal);
+                    "
+                  >
+                    ESR
+                  </div>
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Eric S. Raymond <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/esrtweet"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@esrtweet</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                Programming with AI assistance is very revealing.
+                &hellip;&nbsp;LLMs are so good now that I can validate and
+                generate a tremendous amount of code while doing hardly any
+                hand-coding at all.
+                <strong>And it's dawning on me that I don't miss it.</strong>
+                It's an interesting way to find out that
+                <strong
+                  >I was always a system designer first, with code only as a
+                  means rather than an end.</strong
+                >
+              </div>
+              <div class="x-post-date">Feb 5, 2026</div>
+              <img
+                src="public/esr.png"
+                alt="Eric S. Raymond"
+                style="
+                  width: 60px;
+                  border-radius: 5px;
+                  transform: rotate(-3deg);
+                  position: absolute;
+                  bottom: -70px;
+                  right: 14px;
+                  opacity: 0.9;
+                "
+              />
+            </div>
+            <div class="x-post">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <div
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      background: var(--teal);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      font-weight: 600;
+                      color: var(--dark-teal);
+                    "
+                  >
+                    RD
+                  </div>
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Ryan Dahl <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/rough__sea"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@rough__sea</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                This has been said a thousand times before, but allow me to add
+                my own voice:
+                <strong>the era of humans writing code is over.</strong>
+                Disturbing for those of us who identify as SWEs, but no less
+                true. That's not to say SWEs don't have work to do, but
+                <strong>writing syntax directly is not it.</strong>
+              </div>
+              <div class="x-post-date">Jan 19, 2026</div>
+              <img
+                src="public/nodejs.png"
+                alt="Ryan Dahl"
+                style="
+                  width: 60px;
+                  border-radius: 5px;
+                  transform: rotate(2.5deg);
+                  position: absolute;
+                  bottom: -40px;
+                  right: 14px;
+                  opacity: 0.9;
+                "
+              />
+            </div>
+          </div>
+          <aside class="notes">
+            To stemmer fra folk med tung erfaring. Eric S. Raymond — forfatteren
+            bak «The Cathedral and the Bazaar», en av open source-bevegelsens
+            grunnleggere. Han oppdaget at han egentlig alltid var en
+            systemdesigner, ikke en koder. Ryan Dahl — skaperen av Node.js og
+            Deno. Han sier rett ut: æraen der mennesker skriver kode er over.
+            Begge understreker at jobben ikke forsvinner, men endrer karakter
+            fundamentalt.
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Du bruker KI feil">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url(&quot;public/thinking.jpg&quot;)"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <blockquote
+              style="
+                border-left: 4px solid var(--yellow);
+                padding-left: 1em;
+                font-size: 1.5em;
+                max-width: 720px;
+              "
+            >
+              &laquo;<span
+                class="THIS_IS_A_LIE"
+                title="Dette er funnet opp av Claude!"
+                >KI-verktøyene vi har i dag er kraftige nok til å endre måten vi
+                jobber på. Men de er ikke kraftige nok til å tenke for
+                oss.</span
+              >
+              Du må enten lære å bruke KI som et verktøy for egen tenkning,
+              eller akseptere at andres tenkning, systemer og prioriteringer
+              gradvis vil styre arbeidet ditt.&raquo;
+            </blockquote>
+            <div class="gap"></div>
+            <p style="opacity: 0.8; font-size: 0.85em">
+              &laquo;Du bruker KI feil&raquo; — Silvia Seres i Dagens Næringsliv
+            </p>
+          </div>
+          <aside class="notes">
+            <p>
+              <a
+                href="https://www.dn.no/innlegg/ki/arbeid/teknologi/du-bruker-ki-feil/2-1-1932533"
+                >Du bruker AI Feil</a
+              >
+            </p>
+            <p>
+              Fra en kronikk i DN: «Du bruker KI feil». Hovedpoenget er at
+              KI-verktøy kan enten gjøre deg dummere eller smartere — og
+              forskjellen ligger i hvordan du bruker dem. Bruker du AI som en
+              snarvei for å slippe å tenke, vil andres systemer og
+              prioriteringer gradvis styre arbeidet ditt. Bruker du det som et
+              verktøy for å forsterke din egen tenkning, åpner det enorme
+              muligheter.
+            </p>
+            Foto: Glenn Carstens-Peters / Unsplash
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Meanwhile...">
+        <div class="slide-inner theme-title-center" style="display:flex; align-items:center; justify-content:center;">
+          <div style="display:flex; gap:3em; align-items:center; position:relative;">
+            <img src="public/crazy-guy.jpeg" alt="Crazy guy" style="max-height:380px; border-radius:4px; object-fit:contain; transform:rotate(-4deg); box-shadow:4px 6px 20px rgba(0,0,0,0.3);">
+            <img src="public/internett-er-en-flopp.jpg" alt="Internett er en flopp" style="max-height:380px; border-radius:4px; object-fit:contain; transform:rotate(2.5deg); box-shadow:4px 6px 20px rgba(0,0,0,0.3);">
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-title="My thoughts">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="background-image: url('https://miro.medium.com/1*X5HVSnKyzBYSaiwrciIrxQ.jpeg')"
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>My thoughts</h1>
+          </div>
+          <aside class="notes">
+            <ul>
+              <li>Varme og faglig autoritet!</li>
+              <li>Bruk verktøyene — Claude Code er <em>veldig</em> verdt tiden din.</li>
+              <li>Bygg kompetanse på agentisk AI.</li>
+              <li>DevOps-prinsippene er viktigere enn noen gang.</li>
+              <li>Smidig-prinsippene står seg svært godt.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Diskusjon">
+        <div class="slide-inner theme-title-center">
+          <h1>Your thoughts?</h1>
+          <aside class="notes">
+            Åpne for diskusjon. Mulige spørsmål å stille: — Hvordan bruker dere
+            AI i dag? — Hva er dere mest bekymret for? — Hva er dere mest
+            begeistret for? — Hva bør vi gjøre annerledes i Miles?
+          </aside>
+        </div>
+      </section>
+
+      <section class="slide" data-title="Closing">
+        <div class="slide-inner theme-title-center logo-center">
+          <img src="public/miles-logo-red.svg" alt="Miles" />
+        </div>
+      </section>
+    </div>
+
+    <!-- Progress bar & counter -->
+    <div class="progress"></div>
+    <div class="slide-counter"></div>
+
+    <!-- Scripts -->
+    <script src="public/highlight.min.js"></script>
+    <script src="public/qrcode.min.js"></script>
+    <script src="js/slides.js"></script>
+
+    <!-- Agile cards: one-at-a-time highlight -->
+    <script>
+      (function () {
+        const cards = document.querySelectorAll('.agile-card[data-agile-card]');
+        if (!cards.length) return;
+        var updating = false;
+
+        function updateActive() {
+          if (updating) return;
+          updating = true;
+          var lastVisible = null;
+          cards.forEach(function (c) {
+            if (c.classList.contains('visible')) lastVisible = c;
+          });
+          cards.forEach(function (c) {
+            c.classList.toggle('agile-active', c === lastVisible);
+          });
+          updating = false;
+        }
+
+        cards.forEach(function (card) {
+          new MutationObserver(updateActive).observe(card, {
+            attributes: true,
+            attributeFilter: ['class'],
+          });
+        });
+      })();
+    </script>
+
+    <!-- Timeline image sync -->
+    <script>
+      (function () {
+        const visual = document.querySelector(".timeline-visual");
+        if (!visual) return;
+        const imgs = visual.querySelectorAll("img[data-tl-img]");
+        const observer = new MutationObserver(function () {
+          const visibleItems = document.querySelectorAll(
+            ".timeline-item.fragment.visible[data-tl]",
+          );
+          const lastIdx = visibleItems.length
+            ? visibleItems[visibleItems.length - 1].dataset.tl
+            : null;
+          imgs.forEach(function (img) {
+            img.classList.toggle("tl-visible", img.dataset.tlImg === lastIdx);
+          });
+        });
+        document
+          .querySelectorAll(".timeline-item.fragment[data-tl]")
+          .forEach(function (item) {
+            observer.observe(item, {
+              attributes: true,
+              attributeFilter: ["class"],
+            });
+          });
+      })();
+    </script>
+
+    <!-- Code Production Chart -->
+    <script>
+      (function () {
+        const canvas = document.getElementById("cpc-chart");
+        const tooltip = document.getElementById("cpc-tooltip");
+        if (!canvas || !tooltip) return;
+
+        const data = [
+          { year: 2015, human: 3.7, ai: 0, forecast: false },
+          { year: 2016, human: 4.0, ai: 0, forecast: false },
+          { year: 2017, human: 4.4, ai: 0, forecast: false },
+          { year: 2018, human: 4.9, ai: 0, forecast: false },
+          { year: 2019, human: 5.5, ai: 0.05, forecast: false },
+          { year: 2020, human: 6.1, ai: 0.1, forecast: false },
+          { year: 2021, human: 6.8, ai: 0.3, forecast: false },
+          { year: 2022, human: 7.2, ai: 1.2, forecast: false },
+          { year: 2023, human: 7.5, ai: 3.8, forecast: false },
+          { year: 2024, human: 7.8, ai: 8.5, forecast: false },
+          { year: 2025, human: 8.0, ai: 16.0, forecast: false },
+          { year: 2026, human: 8.2, ai: 30.0, forecast: true },
+          { year: 2027, human: 8.3, ai: 55.0, forecast: true },
+          { year: 2028, human: 8.4, ai: 95.0, forecast: true },
+          { year: 2029, human: 8.5, ai: 160.0, forecast: true },
+          { year: 2030, human: 8.6, ai: 260.0, forecast: true },
+        ];
+
+        const dpr = window.devicePixelRatio || 1;
+
+        function fmt(val) {
+          if (val < 1) return (val * 1000).toFixed(0) + "M";
+          if (val >= 100) return val.toFixed(0) + " mrd";
+          return val.toFixed(1) + " mrd";
+        }
+
+        function draw() {
+          const wrapper = canvas.parentElement;
+          const rect = wrapper.getBoundingClientRect();
+          const W = rect.width - 48;
+          const H = Math.min(340, rect.height - 48);
+          canvas.width = W * dpr;
+          canvas.height = H * dpr;
+          canvas.style.width = W + "px";
+          canvas.style.height = H + "px";
+
+          const ctx = canvas.getContext("2d");
+          ctx.scale(dpr, dpr);
+
+          const pad = { top: 30, right: 30, bottom: 50, left: 60 };
+          const cw = W - pad.left - pad.right;
+          const ch = H - pad.top - pad.bottom;
+
+          const years = data.map(function (d) {
+            return d.year;
+          });
+          var maxVal = 0;
+          data.forEach(function (d) {
+            var t = d.human + d.ai;
+            if (t > maxVal) maxVal = t;
+          });
+          const yMax = Math.ceil(maxVal / 50) * 50;
+
+          function xPos(year) {
+            return (
+              pad.left +
+              ((year - years[0]) / (years[years.length - 1] - years[0])) * cw
+            );
+          }
+          function yPos(val) {
+            return pad.top + ch - (val / yMax) * ch;
+          }
+
+          // Forecast zone
+          const forecastStart = data.find(function (d) {
+            return d.forecast;
+          });
+          if (forecastStart) {
+            const fx = xPos(forecastStart.year);
+            ctx.fillStyle = "rgba(255, 230, 102, 0.04)";
+            ctx.fillRect(fx, pad.top, W - pad.right - fx, ch);
+            ctx.strokeStyle = "rgba(255, 230, 102, 0.2)";
+            ctx.lineWidth = 1;
+            ctx.setLineDash([4, 4]);
+            ctx.beginPath();
+            ctx.moveTo(fx, pad.top);
+            ctx.lineTo(fx, pad.top + ch);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = "rgba(255, 230, 102, 0.5)";
+            ctx.font = "9px DM Mono, monospace";
+            ctx.fillText("PROGNOSE", fx + 6, pad.top + 14);
+          }
+
+          // Grid lines
+          var yTicks = [0, 50, 100, 150, 200, 250];
+          ctx.font = "10px DM Mono, monospace";
+          ctx.textAlign = "right";
+          yTicks.forEach(function (v) {
+            if (v > yMax) return;
+            var y = yPos(v);
+            ctx.strokeStyle = "rgba(255,255,255,0.04)";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(pad.left, y);
+            ctx.lineTo(pad.left + cw, y);
+            ctx.stroke();
+            ctx.fillStyle = "#8a90a0";
+            ctx.fillText(v + " mrd", pad.left - 8, y + 4);
+          });
+
+          // X axis labels
+          ctx.textAlign = "center";
+          ctx.fillStyle = "#8a90a0";
+          data.forEach(function (d) {
+            if (d.year % 2 === 1) return;
+            ctx.fillText(d.year, xPos(d.year), H - pad.bottom + 20);
+          });
+
+          // Stacked area — AI on top
+          ctx.beginPath();
+          data.forEach(function (d, i) {
+            var x = xPos(d.year),
+              y = yPos(d.human + d.ai);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          for (var i = data.length - 1; i >= 0; i--) {
+            ctx.lineTo(xPos(data[i].year), yPos(data[i].human));
+          }
+          ctx.closePath();
+          var aiGrad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+          aiGrad.addColorStop(0, "rgba(255, 107, 53, 0.6)");
+          aiGrad.addColorStop(1, "rgba(255, 107, 53, 0.05)");
+          ctx.fillStyle = aiGrad;
+          ctx.fill();
+
+          // Area: human
+          ctx.beginPath();
+          data.forEach(function (d, i) {
+            var x = xPos(d.year),
+              y = yPos(d.human);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.lineTo(xPos(data[data.length - 1].year), yPos(0));
+          ctx.lineTo(xPos(data[0].year), yPos(0));
+          ctx.closePath();
+          var humanGrad = ctx.createLinearGradient(0, pad.top, 0, pad.top + ch);
+          humanGrad.addColorStop(0, "rgba(74, 158, 255, 0.5)");
+          humanGrad.addColorStop(1, "rgba(74, 158, 255, 0.05)");
+          ctx.fillStyle = humanGrad;
+          ctx.fill();
+
+          // Line: total
+          ctx.beginPath();
+          data.forEach(function (d, i) {
+            var x = xPos(d.year),
+              y = yPos(d.human + d.ai);
+            if (i === 0) {
+              ctx.moveTo(x, y);
+              return;
+            }
+            var prevX = xPos(data[i - 1].year);
+            var prevY = yPos(data[i - 1].human + data[i - 1].ai);
+            var cpX = (prevX + x) / 2;
+            ctx.bezierCurveTo(cpX, prevY, cpX, y, x, y);
+          });
+          ctx.strokeStyle = "#ff6b35";
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+
+          // Line: human
+          ctx.beginPath();
+          data.forEach(function (d, i) {
+            var x = xPos(d.year),
+              y = yPos(d.human);
+            if (i === 0) {
+              ctx.moveTo(x, y);
+              return;
+            }
+            var prevX = xPos(data[i - 1].year);
+            var prevY = yPos(data[i - 1].human);
+            var cpX = (prevX + x) / 2;
+            ctx.bezierCurveTo(cpX, prevY, cpX, y, x, y);
+          });
+          ctx.strokeStyle = "#4a9eff";
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Dots at non-forecast data points
+          data.forEach(function (d) {
+            if (d.forecast) return;
+            var x = xPos(d.year);
+            ctx.beginPath();
+            ctx.arc(x, yPos(d.human + d.ai), 3.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#ff6b35";
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x, yPos(d.human + d.ai), 5.5, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(255, 107, 53, 0.3)";
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          });
+
+          // Axis
+          ctx.strokeStyle = "#1e2230";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, pad.top);
+          ctx.lineTo(pad.left, pad.top + ch);
+          ctx.lineTo(pad.left + cw, pad.top + ch);
+          ctx.stroke();
+
+          canvas._dataPoints = data.map(function (d) {
+            return {
+              year: d.year,
+              human: d.human,
+              ai: d.ai,
+              forecast: d.forecast,
+              x: xPos(d.year),
+              y: yPos(d.human + d.ai),
+            };
+          });
+        }
+
+        // Draw when this slide becomes active, and on resize
+        function initChart() {
+          var slide = canvas.closest(".slide");
+          if (slide && slide.classList.contains("active")) {
+            draw();
+            // Animate stat cards
+            document
+              .querySelectorAll("#cpc-stats .stat-card")
+              .forEach(function (el, i) {
+                setTimeout(function () {
+                  el.classList.add("reveal");
+                }, i * 150);
+              });
+          }
+        }
+
+        // Observe slide activation
+        var slide = canvas.closest(".slide");
+        if (slide) {
+          new MutationObserver(function () {
+            if (slide.classList.contains("active")) {
+              draw();
+              document
+                .querySelectorAll("#cpc-stats .stat-card")
+                .forEach(function (el, i) {
+                  setTimeout(function () {
+                    el.classList.add("reveal");
+                  }, i * 150);
+                });
+            }
+          }).observe(slide, { attributes: true, attributeFilter: ["class"] });
+        }
+
+        window.addEventListener("resize", function () {
+          if (slide && slide.classList.contains("active")) draw();
+        });
+
+        // Initial draw (in case slide is already active)
+        setTimeout(initChart, 100);
+
+        // Hover tooltip
+        canvas.addEventListener("mousemove", function (e) {
+          var rect = canvas.getBoundingClientRect();
+          var mx = e.clientX - rect.left;
+          var pts = canvas._dataPoints;
+          if (!pts) return;
+
+          var closest = pts[0],
+            minDist = Infinity;
+          pts.forEach(function (p) {
+            var d = Math.abs(p.x - mx);
+            if (d < minDist) {
+              minDist = d;
+              closest = p;
+            }
+          });
+
+          if (minDist > 60) {
+            tooltip.classList.remove("visible");
+            return;
+          }
+
+          document.getElementById("cpc-tt-year").textContent = closest.year;
+          document.getElementById("cpc-tt-human").textContent = fmt(
+            closest.human,
+          );
+          document.getElementById("cpc-tt-ai").textContent =
+            closest.ai > 0 ? fmt(closest.ai) : "\u2014";
+          document.getElementById("cpc-tt-total").textContent = fmt(
+            closest.human + closest.ai,
+          );
+          document.getElementById("cpc-tt-forecast").textContent =
+            closest.forecast ? "\u2605 Prognosedata" : "";
+
+          tooltip.style.left = e.clientX + 16 + "px";
+          tooltip.style.top = e.clientY - 40 + "px";
+          tooltip.classList.add("visible");
+        });
+
+        canvas.addEventListener("mouseleave", function () {
+          tooltip.classList.remove("visible");
+        });
+      })();
+    </script>
+  </body>
+</html>

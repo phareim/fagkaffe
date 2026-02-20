@@ -1,0 +1,8 @@
+name = "miles-haugesund-fagkaffe"
+pages_build_output_dir = "presentations"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fag-kaffe-polls"
+database_id = "74393eca-f8fa-4a42-ba21-0dc64643b340"
