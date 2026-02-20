@@ -514,7 +514,7 @@ wrangler d1 execute fag-kaffe-polls --file=presentations/schema.sql
 ### Admin panel: `presentations/admin.html`
 ### Mobile vote page: `presentations/poll.html`
 ### Schema: `presentations/schema.sql`
-### API: `presentations/functions/api/` (Cloudflare Pages Functions + D1)
+### API: `functions/api/` (Cloudflare Pages Functions + D1)
 
 ---
 

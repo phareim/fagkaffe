@@ -363,27 +363,7 @@
   }
 
   async function loadPolls(sessionId, container) {
-    // Clear any existing refresh timer for this session
     if (pollRefreshTimers[sessionId]) clearInterval(pollRefreshTimers[sessionId]);
-
-    async function refresh() {
-      let polls;
-      try {
-        const data = await api('GET', `/api/admin/sessions?presentation=${encodeURIComponent(document.getElementById('pres-select').value)}`);
-        if (!Array.isArray(data)) return;
-        const session = data.find(s => s.id === sessionId);
-        if (!session) return;
-        // We need poll data from a different endpoint — load active session for the same presentation
-        // Actually let's fetch results per poll. First fetch polls via the active endpoint (or we can use admin endpoint)
-        // Since admin sessions endpoint doesn't return polls, we call GET /api/sessions/active
-        // But the session might be closed. Let's render from the active endpoint for open sessions,
-        // and show static data otherwise.
-      } catch {}
-    }
-
-    // Fetch polls from active endpoint for now (works if session is open)
-    // For a more complete solution, all polls would be fetchable from an admin polls endpoint.
-    // Here we use the sessions/active endpoint and supplement with results.
     await renderPolls(sessionId, container);
     pollRefreshTimers[sessionId] = setInterval(() => renderPolls(sessionId, container), 5000);
   }

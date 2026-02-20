@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deploy presentations to Cloudflare Pages as static files.
+# Deploy presentations + functions to Cloudflare Pages.
 # Usage: ./scripts/deploy.sh [project-name]
 #
 # First run will prompt you to create the project.
