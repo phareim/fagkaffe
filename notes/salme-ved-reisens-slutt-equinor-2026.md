@@ -5,11 +5,35 @@ Subtitle: Om å gå fra bordet hos Equinor
 Slides:
 # Industri 4.0
 Bakgrunn: 
-    overflow bilde av industri 4.0, fra Unsplash
+    industri 4.0, fra Unsplash
 notes: Jeg har jobbet på (og av) prosjektet over halvannet år. Fantastisk kjekke folk, godt og trygt arbeidsmiljø tross et svært distribuert team.
+
+# Oppgaven
+bakgrunn:
+    Photo by <a href="https://unsplash.com/@mrsunflower94?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Matteo Vistocco</a> on <a href="https://unsplash.com/photos/people-riding-boat-on-body-of-water-Dph00R2SwFo?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+notes:
+    Vi ønsker å bygge et interoperabelt fundament for data i Equinor.
+
+    smak på _interoperabelt_. Det betyr
+
+# TDI & EPN
+Bakgrunn:
+    Photo by <a href="https://unsplash.com/@karohubert?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Karollyne Videira Hubert</a> on <a href="https://unsplash.com/photos/text-HETSjinNkT8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+Text:
+    
+
+notes:
+    Technology, digital and innovation
+    Exploration and production Norway
+
+    Det er _langt_ fra TDI til EPN. Det er langt fra Kårstø til Fornebu. 
 
 # CoPilot og Fellesskriving
 Bakgrunn:
+    Photo by <a href="https://unsplash.com/@markuswinkler?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Markus Winkler</a> on <a href="https://unsplash.com/photos/black-and-white-typewriter-on-green-table-_nvKjg0aliA?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+
+notes:
 
 
 notes: 
