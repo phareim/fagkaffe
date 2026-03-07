@@ -1,5 +1,13 @@
 # Current Work
-Active presentation: `notes/ai-agile.md` / `presentations/ai-agile.html`
+Active presentations: 
+  - `notes/ai-agile.md` / `presentations/ai-agile.html`
+  - `notes/salme-ved-reisens-slutt.md`
+
+## Notes and presentations
+
+I write my presentations in the `notes/` folder. Claude create presentations based on these notes. I can often update the presentations, and will try to give Claude a heads up to update the corresponding notes-file with the updates. 
+
+I try to keep as little text as possible on my slides, and rather say my piece with words. When I do have text on my slides, it is to underscore what I am trying to say — often with facts, graphs or quotes. 
 
 ---
 
@@ -19,8 +27,6 @@ Active presentation: `notes/ai-agile.md` / `presentations/ai-agile.html`
 
 Single-file HTML presentations styled per the Miles Brand Guide 2026.
 Use the icons and illustrations under the resources directory.
-
-META: as we work and learn, please feel free to jot down notes and thoughts in @NAPKIN.md. it is supposed to be a brain-dump of random thoughts as we work. treat it as such. :END META.
 
 ## Project Structure
 
