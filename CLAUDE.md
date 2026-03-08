@@ -7,13 +7,26 @@ Active presentations:
 
 I write my presentations in the `notes/` folder. Claude create presentations based on these notes. I can often update the presentations, and will try to give Claude a heads up to update the corresponding notes-file with the updates. 
 
-I try to keep as little text as possible on my slides, and rather say my piece with words. When I do have text on my slides, it is to underscore what I am trying to say — often with facts, graphs or quotes. 
+When starting up on a presentation, check if the notes and presentation is in sync. If not, give me a rundown of discrepancies and ask what to update.
 
+regarding notes. for each slide there are typically three points, and the occational fourth:
+- background
+- text
+- notes
+- (interactive)
+
+background are full screen, unless otherwise stated. 
+text: format for readability and style. 
+notes: include the text — add some context where you find it appropriate.
+interactive: if set, the audience can 
 ---
 
 ## Slide Style Preferences
 
+I try to keep as little text as possible on my slides, and rather say my piece with words. When I do have text on my slides, it is to underscore what I am trying to say — often with facts, graphs or quotes. 
+
 - **Full-bleed photos as standalone slides** — used for mood/transition, no text needed
+- **Keep the text on slide minimal, unless otherwise staded** — a quote, tweet or single data-point is most often my preferred slide-style.
 - **Social embeds as primary content** — X-posts and LinkedIn posts shown as-is, side by side when comparing two voices
 - **"Sticker" fragments** — short, punchy labels (e.g. "Is this BS?", "More research needed") that reveal on click as a wry aside
 - **Substantial speaker notes** — tell the full story there; slides stay sparse
@@ -29,6 +42,11 @@ Single-file HTML presentations styled per the Miles Brand Guide 2026.
 Use the icons and illustrations under the resources directory.
 
 ## Project Structure
+
+```
+notes/
+  one file pr presentation
+```
 
 ```
 presentations/

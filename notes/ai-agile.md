@@ -14,22 +14,6 @@ Jeg jobber i skjæringspunktet mellom teknologi og folk og komersielle vurdering
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 __Slides:__
 # opening slide
 (standard Miles-presentasjon)
@@ -72,6 +56,14 @@ notes: en historie om to utviklere, en flyt av data som ikke virket, og en arbei
 
 notes:
      citadelsecurities.com/news-and-insights/2026-global-intelligence-crisis/
+
+# Robert-frost
+background:
+    Photo by <a href="https://unsplash.com/@l2space?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Adrian Mag</a> on <a href="https://unsplash.com/photos/an-empty-road-in-the-middle-of-a-forest-USWGg0oUAsI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>  
+text:
+    the best way out is always trough. — Robert Frost
+notes:
+    the best way out is always trough.
 
 # closing — Miles logo (logo-center)
 
