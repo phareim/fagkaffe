@@ -25,7 +25,7 @@ for f in "${files[@]}"; do
   [[ -z "$title" ]] && title="$slug"
 
   # Extract date from title-meta if available
-  date=$(grep -A2 'class="title-meta"' "$f" | tail -1 | sed 's/<[^>]*>//g;s/^[[:space:]]*//' | head -1)
+  date=$(grep -A2 'class="title-meta"' "$f" | tail -1 | sed 's/<[^>]*>//g;s/^[[:space:]]*//' | head -1 || true)
 
   # Count slides
   slide_count=$(grep -c 'class="slide"' "$f" || true)
