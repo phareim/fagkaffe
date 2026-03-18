@@ -14,13 +14,15 @@ bakgrunn:
 notes:
     Vi ønsker å bygge et interoperabelt fundament for data i Equinor.
 
-    smak på _interoperabelt_. Det betyr
+    smak på _interoperabelt_. Det betyr... 
 
 # TDI & EPN
 Bakgrunn:
     Photo by <a href="https://unsplash.com/@karohubert?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Karollyne Videira Hubert</a> on <a href="https://unsplash.com/photos/text-HETSjinNkT8?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 Text:
+    TDI & EPN (eller; en reise i TBF-er)
+
     
 
 notes:
