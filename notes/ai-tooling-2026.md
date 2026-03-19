@@ -80,3 +80,15 @@ Slides:
     - speaker notes: Mulige spørsmål: Hvordan bruker dere AI i dag? Hva er dere mest bekymret for? Hva er dere mest begeistret for? Hva bør vi gjøre annerledes i Miles?
 
 - Closing — Miles logo (logo-center)
+
+
+
+
+some notes:
+
+# En historie om en omskriving
+bakgrunn: /Users/petter/github/petter/slides/presentations/public/KraftPlugg.jpg.
+tekst: "Te, Tegning og Tenking"
+undertekst: "tre utviklere, én uke, og kanskje 12 linjer kode"
+
+notes: en historie om to utviklere, en flyt av data som ikke virket, og en arbeidsuke med te, tegning og tenking. 
