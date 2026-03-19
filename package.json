@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "./presentations/scripts/serve.sh",
-    "serve": "./presentations/scripts/serve.sh",
+    "build-index": "./presentations/scripts/build-index.sh",
+    "dev": "./presentations/scripts/build-index.sh && ./presentations/scripts/serve.sh",
+    "serve": "./presentations/scripts/build-index.sh && ./presentations/scripts/serve.sh",
     "new": "./presentations/scripts/new.sh",
     "deploy": "./presentations/scripts/deploy.sh"
   },
