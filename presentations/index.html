@@ -111,6 +111,18 @@
       opacity: 0.5;
       font-size: 1.1rem;
     }
+
+    .deploy-stamp {
+      text-align: center;
+      padding: 2.5rem 1rem 1rem;
+      font-size: 0.8rem;
+      opacity: 0.4;
+    }
+
+    .deploy-stamp a {
+      color: var(--burgundy);
+      font-family: 'DM Mono', monospace;
+    }
   </style>
 </head>
 <body>
@@ -120,13 +132,17 @@
   </header>
   <main>
     <div class="grid">
+      <a class="card" href="ai-agile-drafts-2">
+        <div class="card-title">DRAFTS: AI & Agile 2</div>
+        <div class="card-meta"><span>Mars 2026</span><span>9 slides</span></div>
+      </a>
       <a class="card" href="ai-agile-drafts">
         <div class="card-title">DRAFT: AI &amp; Agile</div>
         <div class="card-meta"><span>27 slides</span></div>
       </a>
       <a class="card" href="ai-agile">
         <div class="card-title">AI & Agile</div>
-        <div class="card-meta"><span>Mars 2026</span><span>9 slides</span></div>
+        <div class="card-meta"><span>2026</span><span>28 slides</span></div>
       </a>
       <a class="card" href="ai-tooling-2026">
         <div class="card-title">AI Tooling 2026</div>
@@ -137,6 +153,9 @@
         <div class="card-meta"><span>2026</span><span>10 slides</span></div>
       </a>
     </div>
+    <p class="deploy-stamp">
+      Deployed 2026-03-19 15:35 from <a href="https://github.com/phareim/fagkaffe/commit/a9d4a86d75425dda98160479a8aff029a8efa3d1">a9d4a86</a>
+    </p>
   </main>
 </body>
 </html>

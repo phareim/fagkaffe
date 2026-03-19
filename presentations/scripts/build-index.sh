@@ -40,6 +40,14 @@ for f in "${files[@]}"; do
 "
 done
 
+# Git metadata for deploy stamp
+COMMIT_HASH=$(git -C "$DIR" rev-parse HEAD 2>/dev/null || echo "")
+COMMIT_SHORT=$(git -C "$DIR" rev-parse --short HEAD 2>/dev/null || echo "")
+COMMIT_DATE=$(git -C "$DIR" log -1 --format=%ci 2>/dev/null || echo "")
+REMOTE_URL=$(git -C "$DIR" remote get-url origin 2>/dev/null || echo "")
+# Derive GitHub base URL from remote (handles both SSH and HTTPS)
+GITHUB_URL=$(echo "$REMOTE_URL" | sed 's|git@github.com:|https://github.com/|;s|\.git$||')
+
 # Write the index page
 cat > "$OUT" << 'HEADER'
 <!DOCTYPE html>
@@ -155,6 +163,18 @@ cat > "$OUT" << 'HEADER'
       opacity: 0.5;
       font-size: 1.1rem;
     }
+
+    .deploy-stamp {
+      text-align: center;
+      padding: 2.5rem 1rem 1rem;
+      font-size: 0.8rem;
+      opacity: 0.4;
+    }
+
+    .deploy-stamp a {
+      color: var(--burgundy);
+      font-family: 'DM Mono', monospace;
+    }
   </style>
 </head>
 <body>
@@ -173,8 +193,23 @@ else
   echo -n "$cards" >> "$OUT"
 fi
 
+# Close the grid
+echo '    </div>' >> "$OUT"
+
+# Deploy stamp
+if [[ -n "$COMMIT_HASH" ]]; then
+  # Format date: "2026-03-19 14:30" from git's "2026-03-19 14:30:00 +0100"
+  DEPLOY_TIME=$(echo "$COMMIT_DATE" | cut -d: -f1,2)
+  echo '    <p class="deploy-stamp">' >> "$OUT"
+  if [[ -n "$GITHUB_URL" ]]; then
+    echo "      Deployed ${DEPLOY_TIME} from <a href=\"${GITHUB_URL}/commit/${COMMIT_HASH}\">${COMMIT_SHORT}</a>" >> "$OUT"
+  else
+    echo "      Deployed ${DEPLOY_TIME} from ${COMMIT_SHORT}" >> "$OUT"
+  fi
+  echo '    </p>' >> "$OUT"
+fi
+
 cat >> "$OUT" << 'FOOTER'
-    </div>
   </main>
 </body>
 </html>
