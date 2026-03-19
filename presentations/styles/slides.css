@@ -76,13 +76,17 @@ html, body {
   display: grid;
   place-items: center;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
+  contain: content;
 }
 
 .slide.active {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
+  transition: opacity 0.4s ease, visibility 0s linear 0s;
 }
 
 .slide-inner {
@@ -94,7 +98,8 @@ html, body {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  /* Scale set by JS via transform: scale() */
+  /* Scale set by JS via --slide-scale custom property */
+  transform: scale(var(--slide-scale, 1));
   transform-origin: center center;
 }
 
@@ -655,6 +660,11 @@ figure figcaption {
 .fragment.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Skip fragment animations on hidden slides — avoids compositing work */
+.slide:not(.active) .fragment {
+  transition: none;
 }
 
 /* ── Timeline ────────────────────────────────── */

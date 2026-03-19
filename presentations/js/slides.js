@@ -26,18 +26,26 @@
 
   // ── Navigation ─────────────────────────────────
 
+  // Track which slide indices have visible fragments so we only clear those
+  var dirtySlides = new Set();
+
   function showSlide(index) {
     current = Math.max(0, Math.min(index, slides.length - 1));
 
-    slides.forEach((s, i) => {
-      s.classList.toggle('active', i === current);
-      if (i !== current) {
-        fragmentsOf(s).forEach(f => f.classList.remove('visible'));
+    // Reset fragments only on slides that actually have visible ones
+    dirtySlides.forEach(function (idx) {
+      if (idx !== current) {
+        fragmentsOf(slides[idx]).forEach(function (f) { f.classList.remove('visible'); });
+        dirtySlides.delete(idx);
       }
     });
 
+    slides.forEach(function (s, i) {
+      s.classList.toggle('active', i === current);
+    });
+
     if (progress) {
-      const pct = slides.length > 1 ? (current / (slides.length - 1)) * 100 : 100;
+      var pct = slides.length > 1 ? (current / (slides.length - 1)) * 100 : 100;
       progress.style.width = pct + '%';
     }
 
@@ -50,18 +58,22 @@
   }
 
   function next() {
-    const hidden = hiddenFragments(slides[current]);
+    var hidden = hiddenFragments(slides[current]);
     if (hidden.length > 0) {
       hidden[0].classList.add('visible');
+      dirtySlides.add(current);
       return;
     }
     showSlide(current + 1);
   }
 
   function prev() {
-    const visible = visibleFragments(slides[current]);
+    var visible = visibleFragments(slides[current]);
     if (visible.length > 0) {
       visible[visible.length - 1].classList.remove('visible');
+      if (visibleFragments(slides[current]).length === 0) {
+        dirtySlides.delete(current);
+      }
       return;
     }
     showSlide(current - 1);
@@ -235,19 +247,19 @@
 
   // ── Scaling ────────────────────────────────────
 
-  const slideInners = Array.from(document.querySelectorAll('.slide-inner'));
-
   function scaleSlides() {
-    const scale = Math.min(
+    var scale = Math.min(
       window.innerWidth / 1280,
       window.innerHeight / 720
     );
-    slideInners.forEach(function (el) {
-      el.style.transform = 'scale(' + scale + ')';
-    });
+    document.documentElement.style.setProperty('--slide-scale', scale);
   }
 
-  window.addEventListener('resize', scaleSlides);
+  var _rafScale;
+  window.addEventListener('resize', function () {
+    cancelAnimationFrame(_rafScale);
+    _rafScale = requestAnimationFrame(scaleSlides);
+  });
   scaleSlides();
 
   // ── Syntax Highlighting ────────────────────────
