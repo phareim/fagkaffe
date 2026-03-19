@@ -66,6 +66,10 @@
       pointer-events: none;
     }
 
+    .slide:not(.active) .timeline-visual img {
+      transition: none;
+    }
+
     .timeline-visual img.tl-visible {
       opacity: 1;
       transform: scale(1);
@@ -182,16 +186,9 @@
       transition: opacity 0.5s ease;
     }
 
-    .fade-cycle .fragment.visible {
+    /* Only the last visible fragment is shown — pure CSS, no JS observer needed */
+    .fade-cycle .fragment.visible:not(:has(~ .fragment.visible)) {
       opacity: 1;
-    }
-
-    .fade-cycle .fragment.visible ~ .fragment.visible {
-      /* hide all but the last visible */
-    }
-
-    .fade-cycle .fragment.fade-out {
-      opacity: 0;
     }
 
     /* ── Fowler cutout sticker ── */
@@ -817,30 +814,6 @@
 })();
 </script>
 
-<!-- Fade cycle: hide previous fragments when a new one appears -->
-<script>
-(function () {
-  const cycle = document.querySelector(".fade-cycle");
-  if (!cycle) return;
-  const frags = cycle.querySelectorAll(".fragment");
-  const observer = new MutationObserver(function () {
-    let lastVisible = null;
-    frags.forEach(function (f) {
-      if (f.classList.contains("visible")) lastVisible = f;
-    });
-    frags.forEach(function (f) {
-      if (f.classList.contains("visible") && f !== lastVisible) {
-        f.classList.add("fade-out");
-      } else {
-        f.classList.remove("fade-out");
-      }
-    });
-  });
-  frags.forEach(function (f) {
-    observer.observe(f, { attributes: true, attributeFilter: ["class"] });
-  });
-})();
-</script>
 
 </body>
 </html>
