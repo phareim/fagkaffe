@@ -60,6 +60,7 @@ html, body {
   background: var(--black);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease;
 }
 
 /* ── Slide Deck Container ─────────────────────── */
@@ -67,6 +68,7 @@ html, body {
   position: relative;
   width: 100vw;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* ── Individual Slide ─────────────────────────── */

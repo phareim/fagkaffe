@@ -54,6 +54,7 @@
     }
 
     history.replaceState(null, '', '#' + (current + 1));
+    syncBackground();
     updateNotes();
   }
 
@@ -248,17 +249,33 @@
   // ── Scaling ────────────────────────────────────
 
   function scaleSlides() {
-    var scale = Math.min(
-      window.innerWidth / 1280,
-      window.innerHeight / 720
-    );
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var isPortrait = vh > vw;
+
+    var scale;
+    if (isPortrait) {
+      // Portrait: scale to fill width — slide height will be smaller than viewport
+      scale = vw / 1280;
+    } else {
+      // Landscape: scale to cover — fills screen, minimal clipping at top/bottom
+      scale = Math.max(vw / 1280, vh / 720);
+    }
     document.documentElement.style.setProperty('--slide-scale', scale);
+  }
+
+  // Sync body background to active slide so black bars match the slide colour
+  function syncBackground() {
+    var inner = slides[current] && slides[current].querySelector('.slide-inner');
+    if (inner) {
+      document.body.style.background = window.getComputedStyle(inner).backgroundColor;
+    }
   }
 
   var _rafScale;
   window.addEventListener('resize', function () {
     cancelAnimationFrame(_rafScale);
-    _rafScale = requestAnimationFrame(scaleSlides);
+    _rafScale = requestAnimationFrame(function () { scaleSlides(); syncBackground(); });
   });
   scaleSlides();
 
