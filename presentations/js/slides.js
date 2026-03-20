@@ -249,18 +249,7 @@
   // ── Scaling ────────────────────────────────────
 
   function scaleSlides() {
-    var vw = window.innerWidth;
-    var vh = window.innerHeight;
-    var isPortrait = vh > vw;
-
-    var scale;
-    if (isPortrait) {
-      // Portrait: scale to fill width — slide height will be smaller than viewport
-      scale = vw / 1280;
-    } else {
-      // Landscape: scale to cover — fills screen, minimal clipping at top/bottom
-      scale = Math.max(vw / 1280, vh / 720);
-    }
+    var scale = Math.min(window.innerWidth / 1280, window.innerHeight / 720);
     document.documentElement.style.setProperty('--slide-scale', scale);
   }
 
