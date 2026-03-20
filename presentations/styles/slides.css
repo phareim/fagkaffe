@@ -80,6 +80,13 @@ html, body {
   pointer-events: none;
   transition: opacity 0.4s ease, visibility 0s linear 0.4s;
   contain: content;
+  display: flex;
+  justify-content: center;
+}
+/* Allow bleed slides to paint outside the contain box */
+.slide:has(.photo-full),
+.slide:has(.has-bg) {
+  contain: layout style;
 }
 
 .slide.active {
@@ -100,7 +107,7 @@ html, body {
   overflow: hidden;
   /* Scale set by JS via --slide-scale custom property */
   transform: scale(var(--slide-scale, 1));
-  transform-origin: 0 0;
+  transform-origin: top center;
 }
 
 /* ── Typography ───────────────────────────────── */
@@ -383,16 +390,23 @@ aside.notes {
 /* Background image with overlay for text readability */
 .slide-inner.has-bg {
   padding: 0;
+  overflow: visible;
 }
 .slide-inner.has-bg .bg {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
+  width: calc(100vw / var(--slide-scale, 1));
+  height: calc(100vh / var(--slide-scale, 1));
   background-size: cover;
   background-position: center;
 }
 .slide-inner.has-bg .bg-overlay {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
+  width: calc(100vw / var(--slide-scale, 1));
+  height: calc(100vh / var(--slide-scale, 1));
   background: rgba(69, 13, 33, 0.7);
 }
 .slide-inner.has-bg .bg-content {
@@ -561,12 +575,14 @@ figure figcaption {
 /* Single image covering entire slide (PPTX: "Content Photo 1") */
 .slide-inner.photo-full {
   padding: 0;
+  overflow: visible;
 }
-.slide-inner.photo-full img {
+.slide-inner.photo-full > img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 0;
+  left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
+  width: calc(100vw / var(--slide-scale, 1));
+  height: calc(100vh / var(--slide-scale, 1));
   object-fit: cover;
   border-radius: 0;
 }
@@ -578,6 +594,13 @@ figure figcaption {
   gap: 4px;
   width: 100%;
   height: 100%;
+}
+.slide-inner.photo-full > .photo-grid {
+  position: absolute;
+  top: 0;
+  left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
+  width: calc(100vw / var(--slide-scale, 1));
+  height: calc(100vh / var(--slide-scale, 1));
 }
 .photo-grid.grid-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
 .photo-grid.grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
