@@ -1,787 +1,1005 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="no">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI & Agile — Miles</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI & Agile — Miles</title>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Syntax highlighting -->
-  <link rel="stylesheet" href="styles/highlight-miles.css">
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="styles/highlight-miles.css" />
 
-  <!-- Slides -->
-  <link rel="stylesheet" href="styles/slides.css">
+    <!-- Slides -->
+    <link rel="stylesheet" href="styles/slides.css" />
 
-  <style>
-    /* ── Horizon badge ── */
-    .horizon-badge {
-      position: absolute;
-      top: 20px;
-      right: 24px;
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      opacity: 0.55;
-      padding: 4px 12px;
-      border-radius: 4px;
-      border: 1px solid currentColor;
-      z-index: 2;
-    }
+    <style>
+      /* ── Horizon badge ── */
+      .horizon-badge {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        font-family: var(--font-body);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        opacity: 0.55;
+        padding: 4px 12px;
+        border-radius: 4px;
+        border: 1px solid currentColor;
+        z-index: 2;
+      }
 
-    /* ── Timeline with images ── */
-    .timeline-split {
-      display: flex;
-      gap: 3em;
-      flex: 1;
-      min-height: 0;
-    }
+      /* ── Timeline with images ── */
+      .timeline-split {
+        display: flex;
+        gap: 3em;
+        flex: 1;
+        min-height: 0;
+      }
 
-    .timeline-split .timeline {
-      flex: 1;
-      margin-top: 0;
-    }
+      .timeline-split .timeline {
+        flex: 1;
+        margin-top: 0;
+      }
 
-    .timeline-visual {
-      flex: 0 0 380px;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+      .timeline-visual {
+        flex: 0 0 380px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    .timeline-visual img {
-      position: absolute;
-      max-width: 100%;
-      max-height: 420px;
-      border-radius: 12px;
-      object-fit: contain;
-      opacity: 0;
-      transform: scale(0.96);
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      pointer-events: none;
-    }
+      .timeline-visual img {
+        position: absolute;
+        max-width: 100%;
+        max-height: 420px;
+        border-radius: 12px;
+        object-fit: contain;
+        opacity: 0;
+        transform: scale(0.96);
+        transition:
+          opacity 0.4s ease,
+          transform 0.4s ease;
+        pointer-events: none;
+      }
 
-    .slide:not(.active) .timeline-visual img {
-      transition: none;
-    }
+      .slide:not(.active) .timeline-visual img {
+        transition: none;
+      }
 
-    .timeline-visual img.tl-visible {
-      opacity: 1;
-      transform: scale(1);
-    }
+      .timeline-visual img.tl-visible {
+        opacity: 1;
+        transform: scale(1);
+      }
 
-    /* ── X-post date highlighter ── */
-    .highlighter {
-      position: relative;
-      display: inline;
-      padding: 0.05em 0.15em;
-      z-index: 0;
-    }
+      /* ── X-post date highlighter ── */
+      .highlighter {
+        position: relative;
+        display: inline;
+        padding: 0.05em 0.15em;
+        z-index: 0;
+      }
 
-    .highlighter::before {
-      content: "";
-      position: absolute;
-      inset: -2px -4px;
-      z-index: -1;
-      background: var(--yellow);
-      opacity: 0.85;
-      border-radius: 3px 5px 4px 6px;
-      transform: rotate(-0.6deg) skewX(-1.5deg);
-      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
-      mask-size: 100% 100%;
-      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
-      -webkit-mask-size: 100% 100%;
-    }
+      .highlighter::before {
+        content: "";
+        position: absolute;
+        inset: -2px -4px;
+        z-index: -1;
+        background: var(--yellow);
+        opacity: 0.85;
+        border-radius: 3px 5px 4px 6px;
+        transform: rotate(-0.6deg) skewX(-1.5deg);
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+        mask-size: 100% 100%;
+        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
+        -webkit-mask-size: 100% 100%;
+      }
 
-    .x-post-date {
-      text-align: right;
-      margin-top: auto;
-    }
+      .x-post-date {
+        text-align: right;
+        margin-top: auto;
+      }
 
-    .x-post {
-      display: flex;
-      flex-direction: column;
-      position: relative;
-    }
+      .x-post {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
 
-    /* ── Rigor map ── */
-    .rigor-map {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6em;
-      flex: 1;
-      min-height: 0;
-      padding: 1em 0;
-      position: relative;
-    }
+      /* ── Rigor map ── */
+      .rigor-map {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6em;
+        flex: 1;
+        min-height: 0;
+        padding: 1em 0;
+        position: relative;
+      }
 
-    .rigor-source {
-      font-family: 'Gelica', serif;
-      font-weight: 500;
-      font-size: 1.8em;
-      text-align: center;
-      padding: 0.6em 1em;
-      border: 2px solid currentColor;
-      border-radius: 12px;
-      opacity: 0.9;
-      flex-shrink: 0;
-      z-index: 1;
-    }
+      .rigor-source {
+        font-family: "Gelica", serif;
+        font-weight: 500;
+        font-size: 1.8em;
+        text-align: center;
+        padding: 0.6em 1em;
+        border: 2px solid currentColor;
+        border-radius: 12px;
+        opacity: 0.9;
+        flex-shrink: 0;
+        z-index: 1;
+      }
 
-    .rigor-lines {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-    }
+      .rigor-lines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-    .rigor-lines path {
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 2;
-      opacity: 0;
-      transition: opacity 0.4s ease;
-    }
+      .rigor-lines path {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
 
-    .rigor-lines path.rigor-visible {
-      opacity: 0.45;
-    }
+      .rigor-lines path.rigor-visible {
+        opacity: 0.45;
+      }
 
-    .rigor-targets {
-      display: flex;
-      flex-direction: column;
-      gap: 1.2em;
-      z-index: 1;
-    }
+      .rigor-targets {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2em;
+        z-index: 1;
+      }
 
-    .rigor-node {
-      font-size: 1.15em;
-      padding: 0.5em 1.4em;
-      border-radius: 8px;
-      border: 1px solid currentColor;
-      opacity: 0;
-      white-space: nowrap;
-      transition: opacity 0.4s ease, border-color 0.4s ease;
-    }
+      .rigor-node {
+        font-size: 1.15em;
+        padding: 0.5em 1.4em;
+        border-radius: 8px;
+        border: 1px solid currentColor;
+        opacity: 0;
+        white-space: nowrap;
+        transition:
+          opacity 0.4s ease,
+          border-color 0.4s ease;
+      }
 
-    .rigor-node.visible {
-      opacity: 1;
-      border-color: var(--teal);
-    }
+      .rigor-node.visible {
+        opacity: 1;
+        border-color: var(--teal);
+      }
 
-    /* ── Fade cycle (open questions) ── */
-    .fade-cycle {
-      position: relative;
-      min-height: 3em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-    }
+      /* ── Fade cycle (open questions) ── */
+      .fade-cycle {
+        position: relative;
+        min-height: 3em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
 
-    .fade-cycle .fragment {
-      position: absolute;
-      font-family: 'Gelica', serif;
-      font-weight: 500;
-      font-size: 2em;
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
+      .fade-cycle .fragment {
+        position: absolute;
+        font-family: "Gelica", serif;
+        font-weight: 500;
+        font-size: 2em;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
 
-    /* Only the last visible fragment is shown — pure CSS, no JS observer needed */
-    .fade-cycle .fragment.visible:not(:has(~ .fragment.visible)) {
-      opacity: 1;
-    }
+      /* Only the last visible fragment is shown — pure CSS, no JS observer needed */
+      .fade-cycle .fragment.visible:not(:has(~ .fragment.visible)) {
+        opacity: 1;
+      }
 
-    /* ── Fowler cutout sticker ── */
-    .fowler-cutout {
-      position: absolute;
-      bottom: 60px;
-      right: 60px;
-      width: 220px;
-      border: 6px solid white;
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      transform: rotate(16deg);
-    }
-  </style>
-</head>
-<body>
-
-<div class="deck">
-  <section class="slide" data-title="Title">
-    <div class="slide-inner theme-title">
-      <div class="title-header">
-        <h1>AI & Agile<br>Lokal Camp 2026</h1>
-        <div class="title-meta">
-          Stavanger<br>
-          2026
-        </div>
-      </div>
-      <div class="title-logo">
-        <img src="public/miles-logo-red.svg" alt="Miles">
-      </div>
-      <aside class="notes">
-        Velkommen til Lokal Camp 2026. I dag skal vi snakke om hva som skjer når agentisk koding møter smidig praksis — og hva det betyr for oss som konsulenter.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Agile Manifesto">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/agile-manifesto.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content text-center">
-        <h1>"We are uncovering better ways of developing software by doing it and helping others do it."</h1>
-      </div>
-      <aside class="notes">
-        https://agilemanifesto.org/
-
-        We are uncovering better ways of developing software by doing it and helping others do it. Through this work we have come to value:
-
-        Individuals and interactions over processes and tools.
-        Working software over comprehensive documentation.
-        Customer collaboration over contract negotiation.
-        Responding to change over following a plan.
-
-        That is, while there is value in the items on the right, we value the items on the left more.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Timeline">
-    <div class="slide-inner theme-teal">
-      <div class="timeline-split">
-        <div class="timeline">
-          <div class="timeline-item fragment" data-tl="0">
-            <span class="timeline-date">Jun 2020</span>
-            GPT-3
-          </div>
-          <div class="timeline-item fragment" data-tl="1">
-            <span class="timeline-date">Oct 2021</span>
-            GitHub CoPilot
-          </div>
-          <div class="timeline-item fragment" data-tl="2">
-            <span class="timeline-date">Nov 2022</span>
-            ChatGPT
-          </div>
-          <div class="timeline-item fragment" data-tl="3">
-            <span class="timeline-date">Mar 2023</span>
-            GPT-4 &amp; Claude
-          </div>
-          <div class="timeline-item fragment" data-tl="4">
-            <span class="timeline-date">Jun 2024</span>
-            Multimodal GPT-4o
-          </div>
-          <div class="timeline-item fragment" data-tl="5">
-            <span class="timeline-date">Feb 2025</span>
-            Claude Code
-          </div>
-          <div class="timeline-item fragment" data-tl="6">
-            <span class="timeline-date">Feb 2025</span>
-            <em>«Vibe Coding»</em> enters the chat
-          </div>
-          <div class="timeline-item fragment" data-tl="7">
-            <span class="timeline-date">Jun 2025</span>
-            GPT-5 &amp; Codex
-          </div>
-          <div class="timeline-item fragment" data-tl="8">
-            <span class="timeline-date">Feb 2026</span>
-            Agentic Engineering
-          </div>
-        </div>
-        <div class="timeline-visual">
-          <img data-tl-img="0" src="https://miro.medium.com/1*mhF99YFncF70pSVe5jr76Q.png" alt="GPT-3">
-          <img data-tl-img="1" src="https://github.gallerycdn.vsassets.io/extensions/github/copilotvs/1.206.0.0/1719349649662/Microsoft.VisualStudio.Services.Icons.Default" alt="GitHub Copilot">
-          <img data-tl-img="2" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png" alt="ChatGPT">
-          <img data-tl-img="3" src="https://avatars.slack-edge.com/2025-05-14/8891273522918_30c38bf627ac73075db6_512.png" alt="GPT-4 & Claude">
-          <img data-tl-img="4" src="https://wp.technologyreview.com/wp-content/uploads/2024/05/Screenshot-2024-05-13_crop.jpg" alt="GPT-4o">
-          <img data-tl-img="5" src="https://preview.redd.it/whats-claude-code-v0-f1vrmqb645le1.jpeg?width=640&crop=smart&auto=webp&s=054fd333b56291f1dd6d2609fd48ea4db554672b" alt="Claude Code">
-          <img data-tl-img="6" src="https://pbs.twimg.com/media/HAxGMg1aAAE4JYL?format=jpg&name=900x900" alt="Vibe coding">
-          <img data-tl-img="7" src="https://persistent.oaistatic.com/codex/icon.png" alt="Codex">
-          <img data-tl-img="8" src="https://pbs.twimg.com/media/HAZReLhXkAARUzG.jpg" alt="Agentic engineering">
-        </div>
-      </div>
-      <aside class="notes">
-        Her er de grove trekkene på hva som har skjedd. Merk den bemerkelsesverdig korte tidslinjen vi opererer innenfor her. Fra ChatGPT i november 2022 til i dag — det er litt over tre år.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Karpathy: two tweets">
-    <div class="slide-inner theme-teal text-center">
-      <div class="x-posts-row x-posts-animated">
-        <div class="x-post x-post-large">
-          <div class="x-post-header">
-            <div class="x-post-avatar">
-              <img src="public/karpathy.jpg" alt="Karpathy" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
-            </div>
-            <div class="x-post-author">
-              <span class="x-post-name">Andrej Karpathy <span class="x-post-verified"></span></span>
-              <a href="https://twitter.com/karpathy" target="_blank" class="x-post-handle">@karpathy</a>
+      /* ── Fowler cutout sticker ── */
+      .fowler-cutout {
+        position: absolute;
+        bottom: 40px;
+        right: 80px;
+        width: 220px;
+        border: 8px solid white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        transform: rotate(-8deg);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck">
+      <section class="slide" data-title="Title">
+        <div class="slide-inner theme-title">
+          <div class="title-header">
+            <h1>AI & Agile<br />Lokal Camp 2026</h1>
+            <div class="title-meta">
+              Stavanger<br />
+              2026
             </div>
           </div>
-          <div class="x-post-content">
-            There's a new kind of coding I call <strong>«vibe coding»</strong>, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
+          <div class="title-logo">
+            <img src="public/miles-logo-red.svg" alt="Miles" />
           </div>
-          <div class="x-post-date">
-            <span class="highlighter">Feb 2, 2025</span>
-          </div>
+          <aside class="notes">
+            Velkommen til Lokal Camp 2026. I dag skal vi snakke om hva som skjer
+            når agentisk koding møter smidig praksis — og hva det betyr for oss
+            som konsulenter.
+          </aside>
         </div>
-        <div class="x-post x-post-large">
-          <div class="x-post-header">
-            <div class="x-post-avatar">
-              <img src="public/karpathy.jpg" alt="Karpathy" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+      </section>
+      <section class="slide" data-title="Agile Manifesto">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/agile-manifesto.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content text-center">
+            <h1>
+              "We are uncovering better ways of developing software by doing it
+              and helping others do it."
+            </h1>
+          </div>
+          <aside class="notes">
+            https://agilemanifesto.org/ We are uncovering better ways of
+            developing software by doing it and helping others do it. Through
+            this work we have come to value: Individuals and interactions over
+            processes and tools. Working software over comprehensive
+            documentation. Customer collaboration over contract negotiation.
+            Responding to change over following a plan. That is, while there is
+            value in the items on the right, we value the items on the left
+            more.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Timeline">
+        <div class="slide-inner theme-teal">
+          <div class="timeline-split">
+            <div class="timeline">
+              <div class="timeline-item fragment" data-tl="0">
+                <span class="timeline-date">Jun 2020</span>
+                GPT-3
+              </div>
+              <div class="timeline-item fragment" data-tl="1">
+                <span class="timeline-date">Oct 2021</span>
+                GitHub CoPilot
+              </div>
+              <div class="timeline-item fragment" data-tl="2">
+                <span class="timeline-date">Nov 2022</span>
+                ChatGPT
+              </div>
+              <div class="timeline-item fragment" data-tl="3">
+                <span class="timeline-date">Mar 2023</span>
+                GPT-4 &amp; Claude
+              </div>
+              <div class="timeline-item fragment" data-tl="4">
+                <span class="timeline-date">Jun 2024</span>
+                Multimodal GPT-4o
+              </div>
+              <div class="timeline-item fragment" data-tl="5">
+                <span class="timeline-date">Feb 2025</span>
+                Claude Code
+              </div>
+              <div class="timeline-item fragment" data-tl="6">
+                <span class="timeline-date">Feb 2025</span>
+                <em>«Vibe Coding»</em> enters the chat
+              </div>
+              <div class="timeline-item fragment" data-tl="7">
+                <span class="timeline-date">Jun 2025</span>
+                GPT-5 &amp; Codex
+              </div>
+              <div class="timeline-item fragment" data-tl="8">
+                <span class="timeline-date">Feb 2026</span>
+                Agentic Engineering
+              </div>
             </div>
-            <div class="x-post-author">
-              <span class="x-post-name">Andrej Karpathy <span class="x-post-verified"></span></span>
-              <a href="https://twitter.com/karpathy" target="_blank" class="x-post-handle">@karpathy</a>
+            <div class="timeline-visual">
+              <img
+                data-tl-img="0"
+                src="https://miro.medium.com/1*mhF99YFncF70pSVe5jr76Q.png"
+                alt="GPT-3"
+              />
+              <img
+                data-tl-img="1"
+                src="https://github.gallerycdn.vsassets.io/extensions/github/copilotvs/1.206.0.0/1719349649662/Microsoft.VisualStudio.Services.Icons.Default"
+                alt="GitHub Copilot"
+              />
+              <img
+                data-tl-img="2"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png"
+                alt="ChatGPT"
+              />
+              <img
+                data-tl-img="3"
+                src="https://avatars.slack-edge.com/2025-05-14/8891273522918_30c38bf627ac73075db6_512.png"
+                alt="GPT-4 & Claude"
+              />
+              <img
+                data-tl-img="4"
+                src="https://wp.technologyreview.com/wp-content/uploads/2024/05/Screenshot-2024-05-13_crop.jpg"
+                alt="GPT-4o"
+              />
+              <img
+                data-tl-img="5"
+                src="https://preview.redd.it/whats-claude-code-v0-f1vrmqb645le1.jpeg?width=640&crop=smart&auto=webp&s=054fd333b56291f1dd6d2609fd48ea4db554672b"
+                alt="Claude Code"
+              />
+              <img
+                data-tl-img="6"
+                src="https://pbs.twimg.com/media/HAxGMg1aAAE4JYL?format=jpg&name=900x900"
+                alt="Vibe coding"
+              />
+              <img
+                data-tl-img="7"
+                src="https://persistent.oaistatic.com/codex/icon.png"
+                alt="Codex"
+              />
+              <img
+                data-tl-img="8"
+                src="https://pbs.twimg.com/media/HAZReLhXkAARUzG.jpg"
+                alt="Agentic engineering"
+              />
             </div>
           </div>
-          <div class="x-post-content">
-            My current favourite term: <strong>«agentic engineering»</strong>. «Agentic» because the new default is that you are <strong>not writing the code directly 99% of the time</strong>, you are orchestrating agents who do and acting as oversight. «Engineering» to emphasise that there is an art &amp; science and expertise to it.
-          </div>
-          <div class="x-post-date">
-            <span class="highlighter">Feb 4, 2026</span>
-          </div>
+          <aside class="notes">
+            Her er de grove trekkene på hva som har skjedd. Merk den
+            bemerkelsesverdig korte tidslinjen vi opererer innenfor her. Fra
+            ChatGPT i november 2022 til i dag — det er litt over tre år.
+          </aside>
         </div>
-      </div>
-      <aside class="notes">
-        To tweets fra Andrej Karpathy — medgrunnlegger OpenAI, tidligere AI-sjef Tesla. Til venstre: februar 2025, han minter begrepet «vibe coding» — glem at koden eksisterer. Til høyre: ett år senere, «agentic engineering» — du orkestrerer agenter og opptrer som oversight. Merk skiftet: det krever fortsatt ekspertise, men av en annen type.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Where do we go?">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/jon-tyson-kSCxSeLagDg-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content">
-        <h1>Hvor går veien nå?</h1>
-      </div>
-      <aside class="notes">
-        Vibes til agentisk koding har skjedd på ett år. Vi har så smått hørt om LLM-er til nå er seks år. Hvor er vi i 2027? I 2032?
-
-        Retreat. Same place, some new people. Blant deltakerne var Martin Fowler, Kent Beck, Steve Yegge, Gene Kim og Annie Vella.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Some Thoughtworks">
-    <div class="slide-inner">
-      <h2>Thoughtworks Retreat</h2>
-      <div class="gap"></div>
-      <p>Underlaget kan leses i rapporten<br>
-        <a href="https://www.thoughtworks.com/content/dam/thoughtworks/documents/report/tw_future%20_of_software_development_retreat_%20key_takeaways.pdf" target="_blank" style="color: var(--miles-red);">
-          Takeaways from the future of software development
-        </a>
-      </p>
-      <img class="fragment fowler-cutout" src="public/martin fowler.png" alt="Martin Fowler">
-      <aside class="notes">
-        Thoughtworks samlet noen av de mest innflytelsesrike stemmene i bransjen for et retreat om fremtiden for programvareutvikling. Martin Fowler, Kent Beck, Steve Yegge, Gene Kim og flere. Det som følger er nøkkelinnsiktene fra dette retreatet.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Where does the rigor go?">
-    <div class="slide-inner theme-teal">
-      <span class="horizon-badge">Now</span>
-      <h2>Where does the rigor go?</h2>
-      <div class="rigor-map">
-        <div class="rigor-source">Engineering<br>Quality</div>
-        <div class="rigor-targets">
-          <div class="rigor-node fragment" data-rigor-idx="0">Specs</div>
-          <div class="rigor-node fragment" data-rigor-idx="1">Tests</div>
-          <div class="rigor-node fragment" data-rigor-idx="2">Constraints</div>
-          <div class="rigor-node fragment" data-rigor-idx="3">Risk Management</div>
+      </section>
+      <section class="slide" data-title="Karpathy: to tweets">
+        <div class="slide-inner theme-teal text-center">
+          <div class="x-posts-row x-posts-animated">
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/karpathy"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@karpathy</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                There's a new kind of coding I call
+                <strong>«vibe coding»</strong>, where you fully give in to the
+                vibes, embrace exponentials, and forget that the code even
+                exists.
+              </div>
+              <div class="x-post-date">
+                <span class="highlighter">Feb 2, 2025</span>
+              </div>
+            </div>
+            <div class="x-post x-post-large">
+              <div class="x-post-header">
+                <div class="x-post-avatar">
+                  <img
+                    src="public/karpathy.jpg"
+                    alt="Karpathy"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="x-post-author">
+                  <span class="x-post-name"
+                    >Andrej Karpathy <span class="x-post-verified"></span
+                  ></span>
+                  <a
+                    href="https://twitter.com/karpathy"
+                    target="_blank"
+                    class="x-post-handle"
+                    >@karpathy</a
+                  >
+                </div>
+              </div>
+              <div class="x-post-content">
+                My current favourite term:
+                <strong>«agentic engineering»</strong>. «Agentic» because the
+                new default is that you are
+                <strong>not writing the code directly 99% of the time</strong>,
+                you are orchestrating agents who do and acting as oversight.
+                «Engineering» to emphasise that there is an art &amp; science
+                and expertise to it.
+              </div>
+              <div class="x-post-date">
+                <span class="highlighter">Feb 4, 2026</span>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            To tweets fra Andrej Karpathy — medgrunnlegger OpenAI, tidligere
+            AI-sjef Tesla. Til venstre: februar 2025, han minter begrepet «vibe
+            coding» — glem at koden eksisterer. Til høyre: ett år senere,
+            «agentic engineering» — du orkestrerer agenter og opptrer som
+            oversight. Merk skiftet: det krever fortsatt ekspertise, men av en
+            annen type.
+          </aside>
         </div>
-      </div>
-      <aside class="notes">
-        Where does the rigor go? Engineering quality doesn't disappear when AI writes code. It migrates to specs, tests, constraints, and risk management. The Thoughtworks retreat spent more time on this than any other question.
+      </section>
+      <section class="slide" data-title="Hvor går veien?">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/jon-tyson-kSCxSeLagDg-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Hvor går veien nå?</h1>
+          </div>
+          <aside class="notes">
+            Vibes til agentisk koding har skjedd på ett år. Vi har så smått hørt
+            om LLM-er til nå er seks år. Hvor er vi i 2027? I 2032? Retreat.
+            Same place, some new people. Blant deltakerne var Martin Fowler,
+            Kent Beck, Steve Yegge, Gene Kim og Annie Vella.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Thoughtworks Retreat">
+        <div class="slide-inner">
+          <h2>Thoughtworks Retreat, Februar 2026</h2>
+          <div class="gap"></div>
+          <p>
+            <a style="color: var(--miles-red);"
+              href="https://www.thoughtworks.com/content/dam/thoughtworks/documents/report/tw_future%20_of_software_development_retreat_%20key_takeaways.pdf"
+              target="_blank"
+            >
+              Takeaways from the future of software development
+            </a>
+          </p>
+          <img
+            class="fowler-cutout"
+            src="public/martin fowler.png"
+            alt="Martin Fowler"
+          />
+          <aside class="notes">
+            Thoughtworks samlet noen av de mest innflytelsesrike stemmene i
+            bransjen for et retreat om fremtiden for programvareutvikling.
+            Martin Fowler, Kent Beck, Steve Yegge, Gene Kim og flere. Det som
+            følger er nøkkelinnsiktene fra dette retreatet.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Hvor tar grundigheten veien?">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/daniil-komov-jXyaodR8dWk-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <span class="horizon-badge">Nå</span>
+            <h2>Hvor tar grundigheten veien?</h2>
+            <div class="rigor-map">
+              <div class="rigor-source">Ingeniør-<br />kvalitet</div>
+              <div class="rigor-targets">
+                <div class="rigor-node fragment" data-rigor-idx="0">
+                  Spesifikasjoner
+                </div>
+                <div class="rigor-node fragment" data-rigor-idx="1">Tester</div>
+                <div class="rigor-node fragment" data-rigor-idx="2">
+                  Begrensninger
+                </div>
+                <div class="rigor-node fragment" data-rigor-idx="3">
+                  Risikostyring
+                </div>
+              </div>
+            </div>
+          </div>
+          <aside class="notes">
+            Hvor tar grundigheten veien? Ingeniørkvalitet forsvinner ikke når AI
+            skriver kode. Den migrerer til spesifikasjoner, tester,
+            begrensninger og risikostyring. Thoughtworks-retreatet brukte mer
+            tid på dette enn noe annet spørsmål.
 
-        "Pre-reviewing the plans and post-reviewing engineering."
-      </aside>
+            <h1>Fra kodegjennomgang<br />til risikosortering</h1>
+
+            "Pre-reviewing the plans and post-reviewing engineering." Photo:
+            Daniil Komov / Unsplash
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Produktivitetsparadokset">
+        <div class="slide-inner">
+          <span class="horizon-badge">Nå</span>
+          <h1>Produktivitets- / opplevelsesparadokset</h1>
+          <quote style="font-size: 1.3em; opacity: 0.8"
+            >"... test-driven development produces dramatically better results
+            from AI coding agents."</quote
+          >
+          <aside class="notes">
+            Utviklerproduktivitet og utvikleropplevelse kobles fra hverandre.
+            Organisasjoner står overfor vanskelige valg om hva de skal
+            optimalisere. Du kan gjøre utviklerne mer produktive med AI-verktøy,
+            men det betyr ikke nødvendigvis at de trives bedre. Testsuiter som
+            førsteklasses artefakter. TDD som ingeniørpraksis. Mekanismen er
+            spesifikk: TDD forhindrer en feilmodus der agenter skriver tester
+            som verifiserer feil oppførsel. Når testene eksisterer før koden,
+            kan ikke agentene jukse ved å skrive en test som bare bekrefter den
+            feilaktige implementasjonen de produserte.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Sikkerhet som ettertanke">
+        <div class="slide-inner">
+          <span class="horizon-badge">Nå</span>
+          <h1>
+            "The retreat noted with concern that the security session had low
+            attendance"
+          </h1>
+          <aside class="notes">
+            Agentsikkerhet er sørgelig underutviklet. E-posttilgang alene kan
+            muliggjøre full kontoovertakelse. Sikkerhet har alltid vært
+            stemoderlig behandlet, men i en verden med autonome agenter blir
+            konsekvensene mye større.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Den midterste løkken">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/les-taylor-99hZ8MfNWiI-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <span class="horizon-badge">Nå–1 år</span>
+            <h1>Den midterste løkken</h1>
+          </div>
+          <aside class="notes">
+            En ny kategori av tilsynsarbeid innen programvareutvikling tar form
+            mellom den indre løkken (koding) og den ytre løkken (leveranse).
+            Ingen har navngitt den ennå. Programvareutvikling har lenge blitt
+            beskrevet med to løkker. Den indre løkken er utviklerens personlige
+            syklus med skriving, testing og feilsøking. Den ytre løkken er den
+            bredere leveransesyklusen med CI/CD, deploy og drift. Retreatet
+            identifiserte en tredje: en midterste løkke med tilsynsarbeid som
+            sitter mellom dem.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Kognitiv gjeld">
+        <div class="slide-inner">
+          <span class="horizon-badge">Nå–1 år</span>
+          <h1>Kontinuerlig forståelse<br />bekjemper kognitiv gjeld</h1>
+          <div class="gap"></div>
+          <p style="font-size: 1.3em">Parprogrammering med 🙋🏼‍♂️🙋🏾‍♀️🤖</p>
+          <aside class="notes">
+            Teknisk gjeld blir til kognitiv gjeld: gapet mellom
+            systemkompleksitet og menneskelig forståelse. Parprogrammering med
+            en AI-agent er en ny form for kontinuerlig forståelse.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Agenttopologier">
+        <div class="slide-inner">
+          <span class="horizon-badge">1–3 år</span>
+          <h1>Team Topologies 🤝🏻<br />Agent Topologies</h1>
+          <div class="gap"></div>
+          <p>Conways lov pensjonerte seg ikke. Den ble mer komplisert.</p>
+          <aside class="notes">
+            Conways lov gjelder også for agenter. Virksomhetsarkitektur må nå ta
+            høyde for agentmobilitet, spesialisering og agentdrift. Hvis
+            organisasjoner designer systemer som speiler
+            kommunikasjonsstrukturene deres, hva skjer når agenter blir
+            førsteklasses deltakere i disse strukturene? Hva betyr det når vi
+            skal organisere oss, ikke bare for mennesker, men også mer eller
+            mindre autonome agenter som jobber i organisasjonen?
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Beslutningsutmattelse">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/joel-timothy-Meqj68Yjp3k-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content text-center">
+            <h1>Beslutningsutmattelse</h1>
+          </div>
+          <aside class="notes">
+            Hvis agenter kan produsere arbeid raskere enn ledere kan gjennomgå
+            og godkjenne det, flyttes flaskehalsen fra produksjonskapasitet til
+            beslutningskapasitet. Mellomledere som tidligere fungerte som
+            koordineringspunkter blir nå godkjenningsflaskehalser. Flere
+            praktikere rapporterte at dette allerede skjer i deres
+            organisasjoner: agenter genererer jobbspesifikasjoner, kodefiks og
+            funksjonsimplementasjoner raskere enn noen kan si ja. Retreatet
+            stilte et spissformulert spørsmål: hvis mennesker har
+            kapasitetsgrenser for å forstå systemer, men agenter ikke har det —
+            trenger vi like mange mellomledere?
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Selvhelbredende systemer">
+        <div class="slide-inner">
+          <span class="horizon-badge">2–5 år</span>
+          <h1>Selvhelbredende systemer</h1>
+          <div class="gap"></div>
+          <p>.. selvforbedrende (?)</p>
+          <aside class="notes">
+            Å gå fra menneskelig hendelsesrespons til agentassistert helbredelse
+            krever at vi først løser problemet med «latent kunnskap».
+            Seniorutvikleren som drikker te og sier "nei, dette kan gå galt" er
+            i sin personlighet langt fra dagens språkmodeller.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="AI erstatter oss ikke">
+        <div class="slide-inner theme-teal text-center">
+          <h1>AI erstatter oss ikke,<br />men endrer hva vi gjør</h1>
+          <div class="gap"></div>
+          <p>
+            "Nobody at the retreat could define what product managers will do in
+            an AI-driven world."
+          </p>
+          <aside class="notes">
+            Kunnskapsfragmentering, kulturelle gap mellom disipliner og uklare
+            rollegrenser fantes før AI. AI gjør det bare dyrere å ignorere dem.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Agentisk operativsystem">
+        <div class="slide-inner theme-teal">
+          <h2 class="fragment">ChatGPT</h2>
+          <h2 class="fragment" style="margin-top: 0.3em">→ Agentramme</h2>
+          <h2 class="fragment" style="margin-top: 0.3em">
+            → Agentisk operativsystem
+          </h2>
+          <aside class="notes">
+            Retreatet utforsket hva et operativsystem for agenter må inneholde:
+            - Agentidentitet og tilgangsstyring. - Minne og
+            kontekstvindu-håndtering. - En arbeidsjournal som fanger fremtidig,
+            nåværende og tidligere arbeid med attributter som nødvendige
+            ferdigheter, akseptansekriterier, SLO-er og kostnadsbegrensninger. -
+            Styringsstier gjennom en graf over agentkapabiliteter og
+            samsvarskrav. En sentral innsikt var at en agent er mer enn sin
+            persona, sine mål eller sin nåværende kontekst — den inkluderer
+            historikken over arbeidet den har utført. Arbeidsjournalen ble den
+            sentrale primitiven i dette nye operativsystemet, analogt med en
+            finansiell blokkjede: søkbar, reviderbar, og som lar agenter oppdage
+            og by på arbeid.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Smidig utvikler seg">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/agile-manifesto.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Smidig utvikler seg, den dør ikke</h1>
+            <div class="gap"></div>
+            <ul>
+              <li class="fragment">CI / CD</li>
+              <li class="fragment">TDD</li>
+              <li class="fragment">Parprogrammering</li>
+              <li class="fragment">Ensemble-utvikling</li>
+              <li class="fragment"><s>Seremonier</s> ?</li>
+            </ul>
+          </div>
+          <aside class="notes">
+            Retreatet tok et kraftig oppgjør med narrativet om at «smidig er
+            dødt». Det som skjer er mer nyansert. Noen team komprimerer
+            sprintkadens til én uke og bruker AI til å automatisere seremonier
+            som demoer, rapportering og statusoppdateringer. Andre gjenoppdager
+            XP-praksiser (parprogrammering, ensemble-utvikling, kontinuerlig
+            integrasjon) fordi disse praksisene skaper de tette
+            tilbakemeldingsløkkene og den delte forståelsen som agentassistert
+            utvikling krever.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Smidig vs. styring">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/david-clode-RyJAmuH9GMk-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content text-center">
+            <h1>AI hjelper ikke når organisasjonen bruker tiden på politikk</h1>
+          </div>
+          <aside class="notes">
+            Den virkelige trusselen mot smidig er styring. Team som tar i bruk
+            AI-verktøy og jobber raskere, treffer fortsatt de samme
+            godkjenningsprosessene, samsvarskontrollene og organisatoriske
+            avhengighetene. Uten å reformere styring parallelt med
+            utviklingspraksiser, treffer raskere team bare de samme veggene
+            tidligere. Retreatet la vekt på å involvere internrevisjon og
+            styringsfunksjoner tidlig når man tenker nytt om teampraksiser,
+            fremfor å behandle dem som hindringer man navigerer rundt senere.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Ombygging av fabrikken">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/the-royal-danish-library-EXMSsg40Jvo-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Må vi bygge om?<br />I så fall, hva?</h1>
+            <div class="gap"></div>
+            <p>Verdien kommer med bedre prosesser</p>
+          </div>
+          <aside class="notes">
+            Den virkelige verdien av ny teknologi kommer gjerne først når vi
+            bygger om våre arbeidsprosesser, og tenker på helt nye måter.
+            Elektrifiseringen av fabrikk-gulvet ga verdi da vi bygde om
+            fabrikken, det holdt ikke å bare bytte kull med strøm.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Åpne Spørsmål">
+        <div class="slide-inner theme-teal">
+          <h2>Åpne Spørsmål</h2>
+          <div class="fade-cycle">
+            <div class="fragment">Om arbeid og identitet</div>
+            <div class="fragment">Om organisasjonsdesign</div>
+            <div class="fragment">Om tillit og verifisering</div>
+            <div class="fragment">Om kunnskap og forståelse</div>
+            <div class="fragment">Om fart og stabilitet</div>
+          </div>
+          <aside class="notes">
+            Retreatet avdekket flere spørsmål enn svar. Om arbeid og identitet:
+            Hvordan hjelper vi ingeniører som elsker å skrive kode med å finne
+            mening og tilfredshet i tilsynsarbeid? Hvilke karriereveier leder
+            til den midterste løkken? Om organisasjonsdesign: Hvis agenter gjør
+            mellomledelsens flaskehalser mer synlige, innebærer organisasjonens
+            respons færre ledere, annerledes kompetente ledere, eller en
+            fundamentalt annen koordineringsmodell? Om tillit og verifisering:
+            Hva må være sant for at organisasjoner helt skal slutte å gjennomgå
+            AI-generert kode? Finnes det en verden der testsuiter og
+            begrensninger gir tilstrekkelig verifisering uten menneskelig
+            inspeksjon? Om kunnskap og forståelse: Hvis kode endres raskere enn
+            mennesker kan forstå den, trenger vi en ny modell for å opprettholde
+            institusjonell kunnskap? Om fart og stabilitet: Er vi i en regresjon
+            der AI-drevne produktivitetsgevinster oppveies av stabilitetstap fra
+            større batchstørrelser?
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Vi vet lite">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/adrian-mag-USWGg0oUAsI-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content text-center">
+            <h1>
+              "The map is being redrawn and the people best positioned to draw
+              it are the ones willing to admit how much they don't yet know."
+            </h1>
+          </div>
+          <aside class="notes">
+            Kartet tegnes på nytt. De som er best posisjonert til å tegne det er
+            de som er villige til å innrømme hvor lite de vet.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Robert Frost">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/adrian-mag-USWGg0oUAsI-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content text-center">
+            <h1>"The best way out is always through."</h1>
+            <div class="gap"></div>
+            <p>— Robert Frost</p>
+          </div>
+          <aside class="notes">
+            The best way out is always through. ... Claude blir bare bedre.
+            Maskinene er i ferd med å bli veldig gode på å være maskiner. Jeg
+            synes vi skal være veldig gode på å være mennesker.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Avslutning">
+        <div class="slide-inner theme-title-center logo-center">
+          <img src="public/miles-logo-red.svg" alt="Miles" />
+        </div>
+      </section>
     </div>
-  </section>
-  <section class="slide" data-title="Code review → risk tiering">
-    <div class="slide-inner">
-      <span class="horizon-badge">Now</span>
-      <h1>From code review<br>to risk tiering</h1>
-      <aside class="notes">
-        Code review is being unbundled. Its four functions — mentorship, consistency, correctness, trust — each need a new home. Vi kan ikke lenger bare ha en runde code review som fanger alt. Vi må tenke mer bevisst om hva vi prøver å fange, og når.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Productivity paradox">
-    <div class="slide-inner">
-      <span class="horizon-badge">Now</span>
-      <h1>The productivity /<br>experience paradox</h1>
-      <aside class="notes">
-        Developer productivity and developer experience are decoupling. Organizations face hard choices about which to optimize. Du kan gjøre utviklerne mer produktive med AI-verktøy, men det betyr ikke nødvendigvis at de trives bedre.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="TDD FTW">
-    <div class="slide-inner theme-teal text-center">
-      <h1>"... test-driven development produces dramatically better results from AI coding agents."</h1>
-      <aside class="notes">
-        Test-suites as first-class artifacts. TDD som engineering-praksis.
 
-        The mechanism is specific: TDD prevents a failure mode where agents write tests that verify broken behavior. When the tests exist before the code, agents cannot cheat by writing a test that simply confirms whatever incorrect implementation they produced.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Security as afterthought">
-    <div class="slide-inner">
-      <span class="horizon-badge">Now</span>
-      <h1>"The retreat noted with concern that the security session had low attendance"</h1>
-      <aside class="notes">
-        Agent security is woefully underdeveloped. Email access alone can enable full account takeover. Sikkerhet har alltid vært stemoderlig behandlet, men i en verden med autonome agenter blir konsekvensene mye større.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="The middle loop">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/les-taylor-99hZ8MfNWiI-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content">
-        <span class="horizon-badge">Now–1 yr</span>
-        <h1>The middle loop</h1>
-      </div>
-      <aside class="notes">
-        A new category of supervisory engineering work is forming between inner-loop coding and outer-loop delivery. Nobody has named it yet.
+    <!-- Progress bar & counter -->
+    <div class="progress"></div>
+    <div class="slide-counter"></div>
 
-        Software development has long been described in terms of two loops. The inner loop is the developer's personal cycle of writing, testing and debugging code. The outer loop is the broader delivery cycle of CI/CD, deployment and operations. The retreat identified a third: a middle loop of supervisory engineering work that sits between them.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Cognitive debt">
-    <div class="slide-inner">
-      <span class="horizon-badge">Now–1 yr</span>
-      <h1>Continuous Comprehension<br>fights Cognitive Debt</h1>
-      <div class="gap"></div>
-      <p style="font-size: 1.3em;">Pair programming with 🙋🏼‍♂️🙋🏾‍♀️🤖</p>
-      <aside class="notes">
-        Technical debt is becoming cognitive debt: the gap between system complexity and human understanding. Parprogrammering med en AI-agent er en ny form for kontinuerlig forståelse.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Agent topologies">
-    <div class="slide-inner">
-      <span class="horizon-badge">1–3 yrs</span>
-      <h1>Team Topologies 🤝🏻<br>Agent Topologies</h1>
-      <div class="gap"></div>
-      <p>Conway's Law didn't retire. It got more complicated.</p>
-      <aside class="notes">
-        Conway's Law applies to agents too. Enterprise architecture must now account for agent mobility, specialization, and agent drift.
+    <!-- Scripts -->
+    <script src="public/highlight.min.js"></script>
+    <script src="public/qrcode.min.js"></script>
+    <script src="js/slides.js"></script>
 
-        If organizations design systems that mirror their communication structures, what happens when agents become first-class participants in those structures?
+    <!-- Timeline image sync -->
+    <script>
+      (function () {
+        const visual = document.querySelector(".timeline-visual");
+        if (!visual) return;
+        const imgs = visual.querySelectorAll("img[data-tl-img]");
+        const observer = new MutationObserver(function () {
+          const visibleItems = document.querySelectorAll(
+            ".timeline-item.fragment.visible[data-tl]",
+          );
+          const lastIdx = visibleItems.length
+            ? visibleItems[visibleItems.length - 1].dataset.tl
+            : null;
+          imgs.forEach(function (img) {
+            img.classList.toggle("tl-visible", img.dataset.tlImg === lastIdx);
+          });
+        });
+        document
+          .querySelectorAll(".timeline-item.fragment[data-tl]")
+          .forEach(function (item) {
+            observer.observe(item, {
+              attributes: true,
+              attributeFilter: ["class"],
+            });
+          });
+      })();
+    </script>
 
-        Hva betyr det når vi skal organisere oss, ikke bare for mennesker, men også mer eller mindre autonome agenter som jobber i organisasjonen?
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Decision Fatigue">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/joel-timothy-Meqj68Yjp3k-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content text-center">
-        <h1>Decision Fatigue</h1>
-      </div>
-      <aside class="notes">
-        If agents can produce work faster than leaders can review and approve it, the constraint shifts from production capacity to decision-making capacity. Middle managers who previously served as coordination points now become approval bottlenecks.
+    <!-- Rigor map: draw lines + sync visibility -->
+    <script>
+      (function () {
+        var container = document.querySelector(".rigor-map");
+        if (!container) return;
+        var source = container.querySelector(".rigor-source");
+        var nodes = container.querySelectorAll(".rigor-node[data-rigor-idx]");
+        if (!nodes.length) return;
 
-        Several practitioners reported this already happening at their organizations: agents generating job specifications, code fixes and feature implementations faster than anyone can say yes.
+        // Create overlay SVG
+        var ns = "http://www.w3.org/2000/svg";
+        var svg = document.createElementNS(ns, "svg");
+        svg.classList.add("rigor-lines");
+        container.appendChild(svg);
 
-        The retreat asked a pointed question: if humans have capacity limits for understanding systems but agents do not, do we need as many middle managers?
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Knowledge graphs">
-    <div class="slide-inner">
-      <span class="horizon-badge">1–3 yrs</span>
-      <h1>Knowledge graphs &amp;<br>semantic layers</h1>
-      <aside class="notes">
-        Decades-old technologies are suddenly relevant again as the grounding layer for domain-aware agents. Kunnskapsgrafer og semantiske lag gir agentene forståelse for domenet — noe de ikke får fra koden alene.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Future of roles">
-    <div class="slide-inner">
-      <span class="horizon-badge">1–3 yrs</span>
-      <h1>The future of roles</h1>
-      <aside class="notes">
-        PM, developer, and designer roles are converging. Staff engineers face new expectations. Juniors are more valuable than ever — de ser ting med friske øyne og stiller spørsmål seniorene har sluttet å stille.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Self-healing systems">
-    <div class="slide-inner">
-      <span class="horizon-badge">2–5 yrs</span>
-      <h1>Self-healing systems</h1>
-      <div class="gap"></div>
-      <p>.. self-improving (?)</p>
-      <aside class="notes">
-        Moving from human incident response to agent-assisted healing requires solving the 'latent knowledge' problem first.
+        var paths = [];
+        nodes.forEach(function () {
+          var p = document.createElementNS(ns, "path");
+          svg.appendChild(p);
+          paths.push(p);
+        });
 
-        Seniorutvikleren som drikker te og sier "nei, dette kan gå galt" er i sin personlighet langt fra dagens språkmodeller.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="AI will not replace us">
-    <div class="slide-inner theme-teal text-center">
-      <h1>AI will not replace us,<br>but shift what we do</h1>
-      <div class="gap"></div>
-      <p>"Nobody at the retreat could define what product managers will do in an AI-driven world."</p>
-      <aside class="notes">
-        Knowledge fragmentation, cultural gaps between disciplines and unclear role boundaries existed before AI. AI is simply making them more expensive to ignore.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Agentic operating system">
-    <div class="slide-inner theme-teal">
-      <h2 class="fragment">ChatGPT</h2>
-      <h2 class="fragment" style="margin-top: 0.3em;">→ Agent Harness</h2>
-      <h2 class="fragment" style="margin-top: 0.3em;">→ Agentic Operating System</h2>
-      <aside class="notes">
-        The retreat explored what an operating system for agents would need to include:
-        - Agent identity and permission management.
-        - Memory and context-window management.
-        - A work ledger that captures future, current and past work with attributes like required skills, acceptance criteria, SLOs and cost constraints.
-        - Governance paths through a graph of agent capabilities and compliance requirements.
+        function drawLines() {
+          var w = container.offsetWidth;
+          var h = container.offsetHeight;
+          svg.setAttribute("viewBox", "0 0 " + w + " " + h);
 
-        A central insight was that an agent is more than its persona, goals or current context; it includes the history of work it has performed. The work ledger emerged as the core primitive of this new operating system, analogous to a financial blockchain: searchable, auditable and enabling agents to discover and bid for work.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Evolving not dying">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/agile-manifesto.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content">
-        <h1>Agile is evolving, not dying</h1>
-        <div class="gap"></div>
-        <ul>
-          <li class="fragment">CI / CD</li>
-          <li class="fragment">TDD</li>
-          <li class="fragment">Pair Programming</li>
-          <li class="fragment">Ensemble Development</li>
-          <li class="fragment"><s>Ceremonies</s> ?</li>
-        </ul>
-      </div>
-      <aside class="notes">
-        The retreat pushed back hard on the "agile is dead" narrative. What is happening is more nuanced. Some teams are compressing sprint cadences to one week, using AI to automate end-of-sprint ceremonies like demos, reporting and status summaries. Others are rediscovering XP practices (pair programming, ensemble development, continuous integration) because these practices create the tight feedback loops and shared understanding that agent-assisted development requires.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Agile vs Governance">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/david-clode-RyJAmuH9GMk-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content text-center">
-        <h1>AI hjelper ikke når organisasjonen bruker tiden på politikk</h1>
-      </div>
-      <aside class="notes">
-        The real threat to agile is governance. Teams that adopt AI tools and work faster still run into the same approval processes, compliance gates and organizational dependencies. Without reforming governance alongside development practices, faster teams just hit the same walls sooner.
+          // getBoundingClientRect is scaled by CSS transform, so find the scale
+          var cr = container.getBoundingClientRect();
+          var scale = cr.width / w;
 
-        The retreat emphasized involving internal audit and governance functions early when rethinking team practices, rather than treating them as obstacles to be navigated later.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Ombygging av fabrikken">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/the-royal-danish-library-EXMSsg40Jvo-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content">
-        <h1>Må vi bygge om?<br>I så fall, hva?</h1>
-        <div class="gap"></div>
-        <p>Verdien kommer med bedre prosesser</p>
-      </div>
-      <aside class="notes">
-        Den virkelige verdien av ny teknologi kommer gjerne først når vi bygger om våre arbeidsprosesser, og tenker på helt nye måter. Elektrifiseringen av fabrikk-gulvet ga verdi da vi bygde om fabrikken, det holdt ikke å bare bytte kull med strøm.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Åpne Spørsmål">
-    <div class="slide-inner theme-teal">
-      <h2>Åpne Spørsmål</h2>
-      <div class="fade-cycle">
-        <div class="fragment">On work and identity</div>
-        <div class="fragment">On organizational design</div>
-        <div class="fragment">On trust and verification</div>
-        <div class="fragment">On knowledge and comprehension</div>
-        <div class="fragment">On speed and stability</div>
-      </div>
-      <aside class="notes">
-        The retreat surfaced more questions than answers.
+          // Position relative to container, compensating for scale
+          function rel(el) {
+            var r = el.getBoundingClientRect();
+            return {
+              x: (r.left - cr.left) / scale,
+              y: (r.top - cr.top) / scale,
+              w: r.width / scale,
+              h: r.height / scale,
+            };
+          }
 
-        On work and identity: How do we help engineers who love writing code find meaning and satisfaction in supervisory engineering work? What professional development pathways lead to the middle loop?
+          var s = rel(source);
+          var sx = s.x + s.w; // right edge of source
+          var sy = s.y + s.h / 2; // vertical center of source
 
-        On organizational design: If agents make middle management bottlenecks more visible, does the organizational response involve fewer managers, differently-skilled managers or a fundamentally different coordination model?
+          nodes.forEach(function (node, i) {
+            var n = rel(node);
+            var ex = n.x; // left edge of target
+            var ey = n.y + n.h / 2; // vertical center of target
+            var cpx = sx + (ex - sx) * 0.45;
+            paths[i].setAttribute(
+              "d",
+              "M" +
+                sx +
+                "," +
+                sy +
+                " C" +
+                cpx +
+                "," +
+                sy +
+                " " +
+                cpx +
+                "," +
+                ey +
+                " " +
+                ex +
+                "," +
+                ey,
+            );
+          });
+        }
 
-        On trust and verification: What would need to be true for organizations to stop reviewing AI-generated code entirely? Is there a world where test suites and constraints provide sufficient verification without human inspection?
+        // Draw after layout settles, and on resize / slide change
+        requestAnimationFrame(function () {
+          requestAnimationFrame(drawLines);
+        });
+        window.addEventListener("resize", drawLines);
+        // Redraw when slide becomes active (handles scaling)
+        new MutationObserver(drawLines).observe(container.closest(".slide"), {
+          attributes: true,
+          attributeFilter: ["class"],
+        });
 
-        On knowledge and comprehension: If code changes faster than humans can comprehend it, do we need a new model for maintaining institutional knowledge?
-
-        On speed and stability: Are we currently in a regression where AI-enabled productivity gains are being offset by stability losses from larger batch sizes?
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="You know nothing">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/adrian-mag-USWGg0oUAsI-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content text-center">
-        <h1>"The map is being redrawn and the people best positioned to draw it are the ones willing to admit how much they don't yet know."</h1>
-      </div>
-      <aside class="notes">
-        Kartet tegnes på nytt. De som er best posisjonert til å tegne det er de som er villige til å innrømme hvor lite de vet.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Robert Frost">
-    <div class="slide-inner has-bg">
-      <div class="bg" style="background-image: url('public/unsplash/adrian-mag-USWGg0oUAsI-unsplash.jpg')"></div>
-      <div class="bg-overlay"></div>
-      <div class="bg-content text-center">
-        <h1>"The best way out is always through."</h1>
-        <div class="gap"></div>
-        <p>— Robert Frost</p>
-      </div>
-      <aside class="notes">
-        The best way out is always through.
-
-        ... Claude blir bare bedre.
-
-        Maskinene er i ferd med å bli veldig gode på å være maskiner. Jeg synes vi skal være veldig gode på å være mennesker.
-      </aside>
-    </div>
-  </section>
-  <section class="slide" data-title="Closing">
-    <div class="slide-inner theme-title-center logo-center">
-      <img src="public/miles-logo-red.svg" alt="Miles">
-    </div>
-  </section>
-
-</div>
-
-<!-- Progress bar & counter -->
-<div class="progress"></div>
-<div class="slide-counter"></div>
-
-<!-- Scripts -->
-<script src="public/highlight.min.js"></script>
-<script src="public/qrcode.min.js"></script>
-<script src="js/slides.js"></script>
-
-<!-- Timeline image sync -->
-<script>
-(function () {
-  const visual = document.querySelector(".timeline-visual");
-  if (!visual) return;
-  const imgs = visual.querySelectorAll("img[data-tl-img]");
-  const observer = new MutationObserver(function () {
-    const visibleItems = document.querySelectorAll(
-      ".timeline-item.fragment.visible[data-tl]"
-    );
-    const lastIdx = visibleItems.length
-      ? visibleItems[visibleItems.length - 1].dataset.tl
-      : null;
-    imgs.forEach(function (img) {
-      img.classList.toggle("tl-visible", img.dataset.tlImg === lastIdx);
-    });
-  });
-  document
-    .querySelectorAll(".timeline-item.fragment[data-tl]")
-    .forEach(function (item) {
-      observer.observe(item, {
-        attributes: true,
-        attributeFilter: ["class"],
-      });
-    });
-})();
-</script>
-
-<!-- Rigor map: draw lines + sync visibility -->
-<script>
-(function () {
-  var container = document.querySelector(".rigor-map");
-  if (!container) return;
-  var source = container.querySelector(".rigor-source");
-  var nodes = container.querySelectorAll(".rigor-node[data-rigor-idx]");
-  if (!nodes.length) return;
-
-  // Create overlay SVG
-  var ns = "http://www.w3.org/2000/svg";
-  var svg = document.createElementNS(ns, "svg");
-  svg.classList.add("rigor-lines");
-  container.appendChild(svg);
-
-  var paths = [];
-  nodes.forEach(function () {
-    var p = document.createElementNS(ns, "path");
-    svg.appendChild(p);
-    paths.push(p);
-  });
-
-  function drawLines() {
-    var w = container.offsetWidth;
-    var h = container.offsetHeight;
-    svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-
-    // getBoundingClientRect is scaled by CSS transform, so find the scale
-    var cr = container.getBoundingClientRect();
-    var scale = cr.width / w;
-
-    // Position relative to container, compensating for scale
-    function rel(el) {
-      var r = el.getBoundingClientRect();
-      return {
-        x: (r.left - cr.left) / scale,
-        y: (r.top - cr.top) / scale,
-        w: r.width / scale,
-        h: r.height / scale
-      };
-    }
-
-    var s = rel(source);
-    var sx = s.x + s.w;          // right edge of source
-    var sy = s.y + s.h / 2;      // vertical center of source
-
-    nodes.forEach(function (node, i) {
-      var n = rel(node);
-      var ex = n.x;              // left edge of target
-      var ey = n.y + n.h / 2;    // vertical center of target
-      var cpx = sx + (ex - sx) * 0.45;
-      paths[i].setAttribute("d",
-        "M" + sx + "," + sy +
-        " C" + cpx + "," + sy + " " + cpx + "," + ey + " " + ex + "," + ey
-      );
-    });
-  }
-
-  // Draw after layout settles, and on resize / slide change
-  requestAnimationFrame(function () { requestAnimationFrame(drawLines); });
-  window.addEventListener("resize", drawLines);
-  // Redraw when slide becomes active (handles scaling)
-  new MutationObserver(drawLines).observe(
-    container.closest(".slide"),
-    { attributes: true, attributeFilter: ["class"] }
-  );
-
-  // Sync visibility: line appears with its node
-  var observer = new MutationObserver(function () {
-    nodes.forEach(function (node, i) {
-      paths[i].classList.toggle("rigor-visible", node.classList.contains("visible"));
-    });
-  });
-  nodes.forEach(function (node) {
-    observer.observe(node, { attributes: true, attributeFilter: ["class"] });
-  });
-})();
-</script>
-
-
-</body>
+        // Sync visibility: line appears with its node
+        var observer = new MutationObserver(function () {
+          nodes.forEach(function (node, i) {
+            paths[i].classList.toggle(
+              "rigor-visible",
+              node.classList.contains("visible"),
+            );
+          });
+        });
+        nodes.forEach(function (node) {
+          observer.observe(node, {
+            attributes: true,
+            attributeFilter: ["class"],
+          });
+        });
+      })();
+    </script>
+  </body>
 </html>
