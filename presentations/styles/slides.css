@@ -80,8 +80,6 @@ html, body {
   pointer-events: none;
   transition: opacity 0.4s ease, visibility 0s linear 0.4s;
   contain: content;
-  display: flex;
-  justify-content: center;
 }
 /* Allow bleed slides to paint outside the contain box */
 .slide:has(.photo-full),
@@ -97,17 +95,18 @@ html, body {
 }
 
 .slide-inner {
+  position: absolute;
+  left: 50%;
+  top: 0;
   width: var(--slide-width);
   height: var(--slide-height);
   padding: 64px 80px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
   overflow: hidden;
-  flex-shrink: 0;
   /* Scale set by JS via --slide-scale custom property */
-  transform: scale(var(--slide-scale, 1));
+  transform: translateX(-50%) scale(var(--slide-scale, 1));
   transform-origin: top center;
 }
 
