@@ -133,6 +133,7 @@
         text-align: center;
         padding: 0.6em 1em;
         border: 2px solid currentColor;
+        background-color: rgba(255, 255, 255, 0.2);
         border-radius: 12px;
         opacity: 0.9;
         flex-shrink: 0;
@@ -170,6 +171,7 @@
         padding: 0.5em 1.4em;
         border-radius: 8px;
         border: 1px solid currentColor;
+        background-color: rgba(255, 255, 255, 0.2);
         opacity: 0;
         white-space: nowrap;
         transition:
@@ -180,31 +182,6 @@
       .rigor-node.visible {
         opacity: 1;
         border-color: var(--teal);
-      }
-
-      /* ── Fade cycle (open questions) ── */
-      .fade-cycle {
-        position: relative;
-        min-height: 3em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex: 1;
-      }
-
-      .fade-cycle .fragment {
-        position: absolute;
-        font-family: "Gelica", serif;
-        font-weight: 500;
-        font-size: 2em;
-        text-align: center;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-      }
-
-      /* Only the last visible fragment is shown — pure CSS, no JS observer needed */
-      .fade-cycle .fragment.visible:not(:has(~ .fragment.visible)) {
-        opacity: 1;
       }
 
       /* ── Fowler cutout sticker ── */
@@ -265,102 +242,6 @@
             Responding to change over following a plan. That is, while there is
             value in the items on the right, we value the items on the left
             more.
-          </aside>
-        </div>
-      </section>
-      <section class="slide" data-title="Timeline">
-        <div class="slide-inner theme-teal">
-          <div class="timeline-split">
-            <div class="timeline">
-              <div class="timeline-item fragment" data-tl="0">
-                <span class="timeline-date">Jun 2020</span>
-                GPT-3
-              </div>
-              <div class="timeline-item fragment" data-tl="1">
-                <span class="timeline-date">Oct 2021</span>
-                GitHub CoPilot
-              </div>
-              <div class="timeline-item fragment" data-tl="2">
-                <span class="timeline-date">Nov 2022</span>
-                ChatGPT
-              </div>
-              <div class="timeline-item fragment" data-tl="3">
-                <span class="timeline-date">Mar 2023</span>
-                GPT-4 &amp; Claude
-              </div>
-              <div class="timeline-item fragment" data-tl="4">
-                <span class="timeline-date">Jun 2024</span>
-                Multimodal GPT-4o
-              </div>
-              <div class="timeline-item fragment" data-tl="5">
-                <span class="timeline-date">Feb 2025</span>
-                Claude Code
-              </div>
-              <div class="timeline-item fragment" data-tl="6">
-                <span class="timeline-date">Feb 2025</span>
-                <em>«Vibe Coding»</em> enters the chat
-              </div>
-              <div class="timeline-item fragment" data-tl="7">
-                <span class="timeline-date">Jun 2025</span>
-                GPT-5 &amp; Codex
-              </div>
-              <div class="timeline-item fragment" data-tl="8">
-                <span class="timeline-date">Feb 2026</span>
-                Agentic Engineering
-              </div>
-            </div>
-            <div class="timeline-visual">
-              <img
-                data-tl-img="0"
-                src="https://miro.medium.com/1*mhF99YFncF70pSVe5jr76Q.png"
-                alt="GPT-3"
-              />
-              <img
-                data-tl-img="1"
-                src="https://github.gallerycdn.vsassets.io/extensions/github/copilotvs/1.206.0.0/1719349649662/Microsoft.VisualStudio.Services.Icons.Default"
-                alt="GitHub Copilot"
-              />
-              <img
-                data-tl-img="2"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/512px-ChatGPT_logo.svg.png"
-                alt="ChatGPT"
-              />
-              <img
-                data-tl-img="3"
-                src="https://avatars.slack-edge.com/2025-05-14/8891273522918_30c38bf627ac73075db6_512.png"
-                alt="GPT-4 & Claude"
-              />
-              <img
-                data-tl-img="4"
-                src="https://wp.technologyreview.com/wp-content/uploads/2024/05/Screenshot-2024-05-13_crop.jpg"
-                alt="GPT-4o"
-              />
-              <img
-                data-tl-img="5"
-                src="https://preview.redd.it/whats-claude-code-v0-f1vrmqb645le1.jpeg?width=640&crop=smart&auto=webp&s=054fd333b56291f1dd6d2609fd48ea4db554672b"
-                alt="Claude Code"
-              />
-              <img
-                data-tl-img="6"
-                src="https://pbs.twimg.com/media/HAxGMg1aAAE4JYL?format=jpg&name=900x900"
-                alt="Vibe coding"
-              />
-              <img
-                data-tl-img="7"
-                src="https://persistent.oaistatic.com/codex/icon.png"
-                alt="Codex"
-              />
-              <img
-                data-tl-img="8"
-                src="https://pbs.twimg.com/media/HAZReLhXkAARUzG.jpg"
-                alt="Agentic engineering"
-              />
-            </div>
-          </div>
-          <aside class="notes">
-            Her er de grove trekkene på hva som har skjedd. Merk den
-            bemerkelsesverdig korte tidslinjen vi opererer innenfor her. Fra
-            ChatGPT i november 2022 til i dag — det er litt over tre år.
           </aside>
         </div>
       </section>
@@ -453,26 +334,6 @@
           </aside>
         </div>
       </section>
-      <section class="slide" data-title="Hvor går veien?">
-        <div class="slide-inner has-bg">
-          <div
-            class="bg"
-            style="
-              background-image: url(&quot;public/unsplash/jon-tyson-kSCxSeLagDg-unsplash.jpg&quot;);
-            "
-          ></div>
-          <div class="bg-overlay"></div>
-          <div class="bg-content">
-            <h1>Hvor går veien nå?</h1>
-          </div>
-          <aside class="notes">
-            Vibes til agentisk koding har skjedd på ett år. Vi har så smått hørt
-            om LLM-er til nå er seks år. Hvor er vi i 2027? I 2032? Retreat.
-            Same place, some new people. Blant deltakerne var Martin Fowler,
-            Kent Beck, Steve Yegge, Gene Kim og Annie Vella.
-          </aside>
-        </div>
-      </section>
       <section class="slide" data-title="Thoughtworks Retreat">
         <div class="slide-inner">
           <h2>Thoughtworks Retreat, Februar 2026</h2>
@@ -543,20 +404,11 @@
         <div class="slide-inner">
           <span class="horizon-badge">Nå</span>
           <h1>Produktivitets- / opplevelsesparadokset</h1>
-          <quote style="font-size: 1.3em; opacity: 0.8"
-            >"... test-driven development produces dramatically better results
-            from AI coding agents."</quote
-          >
           <aside class="notes">
             Utviklerproduktivitet og utvikleropplevelse kobles fra hverandre.
             Organisasjoner står overfor vanskelige valg om hva de skal
             optimalisere. Du kan gjøre utviklerne mer produktive med AI-verktøy,
-            men det betyr ikke nødvendigvis at de trives bedre. Testsuiter som
-            førsteklasses artefakter. TDD som ingeniørpraksis. Mekanismen er
-            spesifikk: TDD forhindrer en feilmodus der agenter skriver tester
-            som verifiserer feil oppførsel. Når testene eksisterer før koden,
-            kan ikke agentene jukse ved å skrive en test som bare bekrefter den
-            feilaktige implementasjonen de produserte.
+            men det betyr ikke nødvendigvis at de trives bedre.
           </aside>
         </div>
       </section>
@@ -575,41 +427,26 @@
           </aside>
         </div>
       </section>
-      <section class="slide" data-title="Den midterste løkken">
-        <div class="slide-inner has-bg">
-          <div
-            class="bg"
-            style="
-              background-image: url(&quot;public/unsplash/les-taylor-99hZ8MfNWiI-unsplash.jpg&quot;);
-            "
-          ></div>
-          <div class="bg-overlay"></div>
-          <div class="bg-content">
-            <span class="horizon-badge">Nå–1 år</span>
-            <h1>Den midterste løkken</h1>
-          </div>
-          <aside class="notes">
-            En ny kategori av tilsynsarbeid innen programvareutvikling tar form
-            mellom den indre løkken (koding) og den ytre løkken (leveranse).
-            Ingen har navngitt den ennå. Programvareutvikling har lenge blitt
-            beskrevet med to løkker. Den indre løkken er utviklerens personlige
-            syklus med skriving, testing og feilsøking. Den ytre løkken er den
-            bredere leveransesyklusen med CI/CD, deploy og drift. Retreatet
-            identifiserte en tredje: en midterste løkke med tilsynsarbeid som
-            sitter mellom dem.
-          </aside>
-        </div>
-      </section>
       <section class="slide" data-title="Kognitiv gjeld">
         <div class="slide-inner">
           <span class="horizon-badge">Nå–1 år</span>
           <h1>Kontinuerlig forståelse<br />bekjemper kognitiv gjeld</h1>
+          <div class="gap"></div>
+          <quote style="font-size: 1.3em; opacity: 0.8"
+            >"... test-driven development produces dramatically better results
+            from AI coding agents."</quote
+          >
           <div class="gap"></div>
           <p style="font-size: 1.3em">Parprogrammering med 🙋🏼‍♂️🙋🏾‍♀️🤖</p>
           <aside class="notes">
             Teknisk gjeld blir til kognitiv gjeld: gapet mellom
             systemkompleksitet og menneskelig forståelse. Parprogrammering med
             en AI-agent er en ny form for kontinuerlig forståelse.
+            Testsuiter som førsteklasses artefakter. TDD som ingeniørpraksis.
+            Mekanismen er spesifikk: TDD forhindrer en feilmodus der agenter
+            skriver tester som verifiserer feil oppførsel. Når testene
+            eksisterer før koden, kan ikke agentene jukse ved å skrive en test
+            som bare bekrefter den feilaktige implementasjonen de produserte.
           </aside>
         </div>
       </section>
@@ -684,29 +521,6 @@
           </aside>
         </div>
       </section>
-      <section class="slide" data-title="Agentisk operativsystem">
-        <div class="slide-inner theme-teal">
-          <h2 class="fragment">ChatGPT</h2>
-          <h2 class="fragment" style="margin-top: 0.3em">→ Agentramme</h2>
-          <h2 class="fragment" style="margin-top: 0.3em">
-            → Agentisk operativsystem
-          </h2>
-          <aside class="notes">
-            Retreatet utforsket hva et operativsystem for agenter må inneholde:
-            - Agentidentitet og tilgangsstyring. - Minne og
-            kontekstvindu-håndtering. - En arbeidsjournal som fanger fremtidig,
-            nåværende og tidligere arbeid med attributter som nødvendige
-            ferdigheter, akseptansekriterier, SLO-er og kostnadsbegrensninger. -
-            Styringsstier gjennom en graf over agentkapabiliteter og
-            samsvarskrav. En sentral innsikt var at en agent er mer enn sin
-            persona, sine mål eller sin nåværende kontekst — den inkluderer
-            historikken over arbeidet den har utført. Arbeidsjournalen ble den
-            sentrale primitiven i dette nye operativsystemet, analogt med en
-            finansiell blokkjede: søkbar, reviderbar, og som lar agenter oppdage
-            og by på arbeid.
-          </aside>
-        </div>
-      </section>
       <section class="slide" data-title="Smidig utvikler seg">
         <div class="slide-inner has-bg">
           <div
@@ -717,14 +531,14 @@
           ></div>
           <div class="bg-overlay"></div>
           <div class="bg-content">
-            <h1>Smidig utvikler seg, den dør ikke</h1>
+            <h1>Smidig utvikler seg</h1>
             <div class="gap"></div>
-            <ul>
-              <li class="fragment">CI / CD</li>
-              <li class="fragment">TDD</li>
-              <li class="fragment">Parprogrammering</li>
-              <li class="fragment">Ensemble-utvikling</li>
-              <li class="fragment"><s>Seremonier</s> ?</li>
+            <ul style="font-size: 1.4em">
+              <li>CI / CD</li>
+              <li>TDD</li>
+              <li>Parprogrammering</li>
+              <li>Ensemble-utvikling</li>
+              <li><s>Seremonier</s> ?</li>
             </ul>
           </div>
           <aside class="notes">
@@ -750,6 +564,8 @@
           <div class="bg-overlay"></div>
           <div class="bg-content text-center">
             <h1>AI hjelper ikke når organisasjonen bruker tiden på politikk</h1>
+            <div class="gap"></div>
+            <p style="font-size: 1.2em; opacity: 0.8">... men det gjorde ikke smidig heller</p>
           </div>
           <aside class="notes">
             Den virkelige trusselen mot smidig er styring. Team som tar i bruk
@@ -773,9 +589,7 @@
           ></div>
           <div class="bg-overlay"></div>
           <div class="bg-content">
-            <h1>Må vi bygge om?<br />I så fall, hva?</h1>
-            <div class="gap"></div>
-            <p>Verdien kommer med bedre prosesser</p>
+            <h1>Hvordan bygger vi om?</h1>
           </div>
           <aside class="notes">
             Den virkelige verdien av ny teknologi kommer gjerne først når vi
@@ -785,16 +599,42 @@
           </aside>
         </div>
       </section>
-      <section class="slide" data-title="Åpne Spørsmål">
-        <div class="slide-inner theme-teal">
-          <h2>Åpne Spørsmål</h2>
-          <div class="fade-cycle">
-            <div class="fragment">Om arbeid og identitet</div>
-            <div class="fragment">Om organisasjonsdesign</div>
-            <div class="fragment">Om tillit og verifisering</div>
-            <div class="fragment">Om kunnskap og forståelse</div>
-            <div class="fragment">Om fart og stabilitet</div>
+      <section class="slide" data-title="Den midterste løkken">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/les-taylor-99hZ8MfNWiI-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <span class="horizon-badge">Nå–1 år</span>
+            <h1>Den midterste løkken</h1>
           </div>
+          <aside class="notes">
+            En ny kategori av tilsynsarbeid innen programvareutvikling tar form
+            mellom den indre løkken (koding) og den ytre løkken (leveranse).
+            Ingen har navngitt den ennå. Programvareutvikling har lenge blitt
+            beskrevet med to løkker. Den indre løkken er utviklerens personlige
+            syklus med skriving, testing og feilsøking. Den ytre løkken er den
+            bredere leveransesyklusen med CI/CD, deploy og drift. Retreatet
+            identifiserte en tredje: en midterste løkke med tilsynsarbeid som
+            sitter mellom dem.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Åpne Spørsmål">
+        <div class="slide-inner theme-teal text-center">
+          <h2>Åpne Spørsmål</h2>
+          <div class="gap"></div>
+          <ul style="list-style: none; padding: 0; font-family: 'Gelica', serif; font-weight: 500; font-size: 1.6em; line-height: 1.8;">
+            <li>Om arbeid og identitet</li>
+            <li>Om organisasjonsdesign</li>
+            <li>Om tillit og verifisering</li>
+            <li>Om kunnskap og forståelse</li>
+            <li>Om fart og stabilitet</li>
+          </ul>
           <aside class="notes">
             Retreatet avdekket flere spørsmål enn svar. Om arbeid og identitet:
             Hvordan hjelper vi ingeniører som elsker å skrive kode med å finne
@@ -832,6 +672,26 @@
           <aside class="notes">
             Kartet tegnes på nytt. De som er best posisjonert til å tegne det er
             de som er villige til å innrømme hvor lite de vet.
+          </aside>
+        </div>
+      </section>
+      <section class="slide" data-title="Hvor går veien?">
+        <div class="slide-inner has-bg">
+          <div
+            class="bg"
+            style="
+              background-image: url(&quot;public/unsplash/jon-tyson-kSCxSeLagDg-unsplash.jpg&quot;);
+            "
+          ></div>
+          <div class="bg-overlay"></div>
+          <div class="bg-content">
+            <h1>Hvor går veien nå?</h1>
+          </div>
+          <aside class="notes">
+            Vibes til agentisk koding har skjedd på ett år. Vi har så smått hørt
+            om LLM-er til nå er seks år. Hvor er vi i 2027? I 2032? Retreat.
+            Same place, some new people. Blant deltakerne var Martin Fowler,
+            Kent Beck, Steve Yegge, Gene Kim og Annie Vella.
           </aside>
         </div>
       </section>
