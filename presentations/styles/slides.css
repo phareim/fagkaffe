@@ -105,6 +105,7 @@ html, body {
   justify-content: center;
   position: relative;
   overflow: hidden;
+  flex-shrink: 0;
   /* Scale set by JS via --slide-scale custom property */
   transform: scale(var(--slide-scale, 1));
   transform-origin: top center;
