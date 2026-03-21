@@ -32,6 +32,16 @@ copy from /Users/petter/github/petter/slides/presentations/ai-tooling-2026.html
 # Karpathy: two tweets
 copy from /Users/petter/github/petter/slides/presentations/ai-tooling-2026.html
 
+# Stemmer fra feltet
+copy from /Users/petter/github/petter/slides/presentations/ai-tooling-2026.html#18
+
+text:
+    Two x-posts side by side (theme-teal):
+    - Eric S. Raymond (@esrtweet, Feb 5 2026): "Programming with AI assistance is very revealing. ... LLMs are so good now that I can validate and generate a tremendous amount of code while doing hardly any hand-coding at all. **And it's dawning on me that I don't miss it.** It's an interesting way to find out that **I was always a system designer first, with code only as a means rather than an end.**"
+    - Ryan Dahl (@rough__sea, Jan 19 2026): "This has been said a thousand times before, but allow me to add my own voice: **the era of humans writing code is over.** Disturbing for those of us who identify as SWEs, but no less true. That's not to say SWEs don't have work to do, but **writing syntax directly is not it.**"
+
+notes:
+    To stemmer fra folk med tung erfaring. Eric S. Raymond — forfatteren bak «The Cathedral and the Bazaar», en av open source-bevegelsens grunnleggere. Han oppdaget at han egentlig alltid var en systemdesigner, ikke en koder. Ryan Dahl — skaperen av Node.js og Deno. Han sier rett ut: æraen der mennesker skriver kode er over. Begge understreker at jobben ikke forsvinner, men endrer karakter fundamentalt.
 
 # AI as an accelerator
 background: /Users/petter/github/petter/slides/presentations/public/unsplash/jon-tyson-kSCxSeLagDg-unsplash.jpg
