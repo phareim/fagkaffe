@@ -1,3 +1,7 @@
+# Workflow
+
+Always commit and push changes after making them.
+
 # Current Work
 Active presentations: 
   - `notes/ai-agile.md` / `presentations/ai-agile.html`
