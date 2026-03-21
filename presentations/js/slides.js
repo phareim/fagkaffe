@@ -159,17 +159,6 @@
     openNotesWindow();
   }
 
-  (function createPresentButton() {
-    const btn = document.createElement('button');
-    btn.className = 'present-btn';
-    btn.textContent = 'Present';
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      startPresentation();
-    });
-    document.body.appendChild(btn);
-  })();
-
   // ── Keyboard ───────────────────────────────────
 
   document.addEventListener('keydown', function (e) {
@@ -199,6 +188,12 @@
         if (!e.metaKey && !e.ctrlKey) {
           e.preventDefault();
           toggleFullscreen();
+        }
+        break;
+      case 'p':
+        if (!e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          startPresentation();
         }
         break;
       case 's':
