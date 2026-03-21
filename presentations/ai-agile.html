@@ -495,15 +495,16 @@
           ></div>
           <div class="bg-overlay"></div>
           <div class="bg-content">
-            <h1>Smidig utvikler seg</h1>
-            <div class="gap"></div>
-            <ul style="font-size: 1.4em">
-              <li>CI / CD</li>
-              <li>TDD</li>
-              <li>Parprogrammering</li>
-              <li>Ensemble-utvikling</li>
-              <li><s>Seremonier</s> ?</li>
-            </ul>
+            <div class="rigor-map" style="flex: 1;" id="agile-map">
+              <div class="rigor-source">Smidig<br />utvikler seg</div>
+              <div class="rigor-targets">
+                <div class="rigor-node fragment" data-agile-idx="0">CI / CD</div>
+                <div class="rigor-node fragment" data-agile-idx="1">TDD</div>
+                <div class="rigor-node fragment" data-agile-idx="2">Parprogrammering</div>
+                <div class="rigor-node fragment" data-agile-idx="3">Ensemble-utvikling</div>
+                <div class="rigor-node fragment" data-agile-idx="4"><s>Seremonier</s> ?</div>
+              </div>
+            </div>
           </div>
           <aside class="notes">
             Retreatet tok et kraftig oppgjør med narrativet om at «smidig er
@@ -736,10 +737,9 @@
     <!-- Rigor map: draw lines + sync visibility -->
     <script>
       (function () {
-        var container = document.querySelector(".rigor-map");
-        if (!container) return;
+        document.querySelectorAll(".rigor-map").forEach(function (container) {
         var source = container.querySelector(".rigor-source");
-        var nodes = container.querySelectorAll(".rigor-node[data-rigor-idx]");
+        var nodes = container.querySelectorAll(".rigor-node");
         if (!nodes.length) return;
 
         // Create overlay SVG
@@ -832,6 +832,7 @@
             attributeFilter: ["class"],
           });
         });
+        }); // end forEach .rigor-map
       })();
     </script>
   </body>
