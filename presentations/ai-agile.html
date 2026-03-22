@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="styles/slides.css" />
 
     <style>
-      /* ── Horizon badge ── */
+      /* ── Horizon badge (presentation-specific) ── */
       .horizon-badge {
         position: absolute;
         top: 20px;
@@ -36,85 +36,7 @@
         z-index: 2;
       }
 
-      /* ── Timeline with images ── */
-      .timeline-split {
-        display: flex;
-        gap: 3em;
-        flex: 1;
-        min-height: 0;
-      }
-
-      .timeline-split .timeline {
-        flex: 1;
-        margin-top: 0;
-      }
-
-      .timeline-visual {
-        flex: 0 0 380px;
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .timeline-visual img {
-        position: absolute;
-        max-width: 100%;
-        max-height: 420px;
-        border-radius: 12px;
-        object-fit: contain;
-        opacity: 0;
-        transform: scale(0.96);
-        transition:
-          opacity 0.4s ease,
-          transform 0.4s ease;
-        pointer-events: none;
-      }
-
-      .slide:not(.active) .timeline-visual img {
-        transition: none;
-      }
-
-      .timeline-visual img.tl-visible {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      /* ── X-post date highlighter ── */
-      .highlighter {
-        position: relative;
-        display: inline;
-        padding: 0.05em 0.15em;
-        z-index: 0;
-      }
-
-      .highlighter::before {
-        content: "";
-        position: absolute;
-        inset: -2px -4px;
-        z-index: -1;
-        background: var(--yellow);
-        opacity: 0.85;
-        border-radius: 3px 5px 4px 6px;
-        transform: rotate(-0.6deg) skewX(-1.5deg);
-        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
-        mask-size: 100% 100%;
-        -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='40'%3E%3Cpath d='M2 8 Q20 2 50 6 T100 5 T150 8 T198 4 V36 Q180 32 150 35 T100 33 T50 36 T2 32Z' fill='black'/%3E%3C/svg%3E");
-        -webkit-mask-size: 100% 100%;
-      }
-
-      .x-post-date {
-        text-align: right;
-        margin-top: auto;
-      }
-
-      .x-post {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-      }
-
-      /* ── Rigor map ── */
+      /* ── Rigor map (presentation-specific) ── */
       .rigor-map {
         display: flex;
         align-items: center;
@@ -125,7 +47,6 @@
         padding: 1em 0;
         position: relative;
       }
-
       .rigor-source {
         font-family: "Gelica", serif;
         font-weight: 500;
@@ -139,14 +60,12 @@
         flex-shrink: 0;
         z-index: 1;
       }
-
       .rigor-lines {
         position: absolute;
         inset: 0;
         pointer-events: none;
         z-index: 0;
       }
-
       .rigor-lines path {
         fill: none;
         stroke: currentColor;
@@ -154,18 +73,13 @@
         opacity: 0;
         transition: opacity 0.4s ease;
       }
-
-      .rigor-lines path.rigor-visible {
-        opacity: 0.45;
-      }
-
+      .rigor-lines path.rigor-visible { opacity: 0.45; }
       .rigor-targets {
         display: flex;
         flex-direction: column;
         gap: 1.2em;
         z-index: 1;
       }
-
       .rigor-node {
         font-size: 1.5em;
         padding: 0.5em 1.4em;
@@ -174,17 +88,14 @@
         background-color: rgba(255, 255, 255, 0.2);
         opacity: 0;
         white-space: nowrap;
-        transition:
-          opacity 0.4s ease,
-          border-color 0.4s ease;
+        transition: opacity 0.4s ease, border-color 0.4s ease;
       }
-
       .rigor-node.visible {
         opacity: 1;
         border-color: var(--teal);
       }
 
-      /* ── Fowler cutout sticker ── */
+      /* ── Fowler cutout sticker (presentation-specific) ── */
       .fowler-cutout {
         position: absolute;
         bottom: 40px;

@@ -27,9 +27,10 @@
   // ── Navigation ─────────────────────────────────
 
   // Track which slide indices have visible fragments so we only clear those
-  var dirtySlides = new Set();
+  const dirtySlides = new Set();
 
   function showSlide(index) {
+    var prev = current;
     current = Math.max(0, Math.min(index, slides.length - 1));
 
     // Reset fragments only on slides that actually have visible ones
@@ -40,9 +41,11 @@
       }
     });
 
-    slides.forEach(function (s, i) {
-      s.classList.toggle('active', i === current);
-    });
+    // Only toggle the two slides that changed (O(1) instead of O(N))
+    if (prev !== current) {
+      slides[prev].classList.remove('active');
+    }
+    slides[current].classList.add('active');
 
     if (progress) {
       var pct = slides.length > 1 ? (current / (slides.length - 1)) * 100 : 100;
@@ -56,6 +59,13 @@
     history.replaceState(null, '', '#' + (current + 1));
     syncBackground();
     updateNotes();
+
+    // Poll handling
+    stopPollRefresh();
+    var slug = getPollSlug(slides[current]);
+    if (slug) {
+      registerAndStartPoll(slides[current], slug);
+    }
   }
 
   function next() {
@@ -72,7 +82,7 @@
     var visible = visibleFragments(slides[current]);
     if (visible.length > 0) {
       visible[visible.length - 1].classList.remove('visible');
-      if (visibleFragments(slides[current]).length === 0) {
+      if (visible.length === 1) {
         dirtySlides.delete(current);
       }
       return;
@@ -440,20 +450,6 @@
       startPollRefresh(poll.id, slug);
     } catch (e) { /* network error — silently ignore */ }
   }
-
-  // Patch showSlide to handle poll activation/deactivation
-  (function patchShowSlide() {
-    const origShowSlide = showSlide;
-    showSlide = function (index) {
-      origShowSlide(index);
-      stopPollRefresh();
-      const slide = slides[current];
-      const slug = getPollSlug(slide);
-      if (slug) {
-        registerAndStartPoll(slide, slug);
-      }
-    };
-  })();
 
   // ── Background images (data-bg → CSS custom property) ──
 
