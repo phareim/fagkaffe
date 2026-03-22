@@ -271,6 +271,23 @@ Photo grid with title/text on the left:
 </div>
 ```
 
+### Mind Map
+
+A central concept with branching nodes that reveal one by one. Lines are drawn automatically via SVG. Works with any theme (looks best on dark themes).
+
+```html
+<div class="mind-map" style="flex: 1;">
+  <div class="mind-map-source">Central<br>Concept</div>
+  <div class="mind-map-targets">
+    <div class="mind-map-node fragment">Branch A</div>
+    <div class="mind-map-node fragment">Branch B</div>
+    <div class="mind-map-node fragment">Branch C</div>
+  </div>
+</div>
+```
+
+Each `.mind-map-node.fragment` reveals on click; connecting lines appear automatically with each node.
+
 ### Team / People Cards
 
 Show team members with circular photos, names, and roles:

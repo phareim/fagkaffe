@@ -36,65 +36,6 @@
         z-index: 2;
       }
 
-      /* ── Rigor map (presentation-specific) ── */
-      .rigor-map {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6em;
-        flex: 1;
-        min-height: 0;
-        padding: 1em 0;
-        position: relative;
-      }
-      .rigor-source {
-        font-family: "Gelica", serif;
-        font-weight: 500;
-        font-size: 2.4em;
-        text-align: center;
-        padding: 0.6em 1em;
-        border: 2px solid currentColor;
-        background-color: rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        opacity: 0.9;
-        flex-shrink: 0;
-        z-index: 1;
-      }
-      .rigor-lines {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-      }
-      .rigor-lines path {
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-        opacity: 0;
-        transition: opacity 0.4s ease;
-      }
-      .rigor-lines path.rigor-visible { opacity: 0.45; }
-      .rigor-targets {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2em;
-        z-index: 1;
-      }
-      .rigor-node {
-        font-size: 1.5em;
-        padding: 0.5em 1.4em;
-        border-radius: 8px;
-        border: 1px solid currentColor;
-        background-color: rgba(255, 255, 255, 0.2);
-        opacity: 0;
-        white-space: nowrap;
-        transition: opacity 0.4s ease, border-color 0.4s ease;
-      }
-      .rigor-node.visible {
-        opacity: 1;
-        border-color: var(--teal);
-      }
-
       /* ── Fowler cutout sticker (presentation-specific) ── */
       .fowler-cutout {
         position: absolute;
@@ -323,17 +264,17 @@
       <section class="slide" data-title="Hvor tar grundigheten veien?">
         <div class="slide-inner has-bg" data-bg="public/unsplash/daniil-komov-jXyaodR8dWk-unsplash.jpg">
           <span class="horizon-badge">Nå</span>
-          <div class="rigor-map" style="flex: 1;">
-          <div class="rigor-source">Ingeniør-<br />kvalitet</div>
-          <div class="rigor-targets">
-          <div class="rigor-node fragment" data-rigor-idx="0">
+          <div class="mind-map" style="flex: 1;">
+          <div class="mind-map-source">Ingeniør-<br />kvalitet</div>
+          <div class="mind-map-targets">
+          <div class="mind-map-node fragment">
           Spesifikasjoner
           </div>
-          <div class="rigor-node fragment" data-rigor-idx="1">Tester</div>
-          <div class="rigor-node fragment" data-rigor-idx="2">
+          <div class="mind-map-node fragment">Tester</div>
+          <div class="mind-map-node fragment">
           Begrensninger
           </div>
-          <div class="rigor-node fragment" data-rigor-idx="3">
+          <div class="mind-map-node fragment">
           Risikostyring
           </div>
           </div>
@@ -411,14 +352,14 @@
       </section>
       <section class="slide" data-title="Smidig utvikler seg">
         <div class="slide-inner has-bg" data-bg="public/agile-manifesto.jpg">
-          <div class="rigor-map" style="flex: 1;" id="agile-map">
-          <div class="rigor-source">Smidig<br />utvikler seg</div>
-          <div class="rigor-targets">
-          <div class="rigor-node fragment" data-agile-idx="0">CI / CD</div>
-          <div class="rigor-node fragment" data-agile-idx="1">TDD</div>
-          <div class="rigor-node fragment" data-agile-idx="2">Parprogrammering</div>
-          <div class="rigor-node fragment" data-agile-idx="3">Ensemble-utvikling</div>
-          <div class="rigor-node fragment" data-agile-idx="4"><s>Seremonier</s> ?</div>
+          <div class="mind-map" style="flex: 1;" id="agile-map">
+          <div class="mind-map-source">Smidig<br />utvikler seg</div>
+          <div class="mind-map-targets">
+          <div class="mind-map-node fragment">CI / CD</div>
+          <div class="mind-map-node fragment">TDD</div>
+          <div class="mind-map-node fragment">Parprogrammering</div>
+          <div class="mind-map-node fragment">Ensemble-utvikling</div>
+          <div class="mind-map-node fragment"><s>Seremonier</s> ?</div>
           </div>
           </div>
           <aside class="notes">
@@ -612,106 +553,5 @@
       })();
     </script>
 
-    <!-- Rigor map: draw lines + sync visibility -->
-    <script>
-      (function () {
-        document.querySelectorAll(".rigor-map").forEach(function (container) {
-        var source = container.querySelector(".rigor-source");
-        var nodes = container.querySelectorAll(".rigor-node");
-        if (!nodes.length) return;
-
-        // Create overlay SVG
-        var ns = "http://www.w3.org/2000/svg";
-        var svg = document.createElementNS(ns, "svg");
-        svg.classList.add("rigor-lines");
-        container.appendChild(svg);
-
-        var paths = [];
-        nodes.forEach(function () {
-          var p = document.createElementNS(ns, "path");
-          svg.appendChild(p);
-          paths.push(p);
-        });
-
-        function drawLines() {
-          var w = container.offsetWidth;
-          var h = container.offsetHeight;
-          svg.setAttribute("viewBox", "0 0 " + w + " " + h);
-
-          // getBoundingClientRect is scaled by CSS transform, so find the scale
-          var cr = container.getBoundingClientRect();
-          var scale = cr.width / w;
-
-          // Position relative to container, compensating for scale
-          function rel(el) {
-            var r = el.getBoundingClientRect();
-            return {
-              x: (r.left - cr.left) / scale,
-              y: (r.top - cr.top) / scale,
-              w: r.width / scale,
-              h: r.height / scale,
-            };
-          }
-
-          var s = rel(source);
-          var sx = s.x + s.w; // right edge of source
-          var sy = s.y + s.h / 2; // vertical center of source
-
-          nodes.forEach(function (node, i) {
-            var n = rel(node);
-            var ex = n.x; // left edge of target
-            var ey = n.y + n.h / 2; // vertical center of target
-            var cpx = sx + (ex - sx) * 0.45;
-            paths[i].setAttribute(
-              "d",
-              "M" +
-                sx +
-                "," +
-                sy +
-                " C" +
-                cpx +
-                "," +
-                sy +
-                " " +
-                cpx +
-                "," +
-                ey +
-                " " +
-                ex +
-                "," +
-                ey,
-            );
-          });
-        }
-
-        // Draw after layout settles, and on resize / slide change
-        requestAnimationFrame(function () {
-          requestAnimationFrame(drawLines);
-        });
-        window.addEventListener("resize", drawLines);
-        // Redraw when slide becomes active (handles scaling)
-        new MutationObserver(drawLines).observe(container.closest(".slide"), {
-          attributes: true,
-          attributeFilter: ["class"],
-        });
-
-        // Sync visibility: line appears with its node
-        var observer = new MutationObserver(function () {
-          nodes.forEach(function (node, i) {
-            paths[i].classList.toggle(
-              "rigor-visible",
-              node.classList.contains("visible"),
-            );
-          });
-        });
-        nodes.forEach(function (node) {
-          observer.observe(node, {
-            attributes: true,
-            attributeFilter: ["class"],
-          });
-        });
-        }); // end forEach .rigor-map
-      })();
-    </script>
   </body>
 </html>

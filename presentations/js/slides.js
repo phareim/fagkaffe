@@ -465,6 +465,87 @@
     }
   });
 
+  // ── Mind map: draw lines + sync visibility ─────
+
+  document.querySelectorAll('.mind-map').forEach(function (container) {
+    var source = container.querySelector('.mind-map-source');
+    var nodes = container.querySelectorAll('.mind-map-node');
+    if (!nodes.length) return;
+
+    var ns = 'http://www.w3.org/2000/svg';
+    var svg = document.createElementNS(ns, 'svg');
+    svg.classList.add('mind-map-lines');
+    container.appendChild(svg);
+
+    var paths = [];
+    nodes.forEach(function () {
+      var p = document.createElementNS(ns, 'path');
+      svg.appendChild(p);
+      paths.push(p);
+    });
+
+    function drawLines() {
+      var w = container.offsetWidth;
+      var h = container.offsetHeight;
+      svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+
+      var cr = container.getBoundingClientRect();
+      var scale = cr.width / w;
+
+      function rel(el) {
+        var r = el.getBoundingClientRect();
+        return {
+          x: (r.left - cr.left) / scale,
+          y: (r.top - cr.top) / scale,
+          w: r.width / scale,
+          h: r.height / scale,
+        };
+      }
+
+      var s = rel(source);
+      var sx = s.x + s.w;
+      var sy = s.y + s.h / 2;
+
+      nodes.forEach(function (node, i) {
+        var n = rel(node);
+        var ex = n.x;
+        var ey = n.y + n.h / 2;
+        var cpx = sx + (ex - sx) * 0.45;
+        paths[i].setAttribute(
+          'd',
+          'M' + sx + ',' + sy +
+          ' C' + cpx + ',' + sy +
+          ' ' + cpx + ',' + ey +
+          ' ' + ex + ',' + ey
+        );
+      });
+    }
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(drawLines);
+    });
+    window.addEventListener('resize', drawLines);
+    new MutationObserver(drawLines).observe(container.closest('.slide'), {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    var observer = new MutationObserver(function () {
+      nodes.forEach(function (node, i) {
+        paths[i].classList.toggle(
+          'mind-map-visible',
+          node.classList.contains('visible')
+        );
+      });
+    });
+    nodes.forEach(function (node) {
+      observer.observe(node, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    });
+  });
+
   // ── Init ───────────────────────────────────────
 
   const hash = parseInt(location.hash.replace('#', ''), 10);
