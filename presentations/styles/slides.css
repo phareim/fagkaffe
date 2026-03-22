@@ -389,31 +389,31 @@ aside.notes {
 
 /* Background image with overlay for text readability */
 .slide-inner.has-bg {
-  padding: 0;
+  padding: 64px 80px;
   overflow: visible;
+  color: var(--cream);
 }
-.slide-inner.has-bg .bg {
+.slide-inner.has-bg::before {
+  content: '';
   position: absolute;
   top: 0;
   left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
   width: calc(100vw / var(--slide-scale, 1));
   height: calc(100vh / var(--slide-scale, 1));
-  background-size: cover;
-  background-position: center;
+  background: var(--bg-url) center / cover no-repeat;
 }
-.slide-inner.has-bg .bg-overlay {
+.slide-inner.has-bg::after {
+  content: '';
   position: absolute;
   top: 0;
   left: calc(-1 * (100vw / var(--slide-scale, 1) - var(--slide-width)) / 2);
   width: calc(100vw / var(--slide-scale, 1));
   height: calc(100vh / var(--slide-scale, 1));
-  background: rgba(69, 13, 33, 0.7);
+  background: rgba(69, 13, 33, var(--bg-overlay-opacity, 0.7));
 }
-.slide-inner.has-bg .bg-content {
+.slide-inner.has-bg > * {
   position: relative;
   z-index: 1;
-  padding: 64px 80px;
-  color: var(--cream);
 }
 
 /* Image + text side by side */

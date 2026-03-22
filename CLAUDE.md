@@ -397,16 +397,14 @@ Add `class="img-text img-right"` to put the image on the right.
 
 ### Full background image
 ```html
-<div class="slide-inner has-bg">
-  <div class="bg" style="background-image: url('public/photo.jpg')"></div>
-  <div class="bg-overlay"></div>
-  <div class="bg-content">
-    <h1>Title over image</h1>
-    <p>Subtitle text</p>
-  </div>
+<div class="slide-inner has-bg" data-bg="public/photo.jpg">
+  <h1>Title over image</h1>
+  <p>Subtitle text</p>
 </div>
 ```
-The overlay is burgundy at 70% opacity. Override with inline style if needed.
+The overlay is burgundy at 70% opacity. Override with `data-bg-overlay="0.5"` for custom opacity.
+
+For a photo with text overlay, use `has-bg` with `data-bg` (see above). For a photo with no text, use `photo-full` instead (see Photo section).
 
 ### Image with caption
 ```html

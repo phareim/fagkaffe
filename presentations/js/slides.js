@@ -455,6 +455,15 @@
     };
   })();
 
+  // ── Background images (data-bg → CSS custom property) ──
+
+  document.querySelectorAll('[data-bg]').forEach(function (el) {
+    el.style.setProperty('--bg-url', "url('" + el.dataset.bg + "')");
+    if (el.dataset.bgOverlay) {
+      el.style.setProperty('--bg-overlay-opacity', el.dataset.bgOverlay);
+    }
+  });
+
   // ── Init ───────────────────────────────────────
 
   const hash = parseInt(location.hash.replace('#', ''), 10);
