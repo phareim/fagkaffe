@@ -458,7 +458,12 @@
   // ── Background images (data-bg → CSS custom property) ──
 
   document.querySelectorAll('[data-bg]').forEach(function (el) {
-    el.style.setProperty('--bg-url', "url('" + el.dataset.bg + "')");
+    // Resolve relative URLs to absolute so they work from the stylesheet context
+    var src = el.dataset.bg;
+    if (src.indexOf('://') === -1) {
+      src = new URL(src, document.baseURI).href;
+    }
+    el.style.setProperty('--bg-url', "url('" + src + "')");
     if (el.dataset.bgOverlay) {
       el.style.setProperty('--bg-overlay-opacity', el.dataset.bgOverlay);
     }
