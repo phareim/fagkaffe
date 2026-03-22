@@ -111,7 +111,17 @@
                color: #fbf0e5; border-radius: 4px; padding: 4px 10px;
                cursor: pointer; font-size: 0.75rem; font-family: 'DM Sans', system-ui, sans-serif; }
   .timer-btn:hover { border-color: rgba(255,255,255,0.5); }
+  #next-preview { padding: 24px; border-top: 1px solid rgba(255,255,255,0.1); }
+  #next-preview h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
+       color: #ffd9a1; margin: 0 0 12px 0; }
+  #next-slide-frame { position: relative; width: 100%; aspect-ratio: 16/9;
+       overflow: hidden; background: #111; border-radius: 6px; }
+  .next-slide-clone { position: absolute; width: 1280px; height: 720px;
+       transform-origin: top left; }
+  #next-last { display: flex; align-items: center; justify-content: center;
+       height: 100%; color: rgba(255,255,255,0.4); font-style: italic; }
 </style>
+<link rel="stylesheet" href="${location.origin + location.pathname.replace(/[^/]*$/, '')}styles/slides.css">
 </head><body>
 <div class="top-bar">
   <h2 id="heading">Slide 1 / ${slides.length}</h2>
@@ -121,6 +131,10 @@
   </div>
 </div>
 <div id="notes"></div>
+<div id="next-preview">
+  <h2>Next slide</h2>
+  <div id="next-slide-frame"></div>
+</div>
 <script>
   var startTime = Date.now();
   var timerEl = document.getElementById('timer');
@@ -150,6 +164,25 @@
     const notes = doc.getElementById('notes');
     if (heading) heading.textContent = 'Slide ' + (current + 1) + ' / ' + slides.length;
     if (notes) notes.innerHTML = getNotesHTML(slides[current]);
+
+    const frame = doc.getElementById('next-slide-frame');
+    if (!frame) return;
+    frame.innerHTML = '';
+    const nextSlide = slides[current + 1];
+    if (!nextSlide) {
+      frame.innerHTML = '<div id="next-last">Last slide</div>';
+      return;
+    }
+    const inner = nextSlide.querySelector('.slide-inner');
+    if (!inner) return;
+    const clone = inner.cloneNode(true);
+    clone.querySelectorAll('aside.notes').forEach(n => n.remove());
+    clone.classList.add('next-slide-clone');
+    frame.appendChild(clone);
+    requestAnimationFrame(() => {
+      const scale = frame.offsetWidth / 1280;
+      clone.style.transform = 'scale(' + scale + ')';
+    });
   }
 
   // ── Present Button ──────────────────────────────
