@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Utrulling av Agentisk Koding — Zaptec — Miles</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="styles/highlight-miles.css">
+
+  <!-- Slides -->
+  <link rel="stylesheet" href="styles/slides.css">
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- 1. Title -->
+  <section class="slide" data-title="Tittel">
+    <div class="slide-inner theme-title">
+      <div class="title-header">
+        <h1>Utrulling av Agentisk Koding<br>Zaptec</h1>
+        <div class="title-meta">
+          Internt planleggingsmøte<br>
+          Mars 2026
+        </div>
+      </div>
+      <div class="title-logo">
+        <img src="public/miles-logo-red.svg" alt="Miles">
+      </div>
+      <aside class="notes">
+        Intern presentasjon for planlegging av leveranse til Zaptec.
+        Gjennomgang av metode, rammer og forslag til aktiviteter.
+        Målet med dette møtet er å bli enige om hva vi tilbyr og hvordan vi posisjonerer oss.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. Hookline -->
+  <section class="slide" data-title="Hookline">
+    <div class="slide-inner theme-red text-center">
+      <h1>&laquo;Jeg har til gode å snakke med en utvikler som ønsker å gå tilbake igjen etter å ha jobbet to uker agentisk.&raquo;</h1>
+      <aside class="notes">
+        Dette er erfaringen vår så langt. Agentisk koding er en paradigmeendring som utviklere omfavner raskt.
+        Nøkkelen er å gi folk verktøyene og rammene — de tar det i bruk selv.
+        Denne innsikten er kjernen i salgsargumentet vårt.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 3. Målsetning -->
+  <section class="slide" data-title="Målsetning">
+    <div class="slide-inner">
+      <h2>Målsetning</h2>
+      <div class="gap"></div>
+      <p style="font-size: 1.3em;">Å innføre agenter på en måte som sikrer <span class="accent">stabilitet</span>, <span class="accent">kvalitet</span>, <span class="accent">fart</span> og <span class="accent">kommunikasjon</span> i teamet.</p>
+      <div class="gap"></div>
+      <p>Vi leverer ikke bare verktøy — vi leverer en metode for å ta verktøyene i bruk på en trygg og strukturert måte.</p>
+      <aside class="notes">
+        Målsetningen er firkantet med vilje. Fart uten kvalitet er verdiløst, og kvalitet uten kommunikasjon skaper siloer.
+        Alle fire pilarene må ivaretas samtidig.
+        Overfor Zaptec bør vi understreke at dette er en helhetlig tilnærming — ikke bare "her er Claude, lykke til".
+      </aside>
+    </div>
+  </section>
+
+  <!-- 4. Rammer — Smidig -->
+  <section class="slide" data-title="Rammer">
+    <div class="slide-inner theme-teal">
+      <h2>Rammeverk: Smidig utvikling</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">Vi baserer oss på det vi vet fungerer i smidig utvikling — velprøvde verktøy og et veldefinert språk.</li>
+        <li class="fragment">Måling av det vi ønsker å forbedre <em>og</em> det vi ønsker å risikostyre — slik at vi ser om tiltakene har effekt.</li>
+        <li class="fragment">Claude skriver god kode raskt. <strong>Vår jobb</strong> er å sikre at koden løser reelle behov, at risiko håndteres og at organisasjonen lærer.</li>
+      </ul>
+      <aside class="notes">
+        Poenget her er at vi ikke finner opp hjulet på nytt. Smidig utvikling gir oss et rammeverk vi kan lene oss på.
+        AI-verktøyene endrer hva som er mulig, men ikke hva som er viktig: kvalitet, kommunikasjon, læring.
+        Salgsmessig: vi posisjonerer oss som erfarne smidige konsulenter som også kan AI — ikke AI-folk som prøver å lære seg utvikling.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 5. Section: Konkret metode -->
+  <section class="slide" data-title="Seksjon: Metode">
+    <div class="slide-inner theme-title-center">
+      <div class="section-header">
+        <span class="section-label">Leveransen</span>
+        <h1>Konkret metode</h1>
+        <p>Hva vi faktisk tilbyr Zaptec</p>
+      </div>
+      <aside class="notes">
+        Her kommer detaljene i hva vi selger. Viktig at vi er tydelige på at dette er en pakke — ikke á la carte.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 6. Steg 1: Måling -->
+  <section class="slide" data-title="Steg 1: Måling">
+    <div class="slide-inner">
+      <h2><span class="accent">01</span> Måling først</h2>
+      <div class="gap"></div>
+      <p>Få opp måling på de viktigste parameterne <em>før</em> vi begynner å gjøre endringer i arbeidsprosessene.</p>
+      <div class="gap"></div>
+      <ul>
+        <li>Hva er lead time i dag?</li>
+        <li>Deployment frequency?</li>
+        <li>Change failure rate?</li>
+        <li>Teamets selvrapporterte opplevelse?</li>
+      </ul>
+      <aside class="notes">
+        Uten baseline har vi ingenting å sammenligne med. Det er fristende å hoppe rett til verktøy, men da mister vi evnen til å vise effekt.
+        DORA-metrics er et naturlig utgangspunkt, men vi bør også måle noe mer kvalitativt — som teamets opplevelse av arbeidsflyten.
+        Overfor Zaptec: vi kan vise resultater, ikke bare aktivitet.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 7. Steg 2: Tilgang -->
+  <section class="slide" data-title="Steg 2: Tilgang">
+    <div class="slide-inner">
+      <h2><span class="accent">02</span> Full tilgang fra dag én</h2>
+      <div class="gap"></div>
+      <p>Alle utviklere får tilgang til Claude Max med nok tokens til å jobbe en hel arbeidsdag.</p>
+      <div class="gap"></div>
+      <p>Erfaringen vår tilsier at utviklere relativt raskt klarer å ta verktøyene i bruk. Det er <strong>unødvendig å skalere opp gradvis</strong> — gi dem nok til å jobbe.</p>
+      <aside class="notes">
+        Gradvis utrulling av token-tilgang skaper frustrasjon og hindrer læring.
+        Vi har sett at utviklere som får full tilgang fra start utforsker mer og lærer raskere.
+        Kostnadsmessig: Claude Max er ca. $200/utvikler/mnd. Sammenlignet med konsulentpriser er dette ingenting.
+        Viktig at Zaptec forstår at dette er en investering i produktivitet, ikke en risiko.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 8. Steg 3: TDD og parprogrammering -->
+  <section class="slide" data-title="Steg 3: TDD og par">
+    <div class="slide-inner theme-teal">
+      <h2><span class="accent">03</span> TDD + Parprogrammering</h2>
+      <div class="gap"></div>
+      <div class="columns">
+        <div>
+          <h3>Testdreven utvikling</h3>
+          <p>Skaper tydelighet i <em>hva</em> vi lager. Tester definerer oppførsel før koden skrives — Claude eksekverer mot en tydelig spesifikasjon.</p>
+        </div>
+        <div>
+          <h3>Par- og mob-programmering</h3>
+          <p>Setter utviklerne i en situasjon hvor de kommuniserer fortløpende. Kunnskapsdeling skjer naturlig. Ingen jobber alene med AI.</p>
+        </div>
+      </div>
+      <aside class="notes">
+        TDD og parprogrammering er ikke nye idéer, men de får en ny betydning med agentisk koding.
+        TDD gir Claude klare mål å jobbe mot. Uten tester flyter koden ut i uforutsigbare retninger.
+        Parprogrammering hindrer at utviklere "forsvinner inn i AI-boblen" — de forblir i dialog med hverandre.
+        Salgsmessig: dette er differensiatoren vår. Mange kan sette opp Claude. Få kan kombinere det med god utviklingspraksis.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 9. Steg 4: Start enkelt -->
+  <section class="slide" data-title="Steg 4: Start enkelt">
+    <div class="slide-inner">
+      <h2><span class="accent">04</span> Start enkelt, bygg opp</h2>
+      <div class="gap"></div>
+      <p>Det finnes mange tekniske muligheter i Claude Code og mange muligheter for automatisering i GitHub.</p>
+      <div class="gap"></div>
+      <p>Vårt råd: <strong>start enkelt, kommuniser tett</strong>. Bygg opp rammene for Claude i repoet steg for steg — i en prosess som skaper refleksjon og læringsarenaer.</p>
+      <div class="gap"></div>
+      <p>Arbeidsmetoden med AI må tilpasses hvert team, da utviklingsaktivitetene i ulik grad er egnet for agenter.</p>
+      <aside class="notes">
+        Det er fristende å sette opp CLAUDE.md, hooks, GitHub Actions og alt mulig fra dag én.
+        Men det skaper kompleksitet som teamet ikke forstår ennå. Bedre å la behovene drive konfigurasjonen.
+        Hver dag i "The Middle Loop" har en eksplisitt refleksjonsøkt der teamet kan beslutte å legge til mer automasjon.
+        Overfor Zaptec: vi bygger ikke en ferdig løsning og går — vi bygger opp kompetanse og prosess.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 10. Section: The Middle Loop -->
+  <section class="slide" data-title="Seksjon: The Middle Loop">
+    <div class="slide-inner theme-title-center">
+      <div class="section-header">
+        <span class="section-label">Daglig aktivitet</span>
+        <h1>The Middle Loop</h1>
+        <p>Forslag til daglig arbeidsrytme</p>
+      </div>
+      <aside class="notes">
+        "The Middle Loop" — mellom den ytre strategiske syklusen (sprinter, OKRs) og den indre syklusen (utvikler + Claude).
+        Denne daglige rytmen er designet for å tvinge frem arenaer for samtale og læring.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 11. The Middle Loop — detaljer -->
+  <section class="slide" data-title="Daglig rytme">
+    <div class="slide-inner theme-white">
+      <h2>Daglig rytme</h2>
+      <div class="gap"></div>
+      <div class="columns">
+        <div>
+          <h3 class="accent">Formiddag</h3>
+          <ol>
+            <li class="fragment">Morgenmøte — oppgaver, verdiforslag, metrics</li>
+            <li class="fragment">Sett sammen makker-par/grupper</li>
+            <li class="fragment">Kode-økt med team-lead/arkitekt/coach tilgjengelig</li>
+            <li class="fragment">Refleksjon før lunsj</li>
+          </ol>
+        </div>
+        <div>
+          <h3 class="accent">Ettermiddag</h3>
+          <ol start="5">
+            <li class="fragment">Kode-økt fortsetter</li>
+            <li class="fragment">Felles refleksjon — oppdater prosess og rammer</li>
+            <li class="fragment">AgentOps/DevOps gjennomgår prosesser</li>
+          </ol>
+        </div>
+      </div>
+      <aside class="notes">
+        Nøkkelen er de to refleksjonsøktene — én midt på dagen, én på slutten.
+        Morgenmøtet sikrer at alle jobber mot verdifulle mål. Refleksjonene sikrer at vi lærer underveis.
+        Viktig poeng: dette er et utgangspunkt, ikke en tvangstrøye. Utviklere som trenger dyparbeid kan melde seg av en dag.
+        Overfor Zaptec: vi gir dem en konkret oppskrift de kan tilpasse, ikke en rigid prosess.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 12. Roller i løpet -->
+  <section class="slide" data-title="Roller">
+    <div class="slide-inner">
+      <h2>Roller og tilgjengelighet</h2>
+      <div class="gap"></div>
+      <ul>
+        <li><strong>Makker-par/grupper:</strong> Utviklerne jobber sammen med Claude — aldri alene med AI</li>
+        <li><strong>Team-lead & arkitekt:</strong> Tilgjengelig for dialog og oppfølging gjennom dagen</li>
+        <li><strong>Coach (oss):</strong> Fasiliterer refleksjon, justerer prosess, sikrer læring</li>
+        <li><strong>AgentOps/DevOps:</strong> Ser over automatisering og pipeline på slutten av dagen</li>
+      </ul>
+      <aside class="notes">
+        Vår rolle som Miles-konsulenter er primært coaching og fasilitering.
+        Vi bringer erfaring med agentisk koding og smidig utvikling.
+        Viktig å avklare med Zaptec: hvem på deres side fyller rollene team-lead og arkitekt?
+        AgentOps er et nytt konsept for mange — det handler om å vedlikeholde CLAUDE.md, hooks, og CI/CD for AI-assistert utvikling.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 13. For team og teamledere -->
+  <section class="slide" data-title="Organisatoriske krav">
+    <div class="slide-inner theme-teal">
+      <h2>Forutsetninger hos Zaptec</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment"><strong>Kundeorientering:</strong> Teamledere, produktledere og forretningseiere må være tydelige på hvem de leverer til og hvilken verdi det skaper.</li>
+        <li class="fragment"><strong>Leveransehåndtering:</strong> Relativt raskt blir utfordringen å få levert endringer videre fra teamet på en strukturert måte.</li>
+        <li class="fragment"><strong>Verdi-fokusert prosess:</strong> Nødvendig for å styre utviklingen når hastigheten øker.</li>
+      </ul>
+      <aside class="notes">
+        Dette er en viktig del av samtalen med Zaptec. Agentisk koding øker utviklingshastigheten dramatisk,
+        men det hjelper ikke om flaskehalsen ligger i prioritering, review eller deployment.
+        Vi må forstå Zaptecs modenhet på disse områdene før vi starter.
+        Spørsmål til salgssamtalen: Har Zaptec tydelig produkteierskap? Hvor ofte deployer de? Hvem prioriterer arbeidet?
+      </aside>
+    </div>
+  </section>
+
+  <!-- 14. Verktøykasse -->
+  <section class="slide" data-title="Verktøy">
+    <div class="slide-inner theme-white">
+      <h2>Verktøy og metoder vi bringer inn</h2>
+      <div class="gap"></div>
+      <div class="columns-3">
+        <div>
+          <h3 class="accent">Utvikling</h3>
+          <ul>
+            <li>TDD</li>
+            <li>Parprogrammering</li>
+            <li>Claude Code</li>
+            <li>CLAUDE.md & hooks</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="accent">Prosess</h3>
+          <ul>
+            <li>The Middle Loop</li>
+            <li>Kontinuerlig refleksjon</li>
+            <li>Dokumentasjon av læring</li>
+            <li>Læringsmål</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="accent">Infrastruktur</h3>
+          <ul>
+            <li>CI/CD</li>
+            <li>Kontinuerlig test</li>
+            <li>Metrics (OpenTelemetry)</li>
+            <li>Kontinuerlig dokumentasjon</li>
+          </ul>
+        </div>
+      </div>
+      <aside class="notes">
+        Oversikt over hva vi konkret bringer til bordet.
+        Viktig: vi tilpasser utvalget til Zaptecs behov. De har kanskje allerede god CI/CD men mangler TDD.
+        Eller de har parprogrammering men ingen metrics. Vi starter med gap-analyse.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 15. Underliggende forutsetninger -->
+  <section class="slide" data-title="Forutsetninger">
+    <div class="slide-inner">
+      <h2>Hva vi trenger fra Zaptec</h2>
+      <div class="gap"></div>
+      <ul>
+        <li><strong>Kundefokus</strong> — tydelig forståelse av hvem sluttbrukerne er</li>
+        <li><strong>Tydelig eierskap til leveranse</strong> — noen må eie backloggen og prioriteringen</li>
+        <li><strong>God produktforståelse</strong> — domeneekspertise vi kan lene oss på</li>
+        <li><strong>Vilje til å endre arbeidsprosesser</strong> — dette er ikke bare et nytt verktøy</li>
+        <li><strong>Tilgang til repo, CI/CD og utviklingsmiljø</strong> — praktiske forutsetninger</li>
+      </ul>
+      <aside class="notes">
+        Viktig å være åpen om dette i salgssamtalen. Vi skal ikke love resultater uten å stille krav tilbake.
+        "Vilje til å endre arbeidsprosesser" er den vanskeligste. Mange ønsker AI-gevinster uten å endre noe annet.
+        Spørsmål å stille Zaptec: Er ledelsen med på at dette krever endring i arbeidsmetodikk, ikke bare nye verktøy?
+      </aside>
+    </div>
+  </section>
+
+  <!-- 16. Neste steg -->
+  <section class="slide" data-title="Neste steg">
+    <div class="slide-inner theme-red">
+      <h2>Neste steg for oss</h2>
+      <div class="gap"></div>
+      <ul>
+        <li class="fragment">Avklar Zaptecs modenhet: CI/CD, testpraksis, smidig modenhet</li>
+        <li class="fragment">Definer scope: ett team? Flere? Hvilket domene?</li>
+        <li class="fragment">Sett opp tilbud: varighet, roller, prising</li>
+        <li class="fragment">Forbered ekstern presentasjon tilpasset Zaptec</li>
+      </ul>
+      <aside class="notes">
+        Handlingsplan for oss internt.
+        Vi må vite mer om Zaptec før vi kan gi et godt tilbud. Hvem er kontaktpersonen?
+        Foreslått oppstart: workshop/kartlegging over 1-2 dager, deretter 4-6 uker med coaching.
+      </aside>
+    </div>
+  </section>
+
+  <!-- 17. Closing -->
+  <section class="slide" data-title="Avslutning">
+    <div class="slide-inner theme-title-center">
+      <h1>La oss snakke om Zaptec</h1>
+      <p>Hva vet vi? Hva må vi finne ut?</p>
+      <aside class="notes">
+        Åpne for diskusjon med selger. Gå gjennom hva vi vet om Zaptec, hvem vi snakker med der,
+        og hva vi trenger å kartlegge før vi lager et tilbud.
+      </aside>
+    </div>
+  </section>
+
+</div>
+
+<!-- Progress bar & counter -->
+<div class="progress"></div>
+<div class="slide-counter"></div>
+
+<!-- Scripts -->
+<script src="public/highlight.min.js"></script>
+<script src="public/qrcode.min.js"></script>
+<script src="js/slides.js"></script>
+</body>
+</html>
