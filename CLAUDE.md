@@ -517,6 +517,13 @@ Once deployed, presentations are available at:
 
 ## Live Polls
 
+> **⚠️ Dormant (2026-07-23):** the `fag-kaffe-polls` D1 database was deleted to free
+> account slots (final export: `~/backups/d1/2026-07-23/fag-kaffe-polls.sql` on
+> Sleeper — it held one Feb-2026 test session). The Pages Functions and poll/admin
+> pages are still in the repo but non-functional until you redo the one-time setup
+> below (create the DB, paste the new `database_id` into a restored `[[d1_databases]]`
+> block in `wrangler.toml`, apply the schema, set `ADMIN_TOKEN`).
+
 Audience members scan a QR code → `https://<project>.pages.dev/poll?p=<slug>` → vote on their phone. Results update live in the slide deck every 3 seconds.
 
 ### Poll slide syntax
